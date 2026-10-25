@@ -1,0 +1,98 @@
+name: Provider API change
+description: A provider changed their API, docs or webhook format
+labels: ["provider-change"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you — these are among the most valuable reports this project gets. Payment
+        APIs change without warning, and a provider's change can quietly break every
+        integration built on it.
+
+        The facts in [PROVIDERS.md](https://github.com/asgatcreation/naija-pay/blob/main/PROVIDERS.md)
+        each carry the date they were verified. If you are reporting a change, please
+        include the documentation URL and the date you read it, so the record stays honest.
+
+  - type: dropdown
+    id: provider
+    attributes:
+      label: Provider
+      options:
+        - Paystack
+        - Flutterwave
+        - Monnify
+        - Fincra
+        - Squad
+        - Korapay
+        - Nomba
+        - Paga
+        - Interswitch
+        - Anchor
+        - Safe Haven MFB
+        - Lenco
+        - Other (name it below)
+    validations:
+      required: true
+
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What changed
+      options:
+        - Endpoint path or method
+        - Request or response field names
+        - Webhook payload shape
+        - Webhook signature scheme
+        - Authentication method
+        - Base URL
+        - New API version released
+        - Feature deprecated or removed
+        - Rate limits
+        - KYC or regulatory requirements
+        - Fees or pricing
+        - Other
+    validations:
+      required: true
+
+  - type: input
+    id: docs-url
+    attributes:
+      label: Documentation URL
+      description: The page that shows the current behaviour.
+    validations:
+      required: true
+
+  - type: input
+    id: date-verified
+    attributes:
+      label: Date you read it
+      placeholder: "2026-10-25"
+    validations:
+      required: true
+
+  - type: textarea
+    id: before-after
+    attributes:
+      label: Before and after
+      description: What naija-pay currently expects, and what the provider does now.
+    validations:
+      required: true
+
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence
+      description: |
+        A quote from the docs, a sandbox response, or a webhook body with all secrets
+        and personal data redacted.
+      render: json
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Before submitting
+      options:
+        - label: This comes from the provider's official documentation or my own sandbox test, not from memory or a blog post
+          required: true
+        - label: I have redacted every key, BVN, NIN and account number
+          required: true

@@ -1,0 +1,87 @@
+name: Bug report
+description: Something in naija-pay behaves incorrectly
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Never paste a real secret key, BVN, NIN or account number.** Redact them, or
+        describe the shape of the data instead. If this is a security issue, please
+        [report it privately](https://github.com/asgatcreation/naija-pay/security/advisories/new)
+        rather than here.
+
+  - type: dropdown
+    id: language
+    attributes:
+      label: Language
+      options:
+        - TypeScript / JavaScript
+        - Python
+        - Both
+        - CLI
+    validations:
+      required: true
+
+  - type: dropdown
+    id: provider
+    attributes:
+      label: Provider
+      options:
+        - Paystack
+        - Flutterwave
+        - Monnify
+        - Fincra
+        - Squad
+        - Korapay
+        - Mock provider
+        - Router / multiple providers
+        - Not provider-specific
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: naija-pay version
+      placeholder: "0.1.0"
+    validations:
+      required: true
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: What did you expect, and what happened instead?
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: How to reproduce
+      description: The smallest code that shows the problem. Redact all credentials.
+      render: typescript
+    validations:
+      required: true
+
+  - type: textarea
+    id: error
+    attributes:
+      label: Error or log output
+      description: Include the full typed error if there is one, with secrets redacted.
+      render: shell
+
+  - type: input
+    id: environment
+    attributes:
+      label: Runtime
+      placeholder: "Node 24.16 / Python 3.13.5, Windows 11"
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Before submitting
+      options:
+        - label: I have removed every real key, BVN, NIN and account number from this report
+          required: true
+        - label: I am using test credentials, not live ones

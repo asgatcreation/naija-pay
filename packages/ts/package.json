@@ -1,0 +1,54 @@
+{
+  "name": "@asgatcreation/naija-pay",
+  "version": "0.0.0",
+  "description": "One typed interface to every Nigerian payment and banking-as-a-service provider: collections, virtual accounts, split payments, wallets, payouts and webhooks",
+  "keywords": [
+    "nigeria",
+    "payments",
+    "paystack",
+    "flutterwave",
+    "monnify",
+    "fincra",
+    "squad",
+    "korapay",
+    "virtual-accounts",
+    "webhooks",
+    "fintech"
+  ],
+  "license": "MIT",
+  "author": "Akanji Oluwaseun Gabriel (https://github.com/asgatcreation)",
+  "homepage": "https://github.com/asgatcreation/naija-pay#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/asgatcreation/naija-pay.git",
+    "directory": "packages/ts"
+  },
+  "bugs": {
+    "url": "https://github.com/asgatcreation/naija-pay/issues"
+  },
+  "type": "module",
+  "sideEffects": false,
+  "engines": {
+    "node": ">=20"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "dependencies": {},
+  "scripts": {
+    "test": "node --test test/"
+  }
+}

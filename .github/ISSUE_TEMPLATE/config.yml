@@ -1,0 +1,10 @@
+blank_issues_enabled: false
+
+contact_links:
+  - name: Report a security vulnerability
+    url: https://github.com/asgatcreation/naija-pay/security/advisories/new
+    about: Please report security issues privately, never as a public issue.
+
+  - name: Question or idea
+    url: https://github.com/asgatcreation/naija-pay/discussions
+    about: Ask a question or discuss an idea before opening an issue.

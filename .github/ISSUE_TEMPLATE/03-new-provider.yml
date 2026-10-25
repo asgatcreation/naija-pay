@@ -1,0 +1,73 @@
+name: New provider request
+description: Ask for support for a payment or banking-as-a-service provider
+labels: ["new-provider"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Before opening this, please check
+        [PROVIDERS.md](https://github.com/asgatcreation/naija-pay/blob/main/PROVIDERS.md) —
+        the provider may already be on a tier, or recorded as blocked because its docs
+        are private or its sandbox needs business onboarding.
+
+        A provider can only be built accurately if its documentation is readable. If the
+        docs are behind onboarding, say so — that is useful information, not a blocker
+        to reporting.
+
+  - type: input
+    id: name
+    attributes:
+      label: Provider name
+    validations:
+      required: true
+
+  - type: input
+    id: docs-url
+    attributes:
+      label: Public API documentation URL
+      description: Leave blank if the documentation is not public.
+
+  - type: dropdown
+    id: sandbox
+    attributes:
+      label: Sandbox availability
+      options:
+        - Self-serve — sign up and get test keys immediately
+        - Requires business onboarding or KYB
+        - No sandbox
+        - I do not know
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: features
+    attributes:
+      label: Which features does it offer?
+      options:
+        - label: Collections / checkout
+        - label: Static or reserved virtual accounts
+        - label: Dynamic or temporary virtual accounts
+        - label: Split-payment sub-accounts (settling to someone's external bank account)
+        - label: Wallet sub-accounts (a real NUBAN deposit account that holds a balance)
+        - label: Payouts / transfers
+        - label: Recurring billing or direct debit mandates
+        - label: Webhooks
+        - label: Bills / VTU
+
+  - type: textarea
+    id: why
+    attributes:
+      label: Why this provider
+      description: |
+        Who uses it, and what it does that the currently supported providers do not.
+        Real adoption in Nigeria matters more than feature lists.
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: help
+    attributes:
+      label: Can you help?
+      options:
+        - label: I have sandbox credentials and can run the integration tests
+        - label: I would like to write the adapter myself, following the checklist in CONTRIBUTING.md

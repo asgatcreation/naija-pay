@@ -1,0 +1,97 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  typescript:
+    name: TypeScript (Node ${{ matrix.node }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node: ["20", "22", "24"]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+
+      # No `npm ci` yet: the package has zero runtime dependencies and the dev
+      # toolchain lands in milestone 3, so there is nothing to install. Tests run
+      # on Node's built-in test runner against TypeScript sources directly.
+      - name: Test
+        run: npm test
+
+  python:
+    name: Python ${{ matrix.python }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ["3.10", "3.11", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+
+      - name: Test
+        run: python -m unittest discover -s packages/python/tests -t packages/python -v
+
+  parity:
+    name: Cross-language parity
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+
+      - name: Version parity
+        run: npm run test:parity
+
+  hygiene:
+    name: Repository hygiene
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: No committed .env
+        run: |
+          if git ls-files | grep -E '(^|/)\.env$|(^|/)\.env\.' | grep -v '\.env\.example$'; then
+            echo "::error::an .env file is tracked by git; remove it and rotate the keys"
+            exit 1
+          fi
+          echo "no .env files tracked"
+
+      - name: No obvious live keys anywhere in the tree
+        run: |
+          # Live-key prefixes for the Tier 1 providers. Test keys are fine.
+          if git grep -nIE 'sk_live_[A-Za-z0-9]|pk_live_[A-Za-z0-9]|FLWSECK-[A-Za-z0-9]|MK_PROD_' -- . ':!.github/workflows/ci.yml'; then
+            echo "::error::what looks like a live key is committed; rotate it immediately"
+            exit 1
+          fi
+          echo "no live key patterns found"
+
+      - name: Required project files are present
+        run: |
+          for f in LICENSE README.md CONTRIBUTING.md SECURITY.md CODE_OF_CONDUCT.md \
+                   CHANGELOG.md PROVIDERS.md DESIGN.md PLAN.md .env.example; do
+            test -f "$f" || { echo "::error::missing $f"; exit 1; }
+          done
+          echo "all required files present"
