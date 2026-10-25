@@ -1,0 +1,6208 @@
+{
+  "$comment": "GENERATED FILE - do not edit. Regenerate with `npm run build:banks`. Source data is naija-data, CC BY 4.0.",
+  "source": {
+    "repository": "https://github.com/asgatcreation/naija-data",
+    "file": "data/banks.csv",
+    "dataVersion": "2026-10-16",
+    "licence": "CC-BY-4.0",
+    "attribution": "naija-data by Akanji Oluwaseun Gabriel (https://github.com/asgatcreation/naija-data), CC BY 4.0"
+  },
+  "counts": {
+    "institutionsInSource": 899,
+    "kept": 898,
+    "active": 897,
+    "merged": 1,
+    "withNipCode": 49,
+    "withCbnCode": 141,
+    "withUnverifiedCode": 165
+  },
+  "banks": [
+    {
+      "id": "1trust-microfinance-bank",
+      "name": "1Trust Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "5tt-microfinance-bank",
+      "name": "5TT Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "51455",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "9psb",
+      "name": "9 PSB Ltd",
+      "type": "payment_service_bank",
+      "status": "active",
+      "shortName": "9PSB",
+      "nipCode": "120001",
+      "aliases": [
+        "9mobile 9Payment Service Bank",
+        "9Payment Service Bank"
+      ],
+      "unverified": [
+        "nipCode"
+      ]
+    },
+    {
+      "id": "aacb-microfinance-bank",
+      "name": "AACB Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "ab-microfinance-bank",
+      "name": "AB Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "abbey-mortgage-bank",
+      "name": "ABBEY MORTGAGE BANK",
+      "type": "mortgage",
+      "status": "active"
+    },
+    {
+      "id": "abeg-technologies",
+      "name": "ABEG TECHNOLOGIES LIMITED",
+      "type": "mobile_money_operator",
+      "status": "active"
+    },
+    {
+      "id": "abia-state-university-microfinance-bank",
+      "name": "Abia State University Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "abigi-microfinance-bank",
+      "name": "Abigi Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "above-only-microfinance-bank",
+      "name": "Above Only Microfinance Bank",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "51204",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "abubakar-tafawa-balewa-university-atbu-microfinance-bank",
+      "name": "Abubakar Tafawa Balewa University (ATBU) Microfinance Bank",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "abucoop-microfinance-bank",
+      "name": "Abucoop Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "abulesoro-microfinance-bank",
+      "name": "Abulesoro Microfinance Bank",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "51312",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "access-bank",
+      "name": "Access Bank Plc",
+      "type": "commercial",
+      "status": "active",
+      "shortName": "Access Bank",
+      "cbnCode": "044",
+      "nipCode": "000014",
+      "aliases": [
+        "Access"
+      ],
+      "unverified": [
+        "nipCode"
+      ]
+    },
+    {
+      "id": "accion-microfinance-bank",
+      "name": "Accion Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "ace-microfinance-bank",
+      "name": "ACE Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "achina-microfinance-bank",
+      "name": "Achina Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "ada-microfinance-bank",
+      "name": "ADA Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "adamawa-mortgage-bank",
+      "name": "Adamawa Mortgage Bank Limited",
+      "type": "mortgage",
+      "status": "active",
+      "cbnCode": "90102",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "adazi-enu-microfinance-bank",
+      "name": "Adazi-Enu Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "adazi-nnukwu-microfinance-bank",
+      "name": "Adazi-Nnukwu Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "addosser-microfinance-bank",
+      "name": "Addosser Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "adeyemi-college-staff-microfinance-bank",
+      "name": "Adeyemi College Staff Microfinance Bank",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "adike-microfinance-bank",
+      "name": "Adike Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "advancly-microfinance-bank",
+      "name": "Advancly Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active",
+      "nipCode": "090759",
+      "unverified": [
+        "nipCode"
+      ]
+    },
+    {
+      "id": "afekhafe-microfinance-bank",
+      "name": "Afekhafe Microfinance Bank",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "afemai-microfinance-bank",
+      "name": "Afemai Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "afole-microfinance-bank",
+      "name": "Afole Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "ag-homes",
+      "name": "AG HOMES",
+      "type": "mortgage",
+      "status": "active"
+    },
+    {
+      "id": "agosasa-microfinance-bank",
+      "name": "Agosasa Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "ahmadu-bello-university-microfinance-bank",
+      "name": "Ahmadu Bello University Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "50036",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "aibio-microfinance-bank",
+      "name": "Aibio Microfinance Bank",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "ajewole-microfinance-bank",
+      "name": "Ajewole Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "ajose-microfinance-bank",
+      "name": "Ajose Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "ajuta-microfinance-bank",
+      "name": "Ajuta Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "akalabo-microfinance-bank",
+      "name": "Akalabo Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "akata-microfinance-bank",
+      "name": "Akata Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "akokwa-microfinance-bank",
+      "name": "Akokwa Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "akpo-microfinance-bank",
+      "name": "Akpo Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "aku-diewa-microfinance-bank",
+      "name": "Aku Diewa Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "akuchukwu-microfinance-bank",
+      "name": "Akuchukwu Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active",
+      "nipCode": "090561",
+      "unverified": [
+        "nipCode"
+      ]
+    },
+    {
+      "id": "akwa-savings",
+      "name": "AKWA SAVINGS",
+      "type": "mortgage",
+      "status": "active"
+    },
+    {
+      "id": "al-barakah-microfinance-bank",
+      "name": "Al-Barakah Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "50055",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "al-hayat-microfinance-bank",
+      "name": "Al-Hayat Microfinance Bank",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "albasu-microfinance-bank",
+      "name": "Albasu Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "alekun-microfinance-bank",
+      "name": "Alekun Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "alert-microfinance-bank",
+      "name": "Alert Microfinance Bank",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "51074",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "algreb-microfinance-bank",
+      "name": "Algreb Microfinance Bank",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "alhikma-microfinance-bank",
+      "name": "Al'Hikma Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "aliero-microfinance-bank",
+      "name": "Aliero Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "all-workers-microfinance-bank",
+      "name": "All Workers Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "50059",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "alor-microfinance-bank",
+      "name": "Alor Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "alpha-kapital-microfinance-bank",
+      "name": "Alpha Kapital Microfinance Bank",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "alpha-morgan-bank",
+      "name": "Alpha Morgan Bank Limited",
+      "type": "commercial",
+      "status": "active",
+      "cbnCode": "108",
+      "nipCode": "000041",
+      "unverified": [
+        "nipCode"
+      ]
+    },
+    {
+      "id": "alternative-bank",
+      "name": "Alternative Bank Limited",
+      "type": "non_interest",
+      "status": "active",
+      "nipCode": "000304",
+      "unverified": [
+        "nipCode"
+      ]
+    },
+    {
+      "id": "alvana-microfinance-bank",
+      "name": "Alvana Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "amac-microfinance-bank",
+      "name": "AMAC Microfinance Bank",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "amazu-microfinance-bank",
+      "name": "Amazu Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "amegy-microfinance-bank",
+      "name": "Amegy Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "amju-unique-microfinance-bank",
+      "name": "AMJU-Unique Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "50926",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "amml-microfinance-bank-abuja-markets-management",
+      "name": "AMML Microfinance Bank Limited (Abuja Markets Management Ltd)",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "ampersand-microfinance-bank",
+      "name": "Ampersand Microfinance Bank",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "ample-microfinance-bank",
+      "name": "Ample Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "amucha-microfinance-bank",
+      "name": "Amucha Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "anchorage-microfinance-bank",
+      "name": "Anchorage Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "aniocha-microfinance-bank",
+      "name": "Aniocha Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "annointed-microfinance-bank",
+      "name": "Annointed Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "aogo-microfinance-bank",
+      "name": "Aogo Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "apa-microfinance-bank",
+      "name": "Apa Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "apex-trust-microfinance-bank",
+      "name": "Apex Trust Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "aramoko-microfinance-bank",
+      "name": "Aramoko Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "50083",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "aris-microfinance-bank",
+      "name": "Aris Microfinance Bank",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "asha-microfinance-bank",
+      "name": "Asha Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "aso-savings-loans",
+      "name": "ASO SAVINGS & LOANS",
+      "type": "mortgage",
+      "status": "active"
+    },
+    {
+      "id": "aspire-microfinance-bank",
+      "name": "Aspire Microfinance Bank LImited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "asset-matrix-microfinance-bank",
+      "name": "Asset Matrix Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "90287",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "assets-microfinance-bank",
+      "name": "Assets Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "50092",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "astra-polaris-microfinance-bank",
+      "name": "Astra Polaris Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "auchi-microfinance-bank",
+      "name": "Auchi Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "auchi-polytechnic-microfinance-bank",
+      "name": "Auchi Polytechnic Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "ave-maria-mfb",
+      "name": "AVE MARIA MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "avest-microfinance-bank",
+      "name": "Avest Microfinance bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "avunegbe-microfinance-bank",
+      "name": "Avunegbe Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "avvic-microfinance-bank",
+      "name": "AVVIC MICROFINANCE BANK LIMITED",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "awe-microfinance-bank",
+      "name": "Awe Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "awesome-mfb",
+      "name": "AWESOME MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "awka-etiti-microfinance-bank",
+      "name": "Awka-Etiti Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "awkuzu-microfinance-bank",
+      "name": "Awkuzu Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "azsa-microfinance-bank",
+      "name": "AZSA Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "b-c-kash-microfinance-bank",
+      "name": "B C Kash Microfinance Bank",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "51212",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "babba-microfinance-bank",
+      "name": "Babba Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "babcock-microfinance-bank",
+      "name": "Babcock Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "babura-microfinance-bank",
+      "name": "Babura Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "baige-microfinance-bank",
+      "name": "BAIGE MICROFINANCE BANK LIMITED",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "baines-credit-microfinance-bank",
+      "name": "Baines Credit Microfinance bank",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "51229",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "balera-microfinance-bank",
+      "name": "Balera Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "balogun-fulani-microfinance-bank",
+      "name": "Balogun Fulani Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "balogun-gambari-microfinance-bank",
+      "name": "Balogun Gambari Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "bam-microfinance-bank",
+      "name": "Bam Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "banex-microfinance-bank",
+      "name": "Banex Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "bank-of-agriculture-boa",
+      "name": "Bank of Agriculture (BOA)",
+      "type": "development_finance",
+      "status": "active",
+      "cbnCode": "90367",
+      "nipCode": "090367",
+      "unverified": [
+        "cbnCode",
+        "nipCode"
+      ]
+    },
+    {
+      "id": "bank-of-industry",
+      "name": "BANK OF INDUSTRY",
+      "type": "development_finance",
+      "status": "active"
+    },
+    {
+      "id": "bankeasy-microfinance-bank",
+      "name": "Bankeasy Microfinance bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "baobab-microfinance-bank",
+      "name": "Baobab Microfinance Bank",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "barnawa-microfinance-bank",
+      "name": "Barnawa Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "basawa-microfinance-bank",
+      "name": "Basawa Microfinance bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "batagwara-mfb",
+      "name": "BATAGWARA MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "bauchi-cfa-mirofinance-bank",
+      "name": "Bauchi CFA Mirofinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "bauchi-investment-corporation-mfb-bic",
+      "name": "Bauchi Investment Corporation MFB Limited (BIC)",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "baure-mfb",
+      "name": "BAURE MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "bawyi-microfinance-bank",
+      "name": "Bawyi Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "bayajidda-microfinance-bank",
+      "name": "Bayajidda Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "bayero-university-microfinance-bank",
+      "name": "Bayero University Microfinance Bank",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "bayetin-microfinance-bank",
+      "name": "Bayetin Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "benue-microfinance-bank",
+      "name": "Benue Microfinance Bank",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "benysta-microfinance-bank",
+      "name": "Benysta Microfinance Bank",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "51267",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "berachah-microfinance-bank",
+      "name": "Berachah Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "50122",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "best-star-microfinance-bank",
+      "name": "Best Star Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "50123",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "bethel-microfinance-bank",
+      "name": "Bethel Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "better-life-microfinace-bank",
+      "name": "Better Life Microfinace Bank",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "bichi-microfinance-bank",
+      "name": "Bichi Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "bida-polytechnic-microfinance-bank",
+      "name": "Bida Polytechnic Microfinance Bank",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "bkd-new-microfinance-bank",
+      "name": "BKD NEW Microfinance bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "bloc-microfinance-bank",
+      "name": "Bloc Microfinance bank Limited",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "51411",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "blooms-microfinance-bank",
+      "name": "Blooms Microfinance Bank",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "blucon-mfb",
+      "name": "BLUCON MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "blue-ridge-mfb",
+      "name": "BLUE RIDGE MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "blueprint-investments-mfb",
+      "name": "BLUEPRINT INVESTMENTS MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "boctrust-mfb",
+      "name": "BOCTRUST MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "boi-mfb",
+      "name": "BOI MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "boji-boji-mfb",
+      "name": "BOJI BOJI MFB LTD.",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "bokkos-mfb",
+      "name": "BOKKOS MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "bold-microfinance-bank",
+      "name": "Bold Microfinance bank Limited",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "50725",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "bonghe-mfb",
+      "name": "BONGHE MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "boost-microfinance-bank",
+      "name": "Boost Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "51449",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "borgu-mfb",
+      "name": "BORGU MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "borno-renaissance-mfb",
+      "name": "BORNO RENAISSANCE MFB LTD.",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "boromu-mfb",
+      "name": "BOROMU MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "borstal-mfb",
+      "name": "BORSTAL MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "bosak-mfb",
+      "name": "BOSAK MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "bowen-mfb",
+      "name": "BOWEN MFB",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "50931",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "bowman-mfb",
+      "name": "BOWMAN MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "brent-skyfield-savings",
+      "name": "BRENT (SKYFIELD) SAVINGS",
+      "type": "mortgage",
+      "status": "active"
+    },
+    {
+      "id": "brethren-mfb",
+      "name": "BRETHREN MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "brightway-mfb",
+      "name": "BRIGHTWAY MFB LTD",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "broadview-mfb",
+      "name": "BROADVIEW MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "brooks-mfb",
+      "name": "BROOKS MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "bubayero-mfb",
+      "name": "BUBAYERO MFB LTD",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "bundi-mfb",
+      "name": "BUNDI MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "bungudu-mfb",
+      "name": "BUNGUDU MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "bunkasa-mfb",
+      "name": "BUNKASA MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "bunkure-mfb",
+      "name": "BUNKURE MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "bway-microfinance-bank",
+      "name": "BWAY Microfinance bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "bway-microfinance-bank-microfinance",
+      "name": "BWAY Microfinance bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "canaan-mfb",
+      "name": "CANAAN MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "capitalmetriq-swift-mfb",
+      "name": "CAPITALMETRIQ SWIFT MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "capstone-mfb",
+      "name": "CAPSTONE MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "carbon-mfb",
+      "name": "CARBON MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "caretaker-mfb",
+      "name": "CARETAKER MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "casa-microfinance-bank",
+      "name": "Casa Microfinance bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "cash-rite-mfb",
+      "name": "CASH RITE MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "cashconnect-mfb",
+      "name": "CASHCONNECT MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "cashwise-microfinance-bank",
+      "name": "CASHWISE MICROFINANCE BANK LIMITED",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "castle-mfb",
+      "name": "CASTLE MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "catland-mfb",
+      "name": "CATLAND MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "cedar-mfb",
+      "name": "CEDAR MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "cedrus-microfinance-bank",
+      "name": "Cedrus Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "51437",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "centage-savings-loans",
+      "name": "CENTAGE SAVINGS & LOANS",
+      "type": "mortgage",
+      "status": "active"
+    },
+    {
+      "id": "challenge-mfb",
+      "name": "CHALLENGE MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "chams-mobile",
+      "name": "CHAMS MOBILE LIMITED",
+      "type": "mobile_money_operator",
+      "status": "active",
+      "nipCode": "100036",
+      "unverified": [
+        "nipCode"
+      ]
+    },
+    {
+      "id": "chanelle-mfb",
+      "name": "CHANELLE MFB",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "50171",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "changan-rts-mfb",
+      "name": "CHANGAN RTS MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "charis-microfinance-bank",
+      "name": "Charis Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "chase-mfb",
+      "name": "CHASE MFB LTD",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "chevron-employee-co-operative-mfb-cemcs",
+      "name": "CHEVRON EMPLOYEE CO-OPERATIVE MFB (CEMCS)",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "chibueze-mfb",
+      "name": "CHIBUEZE MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "chikum-mfb",
+      "name": "CHIKUM MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "chrisore-mfb",
+      "name": "CHRISORE MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "chronicles-mfb",
+      "name": "CHRONICLES MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "chukwunenye-mfb",
+      "name": "CHUKWUNENYE MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "cintrust-mfb",
+      "name": "CINTRUST MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "cit-mfb",
+      "name": "CIT MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "citibank",
+      "name": "Citibank Nigeria Limited",
+      "type": "commercial",
+      "status": "active",
+      "shortName": "Citibank",
+      "cbnCode": "023",
+      "aliases": [
+        "Citi"
+      ],
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "citizen-trust-mfb",
+      "name": "CITIZEN TRUST MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "city-code",
+      "name": "CITY CODE",
+      "type": "mortgage",
+      "status": "active",
+      "nipCode": "070027",
+      "unverified": [
+        "nipCode"
+      ]
+    },
+    {
+      "id": "city-mission-methodist-mfb",
+      "name": "CITY MISSION METHODIST MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "civic-mfb",
+      "name": "CIVIC MFB",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "50186",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "cloverleaf-mfb",
+      "name": "CLOVERLEAF MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "coal-camp-mfb",
+      "name": "COAL CAMP MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "coastline-mfb",
+      "name": "COASTLINE MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "coeminna-mfb",
+      "name": "COEMINNA MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "confidence-mfb",
+      "name": "CONFIDENCE MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "consistent-trust-mfb",
+      "name": "CONSISTENT TRUST MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "consumer-mfb",
+      "name": "CONSUMER MFB",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "50910",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "cool-microfinance-bank",
+      "name": "Cool Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "51458",
+      "nipCode": "090842",
+      "unverified": [
+        "nipCode"
+      ]
+    },
+    {
+      "id": "coop-savings-loans",
+      "name": "COOP SAVINGS & LOANS",
+      "type": "mortgage",
+      "status": "active"
+    },
+    {
+      "id": "corestep-mfb",
+      "name": "CORESTEP MFB",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "50204",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "coronation-merchant-bank",
+      "name": "CORONATION MERCHANT BANK",
+      "type": "merchant",
+      "status": "active",
+      "cbnCode": "559",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "covenant-mfb",
+      "name": "COVENANT MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "crescent-mfb",
+      "name": "CRESCENT MFB",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "51297",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "crest-mfb",
+      "name": "CREST MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "crossriver-mfb",
+      "name": "CROSSRIVER MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "crutech-mfb",
+      "name": "CRUTECH MFB",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "50216",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "crystabel-mfb",
+      "name": "CRYSTABEL MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "csd-mfb",
+      "name": "CSD MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "custodian-mfb",
+      "name": "CUSTODIAN MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "dabtikir-microfinance-bank",
+      "name": "Dabtikir Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "daily-trust-mfb",
+      "name": "DAILY-TRUST MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "dal-mfb",
+      "name": "DAL MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "dambatta-makoda-mfb",
+      "name": "DAMBATTA- MAKODA MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "dash-microfinance-bank",
+      "name": "Dash Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "51368",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "davenport-microfinance-bank",
+      "name": "Davenport Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "51334",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "davodani-mfb",
+      "name": "DAVODANI MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "dawakin-kudu-mfb",
+      "name": "DAWAKIN KUDU MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "daylight-mfb",
+      "name": "DAYLIGHT MFB LTD",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "dec-enugu-mfb",
+      "name": "DEC-ENUGU MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "delta-mortgage-finance",
+      "name": "DELTA MORTGAGE FINANCE",
+      "type": "mortgage",
+      "status": "active"
+    },
+    {
+      "id": "destiny-mfb",
+      "name": "DESTINY MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "development-bank-of",
+      "name": "Development Bank of Nigeria PLC",
+      "type": "development_finance",
+      "status": "active"
+    },
+    {
+      "id": "diamond-bank",
+      "name": "Diamond Bank Plc",
+      "type": "commercial",
+      "status": "merged",
+      "shortName": "Diamond Bank",
+      "cbnCode": "063",
+      "nipCode": "000005",
+      "mergedInto": "access-bank",
+      "aliases": [
+        "Diamond"
+      ],
+      "unverified": [
+        "nipCode"
+      ]
+    },
+    {
+      "id": "diobu-mfb",
+      "name": "DIOBU MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "doguwa-mfb",
+      "name": "DOGUWA MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "dolphin-mfb",
+      "name": "DOLPHIN MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "dorben-mfb",
+      "name": "DORBEN MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "dsc-microfinance-bank",
+      "name": "DSC Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "dutse-mfb",
+      "name": "DUTSE MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "dutsin-ma-mfb",
+      "name": "DUTSIN-MA MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "duxbank-microfinance-bank",
+      "name": "Duxbank Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "e-barcs-mfb",
+      "name": "e-BARCS MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "eagle-flight-mfb",
+      "name": "EAGLE FLIGHT MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "earnwell-mfb",
+      "name": "EARNWELL MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "east-gate-mfb",
+      "name": "EAST GATE MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "eastman-mfb",
+      "name": "EASTMAN MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "easy-access-mfb",
+      "name": "EASY ACCESS MFB LTD",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "ebedi-mfb",
+      "name": "EBEDI MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "ebonyi-state-university-mfb-ebsu",
+      "name": "EBONYI STATE UNIVERSITY MFB (EBSU)",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "ecobank",
+      "name": "Ecobank Nigeria Plc",
+      "type": "commercial",
+      "status": "active",
+      "shortName": "Ecobank",
+      "cbnCode": "050",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "edfin-mfb",
+      "name": "EDFIN MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "edo-mfb",
+      "name": "EDO MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "edusoko-microfinance-bank",
+      "name": "Edusoko Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "egbe-mfb",
+      "name": "EGBE MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "egbemoha-mfb",
+      "name": "EGBEMOHA MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "egwafin-mfb",
+      "name": "EGWAFIN MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "ehinoma-microfinance-bank",
+      "name": "Ehinoma Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "ejindu-mfb",
+      "name": "EJINDU MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "ek-reliable-mfb",
+      "name": "EK-RELIABLE MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "ekimogun-mfb",
+      "name": "EKIMOGUN MFB",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "50263",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "ekondo-mfb",
+      "name": "EKONDO MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "ekwulobia-mfb",
+      "name": "EKWULOBIA MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "ellington-microfinance-bank",
+      "name": "Ellington Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "elo-emede-mfb",
+      "name": "ELO-EMEDE MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "emerald-mfb",
+      "name": "EMERALD MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "empire-trust-mfb",
+      "name": "EMPIRE TRUST MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "endwell-mfb",
+      "name": "ENDWELL MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "enede-mfb",
+      "name": "ENEDE MFB LTD",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "enrich-mfb",
+      "name": "ENRICH MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "equator-mfb",
+      "name": "EQUATOR MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "equinox-mfb",
+      "name": "EQUINOX MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "eso-e-mfb",
+      "name": "ESO-E MFB",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "50280",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "etranzact-international",
+      "name": "ETRANZACT INTERNATIONAL LIMITED",
+      "type": "mobile_money_operator",
+      "status": "active"
+    },
+    {
+      "id": "evergreen-mfb",
+      "name": "EVERGREEN MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "ewt-mfb",
+      "name": "EWT MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "excel-mfb",
+      "name": "EXCEL MFB",
+      "type": "microfinance",
+      "status": "active",
+      "nipCode": "090678",
+      "unverified": [
+        "nipCode"
+      ]
+    },
+    {
+      "id": "export-import-bank",
+      "name": "NIGERIA EXPORT IMPORT BANK",
+      "type": "development_finance",
+      "status": "active"
+    },
+    {
+      "id": "ezebo-mfb",
+      "name": "EZEBO MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "faida-mfb",
+      "name": "FAIDA MFB LTD",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "fairmoney-mfb",
+      "name": "FAIRMONEY MFB LTD",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "51318",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "fame-mfb",
+      "name": "FAME MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "fast-mfb",
+      "name": "FAST MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "fbn-mortgages",
+      "name": "FBN MORTGAGES",
+      "type": "mortgage",
+      "status": "active"
+    },
+    {
+      "id": "fcmb",
+      "name": "First City Monument Bank Plc",
+      "type": "commercial",
+      "status": "active",
+      "shortName": "FCMB",
+      "cbnCode": "214",
+      "nipCode": "000003",
+      "aliases": [
+        "First City Monument Bank"
+      ],
+      "unverified": [
+        "nipCode"
+      ]
+    },
+    {
+      "id": "fcmb-mfb",
+      "name": "FCMB MFB LTD.",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "51241",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "fecetu-mfb",
+      "name": "FECETU MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "federal-mortgage-bank-of",
+      "name": "FEDERAL MORTGAGE BANK OF NIGERIA",
+      "type": "development_finance",
+      "status": "active"
+    },
+    {
+      "id": "federal-polytechnic-nekede-mfb",
+      "name": "FEDERAL POLYTECHNIC, NEKEDE MFB LTD",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "fedeth-co-op-mfb",
+      "name": "FEDETH CO-OP MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "fedpoly-nasarawa-mfb",
+      "name": "FEDPOLY NASARAWA MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "ffs-mfb",
+      "name": "FFS MFB",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "51110",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "fha-homes",
+      "name": "FHA HOMES LTD.",
+      "type": "mortgage",
+      "status": "active"
+    },
+    {
+      "id": "fidelity-bank",
+      "name": "Fidelity Bank Plc",
+      "type": "commercial",
+      "status": "active",
+      "shortName": "Fidelity Bank",
+      "cbnCode": "070",
+      "nipCode": "000007",
+      "aliases": [
+        "Fidelity"
+      ],
+      "unverified": [
+        "nipCode"
+      ]
+    },
+    {
+      "id": "fidfund-mfb",
+      "name": "FIDFUND MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "fims-mfb",
+      "name": "FIMS MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "finatrust-mfb",
+      "name": "FINATRUST MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "finca-mfb",
+      "name": "FINCA MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "finex-mfb",
+      "name": "FINEX MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "firmus-mfb",
+      "name": "FIRMUS MFB",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "51314",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "first-access-mfb",
+      "name": "FIRST ACCESS MFB LTD",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "first-bank",
+      "name": "First Bank Nigeria Limited",
+      "type": "commercial",
+      "status": "active",
+      "shortName": "First Bank",
+      "cbnCode": "011",
+      "nipCode": "000016",
+      "aliases": [
+        "FBN",
+        "First Bank of Nigeria"
+      ],
+      "unverified": [
+        "nipCode"
+      ]
+    },
+    {
+      "id": "first-generation-homes",
+      "name": "FIRST GENERATION HOMES",
+      "type": "mortgage",
+      "status": "active"
+    },
+    {
+      "id": "first-heritage-mfb",
+      "name": "FIRST HERITAGE MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "first-low-land-mfb",
+      "name": "FIRST LOW-LAND MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "first-mutual-mfb",
+      "name": "FIRST MUTUAL MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "first-option-mfb",
+      "name": "FIRST OPTION MFB",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "50934",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "first-royal-mfb",
+      "name": "FIRST ROYAL MFB",
+      "type": "microfinance",
+      "status": "active",
+      "nipCode": "090164",
+      "unverified": [
+        "nipCode"
+      ]
+    },
+    {
+      "id": "flexi-microfinance-bank",
+      "name": "Flexi Microfinance Bank",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "flourish-mfb",
+      "name": "FLOURISH MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "foresight-mfb",
+      "name": "FORESIGHT MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "fortis-mobile-money",
+      "name": "FORTIS MOBILE MONEY LIMITED",
+      "type": "mobile_money_operator",
+      "status": "active"
+    },
+    {
+      "id": "fortress-mfb",
+      "name": "FORTRESS MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "forward-mfb",
+      "name": "FORWARD MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "frontline-mfb",
+      "name": "FRONTLINE MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "fsdh-merchant-bank",
+      "name": "FSDH MERCHANT BANK",
+      "type": "merchant",
+      "status": "active",
+      "cbnCode": "501",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "fta-funtua-mfb",
+      "name": "FTA FUNTUA MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "fud-mfb",
+      "name": "FUD MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "fullrange-microfinance-bank",
+      "name": "Fullrange Microfinance Bank Ltd",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "funds-and-electronic-transfer-fets",
+      "name": "FUNDS AND ELECTRONIC TRANSFER (FETS) LIMITED",
+      "type": "mobile_money_operator",
+      "status": "active"
+    },
+    {
+      "id": "fut-minna",
+      "name": "FUT MINNA",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "futo-mfb",
+      "name": "FUTO MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "gaa-akanbi-mfb",
+      "name": "GAA AKANBI MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "gabasawa-mfb",
+      "name": "GABASAWA MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "gamawa-mfb",
+      "name": "GAMAWA MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "garewa-mfb",
+      "name": "GAREWA MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "garki-mfb",
+      "name": "GARKI MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "garu-mallam-mfb",
+      "name": "GARU MALLAM MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "gashua-mfb",
+      "name": "GASHUA MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "gateway-savings",
+      "name": "GATEWAY SAVINGS",
+      "type": "mortgage",
+      "status": "active"
+    },
+    {
+      "id": "gaya-mfb",
+      "name": "GAYA MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "gbede-mfb",
+      "name": "GBEDE MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "giant-stride-mfb",
+      "name": "GIANT STRIDE MFB LTD",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "gidauniya-alheri-mfb",
+      "name": "Gidauniya Alheri MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "giginya-mfb",
+      "name": "GIGINYA MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "girei-mfb",
+      "name": "GIREI MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "giwa-mfb",
+      "name": "GIWA MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "global-initiative-mfb",
+      "name": "GLOBAL INITIATIVE MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "global-trust",
+      "name": "GLOBAL TRUST",
+      "type": "mortgage",
+      "status": "active"
+    },
+    {
+      "id": "globus-bank",
+      "name": "Globus Bank Limited",
+      "type": "commercial",
+      "status": "active",
+      "cbnCode": "103",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "glory-mfb",
+      "name": "GLORY MFB",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "90278",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "gmb-mfb",
+      "name": "GMB MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "gobarau-mfb",
+      "name": "GOBARAU MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "golden-choice-mfb",
+      "name": "GOLDEN CHOICE MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "goldman-mfb",
+      "name": "GOLDMAN MFB",
+      "type": "microfinance",
+      "status": "active",
+      "nipCode": "090574",
+      "unverified": [
+        "nipCode"
+      ]
+    },
+    {
+      "id": "gombe-mfb",
+      "name": "GOMBE MFB",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "90586",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "good-neighbours-mfb",
+      "name": "GOOD NEIGHBOURS MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "good-news-mfb",
+      "name": "GOOD NEWS MFB",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "50739",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "good-shepherd-mfb",
+      "name": "GOOD SHEPHERD MFB",
+      "type": "microfinance",
+      "status": "active",
+      "nipCode": "090664",
+      "unverified": [
+        "nipCode"
+      ]
+    },
+    {
+      "id": "gowans-mfb",
+      "name": "GOWANS MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "grants-mfb",
+      "name": "GRANTS MFB",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "90335",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "granule-microfinance-bank",
+      "name": "GRANULE MICROFINANCE BANK",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "green-acres-mfb",
+      "name": "GREEN ACRES MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "green-bank-mfb",
+      "name": "GREEN-BANK MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "green-energy-mfb",
+      "name": "GREEN ENERGY MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "greenville-mfb",
+      "name": "GREENVILLE MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "greenwich-merchant-bank",
+      "name": "GREENWICH MERCHANT BANK",
+      "type": "merchant",
+      "status": "active",
+      "cbnCode": "562",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "grooming-mfb",
+      "name": "GROOMING MFB",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "51276",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "gtbank",
+      "name": "Guaranty Trust Bank Plc",
+      "type": "commercial",
+      "status": "active",
+      "shortName": "GTBank",
+      "cbnCode": "058",
+      "nipCode": "000013",
+      "aliases": [
+        "GTB",
+        "GTCO",
+        "Guaranty Trust Bank"
+      ],
+      "unverified": [
+        "nipCode"
+      ]
+    },
+    {
+      "id": "gti-mfb",
+      "name": "GTI MFB",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "50368",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "gudusisa-mfb",
+      "name": "GUDUSISA MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "gulfare-mfb",
+      "name": "GULFARE MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "gwong-mfb",
+      "name": "GWONG MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "hadeija-mfb",
+      "name": "HADEIJA MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "haggai-mortgage-bank",
+      "name": "HAGGAI MORTGAGE BANK",
+      "type": "mortgage",
+      "status": "active",
+      "cbnCode": "90065",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "halal-credit-mfb",
+      "name": "HALAL CREDIT MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "hallowed-mfb",
+      "name": "HALLOWED MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "hamada-mfb",
+      "name": "HAMADA MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "hamda-mfb",
+      "name": "HAMDA MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "hasal-mfb",
+      "name": "HASAL MFB",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "50383",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "headway-mfb",
+      "name": "HEADWAY MFB LTD",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "hedge-microfinance-bank",
+      "name": "HEDGE MICROFINANCE BANK LIMITED",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "hedonmark-management-services",
+      "name": "HEDONMARK MANAGEMENT SERVICES LIMITED",
+      "type": "mobile_money_operator",
+      "status": "active"
+    },
+    {
+      "id": "highland-mfb",
+      "name": "HIGHLAND MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "hinache-mfb",
+      "name": "HINACHE MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "home-base-mortgage",
+      "name": "HOME-BASE MORTGAGE",
+      "type": "mortgage",
+      "status": "active"
+    },
+    {
+      "id": "honey-mfb",
+      "name": "HONEY MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "hope-alive-mfb",
+      "name": "HOPE ALIVE MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "hopepsb",
+      "name": "Hope PSB Ltd",
+      "type": "payment_service_bank",
+      "status": "active",
+      "shortName": "HopePSB",
+      "nipCode": "120002",
+      "unverified": [
+        "nipCode"
+      ]
+    },
+    {
+      "id": "i-care-microfinance-bank",
+      "name": "I-Care Microfinance Bank Ltd",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "ibeto-mfb",
+      "name": "IBETO MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "ibile-mfb",
+      "name": "IBILE MFB",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "51244",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "ibolo-mfb",
+      "name": "IBOLO MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "ibom-fadama-mfb",
+      "name": "IBOM FADAMA MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "ibrahim-badamasi-babangida-university-mfb",
+      "name": "IBRAHIM BADAMASI BABANGIDA UNIVERSITY MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "ibu-aje-mfb",
+      "name": "IBU-AJE MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "ichi-mfb",
+      "name": "ICHI MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "ideato-mfb",
+      "name": "IDEATO MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "idemili-mfb",
+      "name": "IDEMILI MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "ifedapo-mfb",
+      "name": "IFEDAPO MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "ifelodun-mfb",
+      "name": "IFELODUN MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "igbo-ukwu-mfb",
+      "name": "IGBO-UKWU MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "igboora-mfb",
+      "name": "IGBOORA MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "ihiala-mfb",
+      "name": "IHIALA MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "ijare-mfb",
+      "name": "IJARE MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "ijebu-ife-mfb",
+      "name": "IJEBU IFE MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "ikenne-mfb",
+      "name": "IKENNE MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "ikere-microfinance-bank",
+      "name": "Ikere Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "ikire-mfb",
+      "name": "IKIRE MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "ikorodu-division-mfb",
+      "name": "IKORODU DIVISION MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "ikoyi-ile-mfb",
+      "name": "IKOYI-ILE MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "ikoyi-osun-mfb",
+      "name": "IKOYI-OSUN MFB",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "50439",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "ilaro-polytechnic-mfb",
+      "name": "ILARO POLYTECHNIC MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "ile-oluji-mfb",
+      "name": "ILE-OLUJI MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "ilisan-mfb",
+      "name": "ILISAN MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "ilobu-mfb",
+      "name": "ILOBU MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "iloffa-mfb",
+      "name": "ILOFFA MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "ilora-mfb",
+      "name": "ILORA MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "ilorin-mfb",
+      "name": "ILORIN MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "iludun-oro-mfb",
+      "name": "ILUDUN ORO MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "ilutuntun-osoro-mfb",
+      "name": "ILUTUNTUN-OSORO MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "imo-state-microfinance-bank",
+      "name": "IMO STATE MICROFINANCE BANK",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "imodi-imosan-mfb",
+      "name": "IMODI-IMOSAN MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "imopoly-mfb",
+      "name": "IMOPOLY MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "imowo-mfb",
+      "name": "IMOWO MFB",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "50453",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "imperial-homes",
+      "name": "IMPERIAL HOMES",
+      "type": "mortgage",
+      "status": "active"
+    },
+    {
+      "id": "imsu-mfb",
+      "name": "IMSU MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "imt-mfb",
+      "name": "IMT MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "indulge-microfinance-bank",
+      "name": "Indulge Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "infinity-mfb",
+      "name": "INFINITY MFB",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "50457",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "infinity-trust",
+      "name": "INFINITY TRUST",
+      "type": "mortgage",
+      "status": "active",
+      "nipCode": "070016",
+      "unverified": [
+        "nipCode"
+      ]
+    },
+    {
+      "id": "insight-mfb",
+      "name": "INSIGHT MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "ipapo-mfb",
+      "name": "IPAPO MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "iperu-mfb",
+      "name": "IPERU MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "irl-mfb",
+      "name": "IRL MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "isale-oyo-mfb",
+      "name": "ISALE OYO MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "ishiagu-mfb",
+      "name": "ISHIAGU MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "ishie-mfb",
+      "name": "ISHIE MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "isi-ego-microfinance-bank",
+      "name": "Isi-Ego Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "isi-uzo-mfb",
+      "name": "ISI-UZO MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "island-mfb",
+      "name": "ISLAND MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "isua-mfb",
+      "name": "ISUA MFB",
+      "type": "microfinance",
+      "status": "active",
+      "nipCode": "090701",
+      "unverified": [
+        "nipCode"
+      ]
+    },
+    {
+      "id": "isuofia-mfb",
+      "name": "ISUOFIA MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "iwa-mfb",
+      "name": "IWA MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "iwade-mfb",
+      "name": "IWADE MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "iwoye-ijesa-mfb",
+      "name": "IWOYE-IJESA MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "iya-zakari-mashi-mfb",
+      "name": "IYA-ZAKARI (MASHI) MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "iyamoye-mfb",
+      "name": "IYAMOYE MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "iyeru-okin-mfb",
+      "name": "IYERU OKIN MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "iyin-ekiti-mfb",
+      "name": "IYIN EKITI MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "izon-mfb",
+      "name": "IZON MFB LTD",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "jaiz-bank",
+      "name": "JAIZ BANK PLC",
+      "type": "non_interest",
+      "status": "active",
+      "cbnCode": "301",
+      "nipCode": "000006",
+      "unverified": [
+        "nipCode"
+      ]
+    },
+    {
+      "id": "janzama-mfb",
+      "name": "JANZAMA MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "jen-mfb",
+      "name": "JEN MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "jessefield-mfb",
+      "name": "JESSEFIELD MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "jewel-coop-mfb",
+      "name": "JEWEL COOP MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "jigawa-savings-loans",
+      "name": "JIGAWA SAVINGS & LOANS",
+      "type": "mortgage",
+      "status": "active"
+    },
+    {
+      "id": "jubilee-life-mortgage-bank",
+      "name": "JUBILEE-LIFE MORTGAGE BANK",
+      "type": "mortgage",
+      "status": "active"
+    },
+    {
+      "id": "kabo-mfb",
+      "name": "KABO MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "kadpoly-mfb",
+      "name": "KADPOLY MFB",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "50502",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "kadupe-mfb",
+      "name": "KADUPE MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "kaizen-microfinance-bank",
+      "name": "Kaizen Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "kamba-mfb",
+      "name": "KAMBA MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "kankara-mfb",
+      "name": "KANKARA MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "kankia-mfb",
+      "name": "KANKIA MFB LTD",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "kano-west-mfb",
+      "name": "KANO-WEST MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "katagum-mfb",
+      "name": "KATAGUM MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "katsu-microfinance-bank",
+      "name": "Katsu Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "katsu-microfinance-bank-microfinance",
+      "name": "Katsu Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "kayvee-mfb",
+      "name": "KAYVEE MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "kc-mfb",
+      "name": "KC MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "kcmb-mfb",
+      "name": "KCMB MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "kebbi-state-homes",
+      "name": "KEBBI STATE HOMES",
+      "type": "mortgage",
+      "status": "active"
+    },
+    {
+      "id": "kenechukwu-mfb",
+      "name": "KENECHUKWU MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "keystone-bank",
+      "name": "Keystone Bank Limited",
+      "type": "commercial",
+      "status": "active",
+      "shortName": "Keystone Bank",
+      "cbnCode": "082",
+      "nipCode": "000002",
+      "aliases": [
+        "Keystone"
+      ],
+      "unverified": [
+        "nipCode"
+      ]
+    },
+    {
+      "id": "khb-mfb",
+      "name": "KHB MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "kingdom-college-mfb",
+      "name": "KINGDOM COLLEGE MFB LTD",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "kisi-mfb",
+      "name": "KISI MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "kku-microfinance",
+      "name": "KKU Microfinance",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "kmc-mfb",
+      "name": "KMC MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "koboweb-microfinance-bank",
+      "name": "Koboweb Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "koins-microfinance-bank",
+      "name": "Koins Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "kolisa-microfinance-bank",
+      "name": "Kolisa Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "kongapay-technologies-formerly-zinternet",
+      "name": "KONGAPAY TECHNOLOGIES LIMITED (FORMERLY ZINTERNET LIMITED )",
+      "type": "mobile_money_operator",
+      "status": "active"
+    },
+    {
+      "id": "kontagora-mfb",
+      "name": "KONTAGORA MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "kopo-kope-mfb",
+      "name": "KOPO-KOPE MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "kredi-money-mfb-formerly-conpro-mfb",
+      "name": "KREDI MONEY MFB (Formerly CONPRO MFB)",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "50200",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "kuda",
+      "name": "KUDA MFB",
+      "type": "microfinance",
+      "status": "active",
+      "shortName": "Kuda",
+      "cbnCode": "50211",
+      "aliases": [
+        "Kuda Bank"
+      ],
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "kumbotso-mfb",
+      "name": "KUMBOTSO MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "kunagaba-mfb",
+      "name": "KUNAGABA MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "kunchi-mfb",
+      "name": "KUNCHI MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "kura-mfb",
+      "name": "KURA MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "kusalla-mfb",
+      "name": "KUSALLA MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "kwacofocus-mfb",
+      "name": "KWACOFOCUS MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "kwara-polytechnic-microfinance-bank",
+      "name": "KWARA POLYTECHNIC MICROFINANCE BANK LIMITED",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "kwasu-mfb",
+      "name": "KWASU MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "kwatashi-mfb",
+      "name": "KWATASHI MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "la-fayette-mfb",
+      "name": "LA FAYETTE MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "ladder-microfinance-bank",
+      "name": "Ladder Microfinance Bank",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "lagos-building-investment",
+      "name": "LAGOS BUILDING & INVESTMENT",
+      "type": "mortgage",
+      "status": "active",
+      "cbnCode": "90052",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "landgold-mfb",
+      "name": "LANDGOLD MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "lapo-mfb",
+      "name": "LAPO MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "lavender",
+      "name": "LAVENDER",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "lawyers-mfb",
+      "name": "LAWYERS MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "layelu-mfb",
+      "name": "LAYELU MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "leadcity-mfb",
+      "name": "LEADCITY MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "legacy-mfb",
+      "name": "LEGACY MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "legend-mfb",
+      "name": "LEGEND MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "letshego-mfb",
+      "name": "LETSHEGO MFB",
+      "type": "microfinance",
+      "status": "active",
+      "nipCode": "090420",
+      "unverified": [
+        "nipCode"
+      ]
+    },
+    {
+      "id": "levite-mfb",
+      "name": "LEVITE MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "lifegate-mfb",
+      "name": "LIFEGATE MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "light-mfb",
+      "name": "LIGHT MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "lightway-microfinance-bank",
+      "name": "Lightway Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "links-mfb",
+      "name": "LINKS MFB",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "50549",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "living-spring-mfb",
+      "name": "LIVING SPRING MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "lobrem-mfb",
+      "name": "LOBREM MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "lotus-bank",
+      "name": "LOTUS BANK LTD",
+      "type": "non_interest",
+      "status": "active",
+      "cbnCode": "303",
+      "nipCode": "000029",
+      "unverified": [
+        "nipCode"
+      ]
+    },
+    {
+      "id": "lovonus-mfb",
+      "name": "LOVONUS MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "m-m-mfb",
+      "name": "M & M MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "mab-allianz-mfb",
+      "name": "MAB ALLIANZ MFB LTD",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "macrod-mfb",
+      "name": "MACROD MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "madelyn-mfb",
+      "name": "MADELYN MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "madobi-mfb",
+      "name": "MADOBI MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "magajin-giri-mfb",
+      "name": "MAGAJIN-GIRI MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "magnet-mfb",
+      "name": "MAGNET MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "maigatari-mfb",
+      "name": "MAIGATARI MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "main-trust-mfb",
+      "name": "MAIN TRUST MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "mainland-mfb",
+      "name": "MAINLAND MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "mainstreet-mfb",
+      "name": "MAINSTREET MFB",
+      "type": "microfinance",
+      "status": "active",
+      "nipCode": "090171",
+      "unverified": [
+        "nipCode"
+      ]
+    },
+    {
+      "id": "malachy-mfb",
+      "name": "MALACHY MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "mapoly-mfb",
+      "name": "MAPOLY MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "maritime-mfb",
+      "name": "MARITIME MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "matazu-mfb",
+      "name": "MATAZU MFB LTD",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "maxitrust-mfb",
+      "name": "MAXITRUST MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "mayden-microfinance-bank",
+      "name": "MAYDEN MICROFINANCE BANK",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "51474",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "mayfresh-mortgage-bank",
+      "name": "MAYFRESH MORTGAGE BANK",
+      "type": "mortgage",
+      "status": "active",
+      "cbnCode": "90003",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "mbaitoli-mfb",
+      "name": "MBAITOLI MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "mbawulu-mfb",
+      "name": "MBAWULU MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "mega-mfb",
+      "name": "MEGA MFB",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "50570",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "megapraise-mfb",
+      "name": "MEGAPRAISE MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "memento-mfb",
+      "name": "MEMENTO MFB LTD",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "memphis-microfinance-bank",
+      "name": "MEMPHIS MICROFINANCE BANK LIMITED",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "meridian-mfb",
+      "name": "MERIDIAN MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "mgbidi-mfb",
+      "name": "MGBIDI MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "mgsl-mortgage-bank",
+      "name": "MGSL MORTGAGE BANK",
+      "type": "mortgage",
+      "status": "active"
+    },
+    {
+      "id": "mia-microfinance-bank",
+      "name": "Mia Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "micheal-okpara-university-mfb",
+      "name": "MICHEAL OKPARA UNIVERSITY MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "microvis-mfb",
+      "name": "MICROVIS MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "midland-mfb",
+      "name": "MIDLAND MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "mint-microfinance-bank",
+      "name": "Mint Microfinance Bank Limited",
+      "type": "non_interest",
+      "status": "active"
+    },
+    {
+      "id": "mkobo-mfb",
+      "name": "MKOBO MFB LTD",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "mkudi",
+      "name": "MKUDI LIMITED",
+      "type": "mobile_money_operator",
+      "status": "active"
+    },
+    {
+      "id": "moddibo-adama-university-microfinance-bank",
+      "name": "Moddibo Adama University Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "model-mfb",
+      "name": "MODEL MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "modiya-yekokpe-mfb",
+      "name": "MODIYA YEKOKPE MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "molusi-mfb",
+      "name": "MOLUSI MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "momo-psb",
+      "name": "MOMO PAYMENT SERVICE BANK",
+      "type": "payment_service_bank",
+      "status": "active",
+      "shortName": "MoMo PSB",
+      "nipCode": "120003",
+      "aliases": [
+        "MTN MoMo",
+        "MTN Momo PSB"
+      ],
+      "unverified": [
+        "nipCode"
+      ]
+    },
+    {
+      "id": "monarch-mfb",
+      "name": "MONARCH MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "moneymaster-psb",
+      "name": "Moneymaster PSB Ltd",
+      "type": "payment_service_bank",
+      "status": "active",
+      "shortName": "Moneymaster PSB",
+      "nipCode": "120005",
+      "unverified": [
+        "nipCode"
+      ]
+    },
+    {
+      "id": "moneytronics-mfb-formerly-ipodo-ikeja-mfb",
+      "name": "MONEYTRONICS MFB (Formerly Ipodo-Ikeja MFB)",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "moneytrust-mfb",
+      "name": "Moneytrust MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "moniepoint",
+      "name": "Moniepoint MFB",
+      "type": "microfinance",
+      "status": "active",
+      "shortName": "Moniepoint",
+      "cbnCode": "50515",
+      "aliases": [
+        "TeamApt"
+      ],
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "movasco-op-microfinance-bank",
+      "name": "Movasco-Op Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "moyofade-mfb",
+      "name": "MOYOFADE MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "mozfin-mfb",
+      "name": "MOZFIN MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "muamala-microfinance-bank",
+      "name": "Muamala Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "multivest-mfb",
+      "name": "MULTIVEST MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "mutual-alliance",
+      "name": "MUTUAL ALLIANCE",
+      "type": "mortgage",
+      "status": "active"
+    },
+    {
+      "id": "mutual-benefit-mfb",
+      "name": "MUTUAL BENEFIT MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "mutual-trust-mfb",
+      "name": "MUTUAL TRUST MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "nagarta-mfb",
+      "name": "NAGARTA MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "naisa-mfb",
+      "name": "NAISA MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "nakowa-mfb",
+      "name": "NAKOWA MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "namoda-mfb",
+      "name": "NAMODA MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "nasarawa-mfb",
+      "name": "NASARAWA MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "national-credit-guarantee-company",
+      "name": "NATIONAL CREDIT GUARANTEE COMPANY LIMITED",
+      "type": "development_finance",
+      "status": "active"
+    },
+    {
+      "id": "ndiolu-mfb",
+      "name": "NDIOLU MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "ndiorah-mfb",
+      "name": "NDIORAH MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "nenzit-mfb",
+      "name": "NENZIT MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "neptune-mfb",
+      "name": "NEPTUNE MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "new-dawn-mfb",
+      "name": "NEW DAWN MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "new-era-mfb",
+      "name": "NEW ERA MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "new-golden-pastures-mfb",
+      "name": "NEW GOLDEN PASTURES MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "new-prudential",
+      "name": "NEW PRUDENTIAL",
+      "type": "mortgage",
+      "status": "active"
+    },
+    {
+      "id": "new-womens-mfb",
+      "name": "NEW WOMEN'S MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "nexton-microfinance-bank",
+      "name": "Nexton Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "ngbo-mfb",
+      "name": "NGBO MFB LTD",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "nice-mfb",
+      "name": "NICE MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "nigerian-consumer-credit-corporation",
+      "name": "NIGERIAN CONSUMER CREDIT CORPORATION",
+      "type": "development_finance",
+      "status": "active"
+    },
+    {
+      "id": "nigerian-navy-mfb",
+      "name": "NIGERIAN NAVY MFB LTD",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "51142",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "nigerian-prisons-mfb",
+      "name": "NIGERIAN PRISONS MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "ningi-mfb",
+      "name": "NINGI MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "nirsal-mfb",
+      "name": "NIRSAL MFB",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "51304",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "nkpa-mfb",
+      "name": "NKPA MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "nkpologwu-mfb",
+      "name": "NKPOLOGWU MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "nkpolu-ust-mfb",
+      "name": "NKPOLU-UST MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "nnokwa-mfb",
+      "name": "NNOKWA MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "noble-mfb",
+      "name": "NOBLE MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "nomase-microfinance-bank",
+      "name": "NOMASE MICROFINANCE BANK LTD",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "noun-mfb",
+      "name": "NOUN MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "nova-bank",
+      "name": "Nova Commercial Bank Limited",
+      "type": "commercial",
+      "status": "active",
+      "shortName": "Nova Bank",
+      "cbnCode": "561",
+      "aliases": [
+        "Nova"
+      ],
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "novel-mfb",
+      "name": "NOVEL MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "novus-microfinance-bank",
+      "name": "Novus Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "51371",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "nownow-digital-systems-formerly-contec-global-infotech",
+      "name": "NOWNOW DIGITAL SYSTEMS LIMITED (FORMERLY CONTEC GLOBAL INFOTECH LIMITED)",
+      "type": "mobile_money_operator",
+      "status": "active"
+    },
+    {
+      "id": "npf-mfb",
+      "name": "NPF MFB",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "50629",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "nri-mfb",
+      "name": "NRI MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "nsu-mfb",
+      "name": "NSU MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "nsuk-mfb",
+      "name": "NSUK MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "nsukka-township-mfb",
+      "name": "NSUKKA TOWNSHIP MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "nuggets-mfb",
+      "name": "NUGGETS MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "numo-mfb",
+      "name": "NUMO MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "nun-mfb",
+      "name": "NUN MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "nut-okebola-mfb",
+      "name": "NUT OKEBOLA MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "nwannegadi-mfb",
+      "name": "NWANNEGADI MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "oakland-mfb",
+      "name": "OAKLAND MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "oba-mfb",
+      "name": "OBA MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "obafemi-awolowo-university-mfb",
+      "name": "OBAFEMI AWOLOWO UNIVERSITY MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "obeledu-mfb",
+      "name": "OBELEDU MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "obodoukwu-mfb",
+      "name": "OBODOUKWU MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "obokun-mfb",
+      "name": "OBOKUN MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "obollo-mfb",
+      "name": "OBOLLO MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "oche-mfb",
+      "name": "OCHE MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "ocon-success-mfb",
+      "name": "OCON SUCCESS MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "octopus-mfb",
+      "name": "OCTOPUS MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "odoakpu-mfb",
+      "name": "ODOAKPU MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "odu-mfb",
+      "name": "ODU MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "oganiru-microfinance-bank",
+      "name": "Oganiru Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "ogberuru-mfb",
+      "name": "OGBERURU MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "ogbete-mfb",
+      "name": "OGBETE MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "ogboefere-mfb",
+      "name": "OGBOEFERE MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "ogige-mfb",
+      "name": "OGIGE MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "ogiyan-mfb",
+      "name": "OGIYAN MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "ohafia-mfb",
+      "name": "OHAFIA MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "ohha-mfb",
+      "name": "OHHA MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "ojokoro-mfb",
+      "name": "OJOKORO MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "okada-microfinance-bank",
+      "name": "Okada Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "oke-aro-oredegbe-mfb",
+      "name": "OKE- ARO OREDEGBE MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "okeagbe-mfb",
+      "name": "OKEAGBE MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "okengwe-mfb",
+      "name": "OKENGWE MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "oko-mfb",
+      "name": "OKO MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "okpe-mfb",
+      "name": "OKPE MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "okpofe-mfb",
+      "name": "OKPOFE MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "okpoga-mfb",
+      "name": "OKPOGA MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "okuku-mfb",
+      "name": "OKUKU MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "okuta-mfb",
+      "name": "OKUTA MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "okwo-oha-mfb",
+      "name": "OKWO-OHA MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "olabisi-onabanjo-university-mfb",
+      "name": "OLABISI ONABANJO UNIVERSITY MFB",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "50689",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "olive-mfb",
+      "name": "OLIVE MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "olomu-aperan-microfinance-bank",
+      "name": "Olomu Aperan Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "olowolagba-mfb",
+      "name": "OLOWOLAGBA MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "olu-basiri-mfb",
+      "name": "OLU-BASIRI MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "oluchukwu-mfb",
+      "name": "OLUCHUKWU MFB",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "50697",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "omak-mfb",
+      "name": "OMAK MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "omiye-mfb",
+      "name": "OMIYE MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "omoluabi-livingspring",
+      "name": "OMOLUABI (LIVINGSPRING)",
+      "type": "mortgage",
+      "status": "active"
+    },
+    {
+      "id": "omuma-mfb",
+      "name": "OMUMA MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "onewallet-microfinance-bank",
+      "name": "Onewallet Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "onibu-ore-mfb",
+      "name": "ONIBU-ORE MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "opay",
+      "name": "OPAY MFB LIMITED",
+      "type": "microfinance",
+      "status": "active",
+      "shortName": "OPay",
+      "nipCode": "999992",
+      "aliases": [
+        "OPay Digital Services",
+        "Paycom"
+      ],
+      "unverified": [
+        "nipCode"
+      ]
+    },
+    {
+      "id": "optimum-global-microfinance-bank",
+      "name": "Optimum Global Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "optimus-bank",
+      "name": "Optimus Bank",
+      "type": "commercial",
+      "status": "active",
+      "cbnCode": "107",
+      "nipCode": "000036",
+      "unverified": [
+        "nipCode"
+      ]
+    },
+    {
+      "id": "oraukwu-mfb",
+      "name": "ORAUKWU MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "orilonise-mfb",
+      "name": "ORILONISE MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "orisun-mfb",
+      "name": "ORISUN MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "orita-basorun-mfb",
+      "name": "ORITA BASORUN MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "orokam-mfb",
+      "name": "OROKAM MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "orsu-mfb",
+      "name": "ORSU MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "osanta-mfb",
+      "name": "OSANTA MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "osct-mfb",
+      "name": "OSCT MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "osi-mfb",
+      "name": "OSI MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "osomhe-mfb",
+      "name": "OSOMHE MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "ospoly-mfb",
+      "name": "OSPOLY MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "osumenyi-mfb",
+      "name": "OSUMENYI MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "otuo-mfb",
+      "name": "OTUO MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "ours-mfb",
+      "name": "OURS MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "owotutu-mfb",
+      "name": "OWOTUTU MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "oyan-mfb",
+      "name": "OYAN MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "oye-versity-microfinance-bank",
+      "name": "OYE VERSITY MICROFINANCE BANK LIMITED",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "pact-microfinance-bank",
+      "name": "PACT MICROFINANCE BANK",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "51477",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "paga",
+      "name": "PAGATECH LIMITED",
+      "type": "mobile_money_operator",
+      "status": "active",
+      "shortName": "Paga",
+      "nipCode": "100002",
+      "aliases": [
+        "Pagatech"
+      ],
+      "unverified": [
+        "nipCode"
+      ]
+    },
+    {
+      "id": "palmcoast-mfb",
+      "name": "PALMCOAST MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "palmera-mfb",
+      "name": "PALMERA MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "palmpay",
+      "name": "PALMPAY LIMITED",
+      "type": "mobile_money_operator",
+      "status": "active",
+      "shortName": "PalmPay",
+      "nipCode": "999991",
+      "unverified": [
+        "nipCode"
+      ]
+    },
+    {
+      "id": "pana-mfb",
+      "name": "PANA MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "paragon-microfinance-bank",
+      "name": "Paragon Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "paragon-microfinance-bank-microfinance",
+      "name": "Paragon Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "parallex-bank",
+      "name": "Parallex Bank Ltd",
+      "type": "commercial",
+      "status": "active",
+      "cbnCode": "104",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "parkway-mfb",
+      "name": "PARKWAY MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "parkway-projects",
+      "name": "PARKWAY PROJECTS LIMITED",
+      "type": "mobile_money_operator",
+      "status": "active"
+    },
+    {
+      "id": "pathfinder-mfb",
+      "name": "PATHFINDER MFB",
+      "type": "microfinance",
+      "status": "active",
+      "nipCode": "090680",
+      "unverified": [
+        "nipCode"
+      ]
+    },
+    {
+      "id": "patrickgold-mfb",
+      "name": "PATRICKGOLD MFB",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "90317",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "payrep-microfinance-bank",
+      "name": "Payrep Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "peace-mfb",
+      "name": "PEACE MFB",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "50743",
+      "nipCode": "090402",
+      "unverified": [
+        "nipCode"
+      ]
+    },
+    {
+      "id": "pecan-trust-mfb",
+      "name": "PECAN TRUST MFB",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "51226",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "peninsula-mfb",
+      "name": "PENINSULA MFB LTD",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "pennywise-mfb",
+      "name": "PENNYWISE MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "pentecost-mfb",
+      "name": "PENTECOST MFB LTD",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "personal-trust-mfb",
+      "name": "PERSONAL TRUST MFB",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "51146",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "petra-mfb",
+      "name": "PETRA MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "phoenix-mfb",
+      "name": "PHOENIX MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "pillar-mfb",
+      "name": "PILLAR MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "pioneer-microfinance-bank",
+      "name": "Pioneer Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "platinum-microfinance-bank",
+      "name": "Platinum Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "platinum-mortgage-bank",
+      "name": "PLATINUM MORTGAGE BANK",
+      "type": "mortgage",
+      "status": "active"
+    },
+    {
+      "id": "plusone-microfinance-bank",
+      "name": "Plusone Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "pointone-microfinance-bank",
+      "name": "Pointone Microfinance Bank",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "polaris-bank",
+      "name": "Polaris Bank Plc",
+      "type": "commercial",
+      "status": "active",
+      "shortName": "Polaris Bank",
+      "cbnCode": "076",
+      "nipCode": "000008",
+      "aliases": [
+        "Polaris"
+      ],
+      "unverified": [
+        "nipCode"
+      ]
+    },
+    {
+      "id": "police-mortgage-bank",
+      "name": "NIGERIA POLICE MORTGAGE BANK",
+      "type": "mortgage",
+      "status": "active"
+    },
+    {
+      "id": "polybadan-mfb",
+      "name": "POLYBADAN MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "polyunwanna-mfb",
+      "name": "POLYUNWANNA MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "preeminent-mfb",
+      "name": "PREEMINENT MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "premier-microfinance-bank",
+      "name": "Premier Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "premium-trust-bank",
+      "name": "Premium Trust Bank",
+      "type": "commercial",
+      "status": "active",
+      "cbnCode": "105",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "prestige-mfb",
+      "name": "PRESTIGE MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "prisco-mfb",
+      "name": "PRISCO MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "pristine-divitis-mfb",
+      "name": "PRISTINE DIVITIS MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "projects-mfb",
+      "name": "PROJECTS MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "prospects-mfb",
+      "name": "PROSPECTS MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "prosperity-mfb",
+      "name": "PROSPERITY MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "providus-bank",
+      "name": "Providus Bank",
+      "type": "commercial",
+      "status": "active",
+      "cbnCode": "101",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "prudent-mfb",
+      "name": "PRUDENT MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "pyramid-mfb",
+      "name": "PYRAMID MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "qube-mfb",
+      "name": "QUBE MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "quest-merchant-bank",
+      "name": "QUEST MERCHANT BANK",
+      "type": "merchant",
+      "status": "active"
+    },
+    {
+      "id": "quickfund-mfb",
+      "name": "QUICKFUND MFB",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "51293",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "rahama-mfb",
+      "name": "RAHAMA MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "rakib-mfb",
+      "name": "RAKIB MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "ramilowo-mfb",
+      "name": "RAMILOWO MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "rand-merchant-bank",
+      "name": "RAND MERCHANT BANK",
+      "type": "merchant",
+      "status": "active",
+      "cbnCode": "502",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "randalpha",
+      "name": "RANDALPHA",
+      "type": "microfinance",
+      "status": "active",
+      "nipCode": "090496"
+    },
+    {
+      "id": "rano-mfb",
+      "name": "RANO MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "refined-benefits-mfb",
+      "name": "REFINED BENEFITS MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "refuge-homes",
+      "name": "REFUGE HOMES",
+      "type": "mortgage",
+      "status": "active"
+    },
+    {
+      "id": "regent-mfb",
+      "name": "REGENT MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "rehoboth-mfb",
+      "name": "REHOBOTH MFB",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "50761",
+      "nipCode": "090463",
+      "unverified": [
+        "cbnCode",
+        "nipCode"
+      ]
+    },
+    {
+      "id": "reliance-mfb",
+      "name": "RELIANCE MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "renmoney-mfb",
+      "name": "RENMONEY MFB",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "51049",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "rephidim-mfb",
+      "name": "REPHIDIM MFB",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "50994",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "ric-mfb",
+      "name": "RIC MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "richway-mfb",
+      "name": "RICHWAY MFB LTD.",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "ricia-capital-microfinance-bank",
+      "name": "Ricia Capital Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "rigo-mfb",
+      "name": "RIGO MFB",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "51286",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "rima-growth-pathway-mfb",
+      "name": "RIMA GROWTH PATHWAY MFB LTD",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "rima-mfb",
+      "name": "RIMA MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "riverside-mfb",
+      "name": "RIVERSIDE MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "rockshield-mfb",
+      "name": "ROCKSHIELD MFB",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "50767",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "royal-blue-mfb",
+      "name": "ROYAL BLUE MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "royal-excellent-microfinance-bank",
+      "name": "Royal Excellent Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "royal-exchange-mfb",
+      "name": "ROYAL EXCHANGE MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "royal-life-key-mfb",
+      "name": "ROYAL LIFE KEY MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "royal-mfb",
+      "name": "ROYAL MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "rubies-mfb",
+      "name": "RUBIES MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "run-microfinance-bank",
+      "name": "Run Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "sabi-mfb",
+      "name": "SABI MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "sabon-yelwa-mfb",
+      "name": "SABON YELWA MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "sabuwa-mfb",
+      "name": "SABUWA MFB LTD",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "safana-mfb",
+      "name": "SAFANA MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "safe-haven-mfb",
+      "name": "SAFE HAVEN MFB",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "51113",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "safeline-mfb",
+      "name": "SAFELINE MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "sagamu-mfb",
+      "name": "SAGAMU MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "sandamu-mfb",
+      "name": "SANDAMU MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "sapida-mfb",
+      "name": "SAPIDA MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "sarkin-kudu-mfb",
+      "name": "SARKIN KUDU MFB LTD",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "savesimple-microfinance-bank",
+      "name": "Savesimple Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "seal-microfinance-bank",
+      "name": "SEAL MICROFINANCE BANK LIMITED",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "seap-mfb",
+      "name": "SEAP MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "seedvest-mfb",
+      "name": "SEEDVEST MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "senchi-mfb",
+      "name": "SENCHI MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "shalom-mfb",
+      "name": "Shalom MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "shepherd-trust-mfb",
+      "name": "SHEPHERD TRUST MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "shield-mfb",
+      "name": "SHIELD MFB",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "50582",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "shine-microfinance-bank",
+      "name": "Shine Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "shongom-mfb",
+      "name": "SHONGOM MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "signature-bank",
+      "name": "Signature Bank Limited",
+      "type": "commercial",
+      "status": "active",
+      "cbnCode": "106",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "silverend-microfinance-bank",
+      "name": "Silverend Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "sincere-mfb",
+      "name": "SINCERE MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "sls-mfb",
+      "name": "SLS MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "smartcash-psb",
+      "name": "SMARTCASH PSB LIMITED",
+      "type": "payment_service_bank",
+      "status": "active",
+      "shortName": "SmartCash PSB",
+      "nipCode": "120004",
+      "aliases": [
+        "Airtel SmartCash",
+        "Airtel Smartcash PSB"
+      ],
+      "unverified": [
+        "nipCode"
+      ]
+    },
+    {
+      "id": "smartmicro-mfb",
+      "name": "SMARTMICRO MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "snow-mfb",
+      "name": "SNOW MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "solid-allianz-mfb",
+      "name": "SOLID ALLIANZ MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "solid-rock-mfb",
+      "name": "SOLID ROCK MFB",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "50800",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "solid-trust-mfb",
+      "name": "Solid Trust MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "soroman-mfb",
+      "name": "SOROMAN MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "sosa-microfinance-bank",
+      "name": "Sosa Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "source-microfinance-bank",
+      "name": "SOURCE MICROFINANCE BANK LIMITED",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "90641",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "sparkle-mfb",
+      "name": "SPARKLE MFB",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "51310",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "spectrum-mfb",
+      "name": "SPECTRUM MFB",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "50756",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "springfield-microfinance-bank",
+      "name": "Springfield Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "51429",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "springville-microfinance-bank",
+      "name": "Springville Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "stanbic-ibtc",
+      "name": "Stanbic IBTC Bank Plc",
+      "type": "commercial",
+      "status": "active",
+      "shortName": "Stanbic IBTC",
+      "cbnCode": "221",
+      "nipCode": "000012",
+      "aliases": [
+        "Stanbic"
+      ],
+      "unverified": [
+        "nipCode"
+      ]
+    },
+    {
+      "id": "standard-chartered",
+      "name": "Standard Chartered Bank Nigeria Ltd.",
+      "type": "commercial",
+      "status": "active",
+      "shortName": "Standard Chartered",
+      "cbnCode": "068",
+      "aliases": [
+        "StanChart"
+      ],
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "standard-mfb",
+      "name": "STANDARD MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "stateside-mfb",
+      "name": "STATESIDE MFB",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "50809",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "stb-building-society",
+      "name": "STB BUILDING SOCIETY",
+      "type": "mortgage",
+      "status": "active"
+    },
+    {
+      "id": "stellas-mfb",
+      "name": "STELLAS MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "step-by-step-mfb",
+      "name": "STEP BY STEP MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "sterling-bank",
+      "name": "Sterling Bank Plc",
+      "type": "commercial",
+      "status": "active",
+      "shortName": "Sterling Bank",
+      "cbnCode": "232",
+      "nipCode": "000001",
+      "aliases": [
+        "Sterling"
+      ],
+      "unverified": [
+        "nipCode"
+      ]
+    },
+    {
+      "id": "stillwaters-mfb",
+      "name": "STILLWATERS MFB LTD",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "stockcorp-mfb",
+      "name": "STOCKCORP MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "sulspap-mfb",
+      "name": "SULSPAP MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "summit-bank",
+      "name": "SUMMIT BANK LIMITED",
+      "type": "non_interest",
+      "status": "active",
+      "cbnCode": "305",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "sunbeam-mfb",
+      "name": "SUNBEAM MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "suntop-microfinance-bank",
+      "name": "Suntop Microfinance Bank",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "suntrust-bank",
+      "name": "SunTrust Bank Nigeria Limited",
+      "type": "commercial",
+      "status": "active",
+      "cbnCode": "100",
+      "nipCode": "000022",
+      "unverified": [
+        "nipCode"
+      ]
+    },
+    {
+      "id": "support-mfb",
+      "name": "SUPPORT MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "sure-anchor-mfb",
+      "name": "SURE ANCHOR MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "swifttrust-microfinance-bank",
+      "name": "Swifttrust Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "taj",
+      "name": "TAJ",
+      "type": "non_interest",
+      "status": "active",
+      "cbnCode": "302",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "tanadi-mfb",
+      "name": "TANADI MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "tangale-mfb",
+      "name": "TANGALE MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "tangerine-money-microfinance-bank",
+      "name": "Tangerine Money Microfinance Bank",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "51269",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "tasued-mfb",
+      "name": "TASUED MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "tatum-bank",
+      "name": "Tatum Bank Limited",
+      "type": "commercial",
+      "status": "active",
+      "cbnCode": "109",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "tcf-mfb",
+      "name": "TCF MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "teasy-international-company",
+      "name": "TEASY INTERNATIONAL COMPANY LTD.",
+      "type": "mobile_money_operator",
+      "status": "active"
+    },
+    {
+      "id": "teerus-microfinance-bank",
+      "name": "TEERUS MICROFINANCE BANK LIMITED",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "teerus-microfinance-bank-microfinance",
+      "name": "Teerus Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "tellerone-fi-microfinance-bank",
+      "name": "Tellerone FI Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "tenn-microfinance-bank",
+      "name": "Tenn Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "51403",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "tf-mfb",
+      "name": "TF MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "the-infrastructure-bank",
+      "name": "The Infrastructure Bank",
+      "type": "development_finance",
+      "status": "active"
+    },
+    {
+      "id": "the-millennium-mfb",
+      "name": "The Millennium MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "titan-trust-bank",
+      "name": "Titan Trust Bank Ltd",
+      "type": "commercial",
+      "status": "active",
+      "shortName": "Titan Trust Bank",
+      "cbnCode": "102",
+      "aliases": [
+        "Titan Bank",
+        "Titan"
+      ],
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "top-rate-mfb",
+      "name": "TOP RATE MFB",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "90801",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "topclass-mfb",
+      "name": "TOPCLASS MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "total-trust-mfb",
+      "name": "TOTAL TRUST MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "touchgold-mfb",
+      "name": "TOUCHGOLD MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "townserve-mfb",
+      "name": "TOWNSERVE MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "transpay-microfinance-bank",
+      "name": "Transpay Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active",
+      "nipCode": "090708",
+      "unverified": [
+        "nipCode"
+      ]
+    },
+    {
+      "id": "treasures-mfb",
+      "name": "TREASURES MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "trident-mfb",
+      "name": "TRIDENT MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "tripple-a-mfb",
+      "name": "TRIPPLE A MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "triumphant-microfinance-bank",
+      "name": "TRIUMPHANT MICROFINANCE BANK LIMITED",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "trust-mfb",
+      "name": "TRUST MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "trustbanc-j6",
+      "name": "TRUSTBANC J6",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "51118",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "trustbond-mortgage-bank",
+      "name": "TRUSTBOND MORTGAGE BANK",
+      "type": "mortgage",
+      "status": "active"
+    },
+    {
+      "id": "trustfund-mfb",
+      "name": "TRUSTFUND MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "tudunwada-mfb",
+      "name": "TUDUNWADA MFB LTD",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "u-c-mfb",
+      "name": "U & C MFB",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "50840",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "uba",
+      "name": "United Bank For Africa Plc",
+      "type": "commercial",
+      "status": "active",
+      "shortName": "UBA",
+      "cbnCode": "033",
+      "nipCode": "000004",
+      "aliases": [
+        "United Bank for Africa"
+      ],
+      "unverified": [
+        "nipCode"
+      ]
+    },
+    {
+      "id": "ubj-microfinance-bank",
+      "name": "UBJ Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "51396",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "ucb-mfb",
+      "name": "UCB MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "uda-mfb",
+      "name": "UDA MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "udoka-mfb",
+      "name": "UDOKA MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "uforo-microfinance-bank",
+      "name": "Uforo Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "uga-mfb",
+      "name": "UGA MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "ugborimili-mfb",
+      "name": "UGBORIMILI MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "uhuru-mfb",
+      "name": "UHURU MFB",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "51322",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "ukpor-mfb",
+      "name": "UKPOR MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "ukwala-mfb",
+      "name": "UKWALA MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "ultimate-mfb",
+      "name": "ULTIMATE MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "ultraviolet-microfinance-bank",
+      "name": "Ultraviolet Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "51080",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "ummah-mfb",
+      "name": "UMMAH MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "umuawulu-mfb",
+      "name": "UMUAWULU MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "umuchinemere-procredit-mfb",
+      "name": "UMUCHINEMERE PROCREDIT MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "umuchukwu-mfb",
+      "name": "UMUCHUKWU MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "umunnachi-mfb",
+      "name": "UMUNNACHI MFB",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "51097",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "umunri-microfinance-bank",
+      "name": "Umunri Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "umuoji-mfb",
+      "name": "UMUOJI MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "umyu-microfinance-bank",
+      "name": "UMYU Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "unaab-mfb",
+      "name": "UNAAB MFB",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "50870",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "ungogo-mfb",
+      "name": "UNGOGO MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "unibadan-mfb",
+      "name": "UNIBADAN MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "unical-mfb",
+      "name": "UNICAL MFB",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "50871",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "unicorn-microfinance-bank",
+      "name": "Unicorn Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "unifund-mfb",
+      "name": "UNIFUND MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "unilag-mfb",
+      "name": "UNILAG MFB LTD",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "51316",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "unilorin-mfb",
+      "name": "UNILORIN MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "unimaid-mfb",
+      "name": "UNIMAID MFB",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "50875",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "union-bank",
+      "name": "Union Bank of Nigeria Plc",
+      "type": "commercial",
+      "status": "active",
+      "shortName": "Union Bank",
+      "cbnCode": "032",
+      "nipCode": "000018",
+      "unverified": [
+        "nipCode"
+      ]
+    },
+    {
+      "id": "united-capital-mfb",
+      "name": "UNITED CAPITAL MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "unity-bank",
+      "name": "Unity Bank Plc",
+      "type": "commercial",
+      "status": "active",
+      "shortName": "Unity Bank",
+      "cbnCode": "215",
+      "nipCode": "000011",
+      "unverified": [
+        "nipCode"
+      ]
+    },
+    {
+      "id": "uniuyo-mfb",
+      "name": "UNIUYO MFB",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "50880",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "university-of-benin-mfb",
+      "name": "UNIVERSITY OF BENIN MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "unn-mfb",
+      "name": "UNN MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "unubi-mfb",
+      "name": "UNUBI MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "urban-mfb",
+      "name": "URBAN MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "ure-mfb",
+      "name": "URE MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "utako-mfb",
+      "name": "UTAKO MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "utuh-mfb",
+      "name": "UTUH MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "uvuoma-mfb",
+      "name": "UVUOMA MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "uvuru-mfb",
+      "name": "UVURU MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "uzondu-mfb",
+      "name": "UZONDU MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "vangel-microfinance-bank",
+      "name": "Vangel Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "vcl-mfb",
+      "name": "VCL MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "vfd-mfb",
+      "name": "VFD MFB LTD",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "victory-mfb",
+      "name": "VICTORY MFB",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "51085",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "visa-mfb",
+      "name": "VISA MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "viscount-mfb",
+      "name": "VISCOUNT MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "vista-microfinance-bank",
+      "name": "Vista Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "90787",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "visual-ict",
+      "name": "VISUAL ICT LIMITED",
+      "type": "mobile_money_operator",
+      "status": "active",
+      "nipCode": "100023",
+      "unverified": [
+        "nipCode"
+      ]
+    },
+    {
+      "id": "vtnetwork",
+      "name": "VTNETWORK LIMITED",
+      "type": "mobile_money_operator",
+      "status": "active"
+    },
+    {
+      "id": "waila-mfb",
+      "name": "WAILA MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "wallet-microfinance-bank",
+      "name": "Wallet Microfinance Bank",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "waya-mfb",
+      "name": "WAYA MFB",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "51355",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "we-microfinance-bank",
+      "name": "WE MICROFINANCE BANK LIMITED",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "welfare-mfb",
+      "name": "WELFARE MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "wema-bank",
+      "name": "Wema Bank Plc",
+      "type": "commercial",
+      "status": "active",
+      "shortName": "Wema Bank",
+      "cbnCode": "035",
+      "nipCode": "000017",
+      "aliases": [
+        "Wema",
+        "ALAT"
+      ],
+      "unverified": [
+        "nipCode"
+      ]
+    },
+    {
+      "id": "weston-charis-microfinance-bank",
+      "name": "Weston-Charis Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "51386",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "wetland-mfb",
+      "name": "WETLAND MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "willows-microfinance-bank",
+      "name": "Willows Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "woliwo-mfb",
+      "name": "WOLIWO MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "women-development-mfb",
+      "name": "WOMEN DEVELOPMENT MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "wra-mfb",
+      "name": "WRA MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "wudil-mfb",
+      "name": "WUDIL MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "xpress-mts",
+      "name": "XPRESS MTS LIMITED",
+      "type": "mobile_money_operator",
+      "status": "active"
+    },
+    {
+      "id": "xslnce-mfb",
+      "name": "XSLNCE MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "yabo-mfb",
+      "name": "YABO MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "yankari-mfb",
+      "name": "Yankari MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "yauri-emirates-mfb",
+      "name": "YAURI EMIRATES MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "yct-microfinance-bank",
+      "name": "YCT Microfinance Bank",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "yes-mfb",
+      "name": "YES MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "yobe-state-mfb",
+      "name": "YOBE STATE MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "zazzau-mfb",
+      "name": "ZAZZAU MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "zefa-mfb",
+      "name": "ZEFA MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "zenith-bank",
+      "name": "Zenith Bank Plc",
+      "type": "commercial",
+      "status": "active",
+      "shortName": "Zenith Bank",
+      "cbnCode": "057",
+      "nipCode": "000015",
+      "aliases": [
+        "Zenith"
+      ],
+      "unverified": [
+        "nipCode"
+      ]
+    },
+    {
+      "id": "zikora-mfb",
+      "name": "ZIKORA MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "zion-mfb",
+      "name": "ZION MFB",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "zircon-microfinance-bank",
+      "name": "Zircon Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active"
+    },
+    {
+      "id": "zitra-microfinance-bank",
+      "name": "Zitra Microfinance Bank Limited",
+      "type": "microfinance",
+      "status": "active",
+      "cbnCode": "51373",
+      "unverified": [
+        "cbnCode"
+      ]
+    },
+    {
+      "id": "zurmi-mfb",
+      "name": "ZURMI MFB",
+      "type": "microfinance",
+      "status": "active"
+    }
+  ]
+}

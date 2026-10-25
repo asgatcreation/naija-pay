@@ -67,8 +67,36 @@ jobs:
         with:
           node-version: "24"
 
-      - name: Version parity
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      # Runs the shared cases in fixtures/parity/ through BOTH packages and compares
+      # the canonical JSON byte for byte. If the two languages ever disagree about an
+      # amount, a split's rounding, a redacted string or why a value was refused, this
+      # fails and names the case.
+      - name: Core and version parity
         run: npm run test:parity
+
+  generated-data:
+    name: Generated data is current
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+
+      # Validates the COMMITTED data offline: it parses, its counts match its contents,
+      # its attribution is intact, and no two active institutions share a code.
+      #
+      # Deliberately does not regenerate from naija-data. Doing that would turn CI red
+      # whenever naija-data ships a new bank, which is someone else's commit breaking
+      # this build — the fastest way to get a useful check disabled. Upstream drift is
+      # the weekly workflow's job, where it opens an issue instead.
+      - name: Validate committed bank data
+        run: npm run check:data
 
   hygiene:
     name: Repository hygiene

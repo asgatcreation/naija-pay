@@ -26,3 +26,21 @@ Nothing is published to npm or PyPI yet. See [PLAN.md](PLAN.md) for the mileston
   Dependabot, and the CI workflow.
 - Workspace skeletons for the TypeScript (`packages/ts`) and Python (`packages/python`) packages,
   and the shared fixture layout both languages test against.
+- Core primitives in both languages: `Money` as an integer count of minor units with exact
+  integer split arithmetic, the typed error hierarchy, and automatic redaction of BVNs, NINs,
+  account numbers, card numbers and every provider's credential format.
+- Cross-language parity harness: 67 shared cases in `fixtures/parity/` run through both packages,
+  compared byte for byte, covering amounts, split rounding, redaction, key detection and the
+  exact message of every rejection.
+- Bank data generated from naija-data (CC BY 4.0, attribution embedded) into
+  `data/banks.generated.json`, with an offline validator that checks attribution, shape, merger
+  targets and code uniqueness among active institutions.
+
+### Changed
+
+- **Bank codes are no longer normalised onto a single CBN/NIBSS code.** Measuring the real data
+  showed naija-data carries a NIP code for only 49 of 898 institutions, while Paystack alone
+  returns 292 Nigerian banks under codes of its own in three different lengths. The provider's own
+  bank code is now authoritative and is never substituted; naija-data supplies institution
+  identity, merger status and verification flags as enrichment. See the bank-codes section of
+  DESIGN.md.

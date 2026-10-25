@@ -1,11 +1,50 @@
 """naija-pay — one typed interface to every Nigerian payment and banking-as-a-service provider.
 
-This is the scaffold entry point (milestone 2). The core — money types, typed errors,
-the HTTP layer, redaction and the webhook parser — lands in milestone 3. The API
-contract being built to is in DESIGN.md at the repository root.
+The API contract being built to is in DESIGN.md at the repository root.
 """
 
 from typing import Literal
+
+from naija_pay.core import (
+    BASIS_POINTS_TOTAL,
+    AuthenticationError,
+    ConfigurationError,
+    DuplicateReferenceError,
+    InsufficientFundsError,
+    KycRequiredError,
+    Money,
+    MoneyError,
+    NaijaPayError,
+    NetworkError,
+    NotFoundError,
+    PayoutStatusUnknownError,
+    ProviderDownError,
+    ProviderError,
+    RateLimitedError,
+    Share,
+    SplitPart,
+    SplitResult,
+    UnsupportedOperationError,
+    ValidationError,
+    WebhookVerificationError,
+    add,
+    compare,
+    error_class_for_status,
+    format_money,
+    from_major,
+    looks_like_live_key,
+    looks_like_test_key,
+    mask_account_number,
+    mask_identity_number,
+    minor_unit_exponent,
+    money,
+    naira,
+    redact,
+    redact_object,
+    split_by_basis_points,
+    split_by_flat_amounts,
+    subtract,
+)
 
 #: The package version. Kept identical to the TypeScript package; CI enforces it.
 __version__ = "0.0.0"
@@ -30,4 +69,46 @@ Environment = Literal["test", "live"]
 #:                     explicitly skipped (Squad and Monnify, as of 2026-10-25)
 SignatureStrength = Literal["full-body", "partial-body", "shared-secret", "unverified"]
 
-__all__ = ["Environment", "SignatureStrength", "__version__"]
+__all__ = [
+    "BASIS_POINTS_TOTAL",
+    "AuthenticationError",
+    "ConfigurationError",
+    "DuplicateReferenceError",
+    "Environment",
+    "InsufficientFundsError",
+    "KycRequiredError",
+    "Money",
+    "MoneyError",
+    "NaijaPayError",
+    "NetworkError",
+    "NotFoundError",
+    "PayoutStatusUnknownError",
+    "ProviderDownError",
+    "ProviderError",
+    "RateLimitedError",
+    "Share",
+    "SignatureStrength",
+    "SplitPart",
+    "SplitResult",
+    "UnsupportedOperationError",
+    "ValidationError",
+    "WebhookVerificationError",
+    "__version__",
+    "add",
+    "compare",
+    "error_class_for_status",
+    "format_money",
+    "from_major",
+    "looks_like_live_key",
+    "looks_like_test_key",
+    "mask_account_number",
+    "mask_identity_number",
+    "minor_unit_exponent",
+    "money",
+    "naira",
+    "redact",
+    "redact_object",
+    "split_by_basis_points",
+    "split_by_flat_amounts",
+    "subtract",
+]

@@ -18,7 +18,9 @@
   "scripts": {
     "test": "node --test \"packages/ts/test/**/*.test.ts\"",
     "test:python": "python -m unittest discover -s packages/python/tests -t packages/python -v",
-    "test:parity": "node tools/check-version-parity.mjs",
-    "check": "npm run test && npm run test:python && npm run test:parity"
+    "test:parity": "node tools/check-parity.mjs",
+    "check": "npm run test && npm run test:python && npm run test:parity && npm run check:data",
+    "build:banks": "node tools/generate-banks.mjs",
+    "check:data": "node tools/check-generated-data.mjs"
   }
 }

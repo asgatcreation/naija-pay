@@ -331,10 +331,60 @@ await pay.payouts.createBulk({ reference, items: [...] });
 await pay.balance.get();
 ```
 
-Bank codes come from naija-data, generated into the package at build time. The build **fails** if any
-provider's published bank list contains a bank that cannot be mapped to a CBN/NIBSS code; the report
-names the unmapped banks so they become a naija-data issue rather than a silent gap. `bankSlug`
-preserves provider-specific identifiers (`titan-paystack`, `habari`) for round-tripping.
+### Bank codes: corrected 2026-10-26
+
+An earlier draft of this document said bank codes would be normalised onto a single CBN/NIBSS code,
+with the build failing on any bank that could not be mapped. Measuring the actual data showed that
+is not achievable, so the design changed:
+
+| Source | Reality, measured 2026-10-26 |
+| --- | --- |
+| naija-data `banks.csv` | 899 institutions, but only **50** have a NIP code and **142** a CBN code. **732 have neither.** Its strength is the institution registry — 796 microfinance banks — not payment codes. |
+| Paystack's live NG list | **292** banks, whose `code` lengths are 177 five-digit, 60 three-digit, 45 six-digit, and a handful of 2, 4, 7, 8 and 9 digits. It is not a NIBSS 6-digit code; it is Paystack's own identifier. |
+
+There is no universal code to normalise onto. So:
+
+1. **The provider's own bank code is authoritative for calling that provider, and naija-pay never
+   substitutes it.** `BankAccount.bankCode` carries exactly what that provider expects, and a payout
+   built from one provider's bank list is never sent to another. This is a money-safety rule.
+2. **naija-data is the enrichment and identity layer, not the code authority.** It answers "is
+   Paystack's bank X the same institution as Monnify's bank Y?" via a canonical `institutionId`, and
+   supplies the canonical name, institution type, merger status, and the NIP/CBN codes where it has
+   them.
+3. **Matching is by code where naija-data has one, otherwise by normalised name and alias.** Every
+   match records how it was made, so a weak match is visible rather than assumed.
+4. **The build does not fail on unmapped banks.** It writes a coverage report, and CI fails only if
+   coverage *regresses* below a committed baseline. Blocking every build on a known upstream gap
+   would just mean disabling the check; a regression gate keeps the signal useful.
+
+```ts
+interface BankAccount {
+  accountNumber: string;     // masked in logs and errors
+  accountName: string;
+  bankName: string;          // as the provider gave it
+  bankCode: string;          // THE PROVIDER'S OWN CODE — authoritative, never substituted
+  provider: string;          // which provider's namespace bankCode belongs to
+  institution: {             // enrichment from naija-data; null when unmatched
+    id: string;              // canonical, e.g. "access-bank"
+    name: string;
+    type: "commercial" | "microfinance" | "payment_service_bank" | ...;
+    nipCode: string | null;
+    cbnCode: string | null;
+    status: "active" | "merged";
+    mergedInto: string | null;     // providers still return merged banks' codes
+    unverifiedCodes: string[];     // codes naija-data could not verify upstream
+    matchedBy: "nip_code" | "cbn_code" | "name" | "alias";
+  } | null;
+}
+```
+
+Two things this buys that a single normalised code would not: a caller can be told that the bank they
+are about to pay is **merged into another institution**, and that a code naija-data carries is
+**unverified upstream** rather than silently trusting it. Both come straight from naija-data's own
+`status`, `merged_into` and `unverified_fields` columns.
+
+Unmatched banks are reported, not hidden — `npm run report:banks` lists them per provider, and they
+become naija-data issues, which is how the dataset improves.
 
 **Payouts are never retried automatically.** They are not idempotent at the provider in any
 documented way we trust. A `NetworkError` on a payout returns a distinct

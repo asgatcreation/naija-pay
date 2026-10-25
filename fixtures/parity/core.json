@@ -1,0 +1,136 @@
+{
+  "$comment": "Shared parity cases. Both the TypeScript and Python runners execute these and must emit byte-identical canonical JSON. See fixtures/README.md.",
+  "fromMajor": [
+    { "major": 150, "currency": "NGN" },
+    { "major": 150.75, "currency": "NGN" },
+    { "major": 1.15, "currency": "NGN" },
+    { "major": 0.07, "currency": "NGN" },
+    { "major": 0.01, "currency": "NGN" },
+    { "major": 0, "currency": "NGN" },
+    { "major": 99999.99, "currency": "NGN" },
+    { "major": 2.5, "currency": "USD" },
+    { "major": 100, "currency": "XOF" },
+    { "major": 1.005, "currency": "NGN" },
+    { "major": 100.5, "currency": "XOF" },
+    { "major": -1, "currency": "NGN" }
+  ],
+  "format": [
+    { "amount": 15075, "currency": "NGN" },
+    { "amount": 5, "currency": "NGN" },
+    { "amount": 0, "currency": "NGN" },
+    { "amount": 100000000, "currency": "NGN" },
+    { "amount": 250, "currency": "USD" }
+  ],
+  "splitByBasisPoints": [
+    {
+      "total": { "amount": 10000, "currency": "NGN" },
+      "shares": [{ "account": "vendor", "share": 9000 }]
+    },
+    {
+      "total": { "amount": 10001, "currency": "NGN" },
+      "shares": [
+        { "account": "a", "share": 3333 },
+        { "account": "b", "share": 3333 },
+        { "account": "c", "share": 3333 }
+      ]
+    },
+    {
+      "total": { "amount": 1, "currency": "NGN" },
+      "shares": [{ "account": "a", "share": 5000 }]
+    },
+    {
+      "total": { "amount": 333, "currency": "NGN" },
+      "shares": [
+        { "account": "a", "share": 1234 },
+        { "account": "b", "share": 4321 }
+      ]
+    },
+    {
+      "total": { "amount": 99999999, "currency": "NGN" },
+      "shares": [
+        { "account": "a", "share": 1 },
+        { "account": "b", "share": 9999 }
+      ]
+    },
+    {
+      "total": { "amount": 10000, "currency": "NGN" },
+      "shares": [{ "account": "a", "share": 10000 }]
+    },
+    {
+      "total": { "amount": 10000, "currency": "NGN" },
+      "shares": [{ "account": "a", "share": 0 }]
+    },
+    {
+      "total": { "amount": 10000, "currency": "NGN" },
+      "shares": [
+        { "account": "a", "share": 6000 },
+        { "account": "b", "share": 5000 }
+      ]
+    }
+  ],
+  "splitByFlatAmounts": [
+    {
+      "total": { "amount": 10000, "currency": "NGN" },
+      "shares": [{ "account": "a", "share": 2500 }]
+    },
+    {
+      "total": { "amount": 10000, "currency": "NGN" },
+      "shares": [
+        { "account": "a", "share": 2500 },
+        { "account": "b", "share": 7500 }
+      ]
+    },
+    {
+      "total": { "amount": 1000, "currency": "NGN" },
+      "shares": [{ "account": "a", "share": 2000 }]
+    }
+  ],
+  "redact": [
+    "verification failed for bvn 22222222222",
+    "nin 12345678901 account 0123456789",
+    "request used sk_test_abc123def456 for auth",
+    "request used sk_live_abc123def456 for auth",
+    "request used sandbox_sk_abc123def456 for auth",
+    "request used FLWSECK_TEST-abc123def456-X for auth",
+    "request used FLWSECK-abc123def456 for auth",
+    "request used MK_TEST_GC3B8XG2XX for auth",
+    "Authorization: Bearer abc123def456ghi",
+    "pan 4242424242424242 declined",
+    "transaction failed with code 404",
+    "amount 15000 kobo",
+    "sender 0123456789 sent to 9876543210",
+    ""
+  ],
+  "redactObject": [
+    {
+      "event": "charge.success",
+      "reference": "order_01HQ",
+      "amount": 15000,
+      "customer": { "email": "ada@example.com", "phone": "+2348100000000", "bvn": "22222222222" },
+      "account": { "accountNumber": "0123456789", "bankCode": "058" },
+      "secretKey": "sk_live_abc123def456",
+      "authorization": "Bearer abc123def456ghi"
+    },
+    {
+      "secret_key": "sk_live_aaaaaaaaaaaa",
+      "SECRET-KEY": "sk_live_bbbbbbbbbbbb",
+      "accountNumber": "0123456789",
+      "account_number": "0123456789"
+    },
+    { "reason": "BVN 22222222222 does not match account 0123456789" },
+    { "items": [{ "bvn": "22222222222" }, { "accountNumber": "0123456789" }] },
+    { "nested": { "deeper": { "nin": "12345678901", "note": "fine" } } }
+  ],
+  "keyDetection": [
+    "sk_test_abc123",
+    "sk_live_abc123",
+    "sandbox_sk_abc123",
+    "FLWSECK_TEST-abc123",
+    "FLWSECK-abc123",
+    "MK_TEST_GC3B8XG2XX",
+    "MK_PROD_abc123",
+    "pk_test_abc123",
+    "not-a-key"
+  ],
+  "errorForStatus": [400, 401, 403, 404, 409, 422, 429, 500, 502, 503, 418]
+}
