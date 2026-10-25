@@ -21,7 +21,12 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node: ["20", "22", "24"]
+        # Only 22 and 24 here, because these tests execute the TypeScript sources
+        # directly and Node gained native type stripping in 22.18 / 23.6. The
+        # PUBLISHED package supports Node 20+ — it ships compiled JavaScript — and
+        # milestone 3 adds a build job that runs the compiled output on Node 20 to
+        # prove it.
+        node: ["22", "24"]
     steps:
       - uses: actions/checkout@v4
 

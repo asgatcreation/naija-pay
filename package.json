@@ -10,7 +10,7 @@
     "url": "git+https://github.com/asgatcreation/naija-pay.git"
   },
   "engines": {
-    "node": ">=24"
+    "node": ">=22.18"
   },
   "workspaces": [
     "packages/ts"
