@@ -5,6 +5,7 @@ contact_links:
     url: https://github.com/asgatcreation/naija-pay/security/advisories/new
     about: Please report security issues privately, never as a public issue.
 
-  - name: Question or idea
-    url: https://github.com/asgatcreation/naija-pay/discussions
-    about: Ask a question or discuss an idea before opening an issue.
+  - name: Read the provider research first
+    url: https://github.com/asgatcreation/naija-pay/blob/main/PROVIDERS.md
+    about: Every provider's verified facts, capability matrix and sandbox availability.
+
