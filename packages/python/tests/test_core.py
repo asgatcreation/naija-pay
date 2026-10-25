@@ -209,10 +209,10 @@ class TestRedactFreeText(unittest.TestCase):
     def test_masks_every_provider_key_format(self) -> None:
         cases = [
             ("sk_test_abc123def456", "sk_test_"),
-            ("sk_live_abc123def456", "sk_live_"),
+            ("sk_live_EXAMPLEdef456", "sk_live_"),
             ("sandbox_sk_abc123def456", "sandbox_sk_"),
             ("FLWSECK_TEST-abc123def456-X", "FLWSECK_TEST-"),
-            ("FLWSECK-abc123def456", "FLWSECK-"),
+            ("FLWSECK-EXAMPLEdef456", "FLWSECK-"),
             ("MK_TEST_GC3B8XG2XX", "MK_TEST_"),
             ("Bearer abc123def456ghi", "Bearer "),
         ]
@@ -246,7 +246,7 @@ class TestRedactObject(unittest.TestCase):
             "amount": 15_000,
             "customer": {"email": "ada@example.com", "phone": "+2348100000000", "bvn": BVN},
             "account": {"accountNumber": ACCOUNT, "bankCode": "058"},
-            "secretKey": "sk_live_abc123def456",
+            "secretKey": "sk_live_EXAMPLEdef456",
             "authorization": "Bearer abc123def456ghi",
         }
         out = redact_object(payload)
@@ -262,13 +262,13 @@ class TestRedactObject(unittest.TestCase):
         self.assertEqual(out["authorization"], "[redacted]")
         self.assertNotIn(BVN, serialised)
         self.assertNotIn(ACCOUNT, serialised)
-        self.assertNotIn("sk_live_abc123def456", serialised)
+        self.assertNotIn("sk_live_EXAMPLEdef456", serialised)
 
     def test_field_names_regardless_of_case_or_separator(self) -> None:
         out = redact_object(
             {
-                "secret_key": "sk_live_aaaaaaaaaaaa",
-                "SECRET-KEY": "sk_live_bbbbbbbbbbbb",
+                "secret_key": "sk_live_EXAMPLEaaaaaa",
+                "SECRET-KEY": "sk_live_EXAMPLEbbbbbb",
                 "accountNumber": ACCOUNT,
                 "account_number": ACCOUNT,
             }
@@ -292,10 +292,10 @@ class TestRedactObject(unittest.TestCase):
         self.assertEqual(out["cyclic"]["self"], "[circular]")
 
     def test_does_not_mutate_input(self) -> None:
-        original = {"bvn": BVN, "nested": {"secretKey": "sk_live_abc123def456"}}
+        original = {"bvn": BVN, "nested": {"secretKey": "sk_live_EXAMPLEdef456"}}
         redact_object(original)
         self.assertEqual(original["bvn"], BVN)
-        self.assertEqual(original["nested"]["secretKey"], "sk_live_abc123def456")
+        self.assertEqual(original["nested"]["secretKey"], "sk_live_EXAMPLEdef456")
 
 
 class TestMaskingHelpers(unittest.TestCase):
@@ -309,9 +309,9 @@ class TestMaskingHelpers(unittest.TestCase):
 
 class TestKeyEnvironmentDetection(unittest.TestCase):
     def test_recognises_live_keys(self) -> None:
-        self.assertTrue(looks_like_live_key("sk_live_abc123"))
-        self.assertTrue(looks_like_live_key("FLWSECK-abc123"))
-        self.assertTrue(looks_like_live_key("MK_PROD_abc123"))
+        self.assertTrue(looks_like_live_key("sk_live_EXAMPLE123"))
+        self.assertTrue(looks_like_live_key("FLWSECK-EXAMPLE123"))
+        self.assertTrue(looks_like_live_key("MK_PROD_EXAMPLE123"))
         self.assertFalse(looks_like_live_key("sk_test_abc123"))
         self.assertFalse(looks_like_live_key("FLWSECK_TEST-abc123"))
 
@@ -320,16 +320,16 @@ class TestKeyEnvironmentDetection(unittest.TestCase):
         self.assertTrue(looks_like_test_key("sandbox_sk_abc123"))
         self.assertTrue(looks_like_test_key("FLWSECK_TEST-abc123"))
         self.assertTrue(looks_like_test_key("MK_TEST_GC3B8XG2XX"))
-        self.assertFalse(looks_like_test_key("sk_live_abc123"))
+        self.assertFalse(looks_like_test_key("sk_live_EXAMPLE123"))
 
     def test_key_is_never_both(self) -> None:
         for key in (
             "sk_test_abc123",
-            "sk_live_abc123",
+            "sk_live_EXAMPLE123",
             "FLWSECK_TEST-abc123",
-            "FLWSECK-abc123",
+            "FLWSECK-EXAMPLE123",
             "MK_TEST_abc",
-            "MK_PROD_abc",
+            "MK_PROD_EXAMPLE",
             "sandbox_sk_abc123",
         ):
             self.assertFalse(
@@ -341,13 +341,13 @@ class TestKeyEnvironmentDetection(unittest.TestCase):
 class TestErrors(unittest.TestCase):
     def test_redacts_at_construction(self) -> None:
         err = NaijaPayError(
-            f"failed for bvn {BVN} with key sk_live_abc123def456",
+            f"failed for bvn {BVN} with key sk_live_EXAMPLEdef456",
             provider="paystack",
             operation="virtual_accounts.create_static",
         )
         for text in (str(err), repr(err), err.message, json.dumps(err.to_dict())):
             self.assertNotIn(BVN, text)
-            self.assertNotIn("sk_live_abc123def456", text)
+            self.assertNotIn("sk_live_EXAMPLEdef456", text)
 
     def test_redacts_provider_message(self) -> None:
         err = NaijaPayError("failed", provider_message=f"account {ACCOUNT} invalid")

@@ -16,6 +16,12 @@ are few and they are written down, which is the point.
 4. **No secrets, ever.** Test keys only, in a gitignored `.env`. If you commit a key by accident,
    rotate it immediately and say so.
 5. **No raw card data.** Nothing in this SDK may accept a PAN, CVV or expiry date.
+6. **Fake credentials must contain the token `EXAMPLE`.** Tests and fixtures need
+   realistic-looking keys to prove that redaction works, so write them as
+   `sk_live_EXAMPLE123` or `FLWSECK-EXAMPLEdef456`. CI greps the whole tree for live-key
+   shapes and ignores only matches containing `EXAMPLE`. That way the check still applies
+   inside test files — which is exactly where a real key gets pasted by accident — rather
+   than excluding those paths wholesale.
 
 ## Getting set up
 

@@ -115,8 +115,15 @@ jobs:
       - name: No obvious live keys anywhere in the tree
         run: |
           # Live-key prefixes for the Tier 1 providers. Test keys are fine.
-          if git grep -nIE 'sk_live_[A-Za-z0-9]|pk_live_[A-Za-z0-9]|FLWSECK-[A-Za-z0-9]|MK_PROD_' -- . ':!.github/workflows/ci.yml'; then
-            echo "::error::what looks like a live key is committed; rotate it immediately"
+          #
+          # Fake credentials in tests and fixtures must contain the literal token
+          # EXAMPLE, and are ignored here. That keeps this check strong inside test
+          # files too — which is exactly where a real key gets pasted by accident —
+          # instead of excluding those paths wholesale. See CONTRIBUTING.md.
+          if git grep -nIE 'sk_live_[A-Za-z0-9]|pk_live_[A-Za-z0-9]|FLWSECK-[A-Za-z0-9]|MK_PROD_[A-Za-z0-9]' \
+               -- . ':!.github/workflows/ci.yml' | grep -v 'EXAMPLE'; then
+            echo "::error::what looks like a live key is committed; rotate it immediately."
+            echo "::error::If it is fake test data, put the token EXAMPLE in it."
             exit 1
           fi
           echo "no live key patterns found"

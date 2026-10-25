@@ -30,10 +30,10 @@ describe("redact in free text", () => {
   test("masks every provider's key format, keeping the prefix", () => {
     const cases: [string, string][] = [
       ["sk_test_abc123def456", "sk_test_"],
-      ["sk_live_abc123def456", "sk_live_"],
+      ["sk_live_EXAMPLEdef456", "sk_live_"],
       ["sandbox_sk_abc123def456", "sandbox_sk_"],
       ["FLWSECK_TEST-abc123def456-X", "FLWSECK_TEST-"],
-      ["FLWSECK-abc123def456", "FLWSECK-"],
+      ["FLWSECK-EXAMPLEdef456", "FLWSECK-"],
       ["MK_TEST_GC3B8XG2XX", "MK_TEST_"],
       ["Bearer abc123def456ghi", "Bearer "],
     ];
@@ -71,7 +71,7 @@ describe("redactObject", () => {
       amount: 15_000,
       customer: { email: "ada@example.com", phone: "+2348100000000", bvn: BVN },
       account: { accountNumber: ACCOUNT, bankCode: "058" },
-      secretKey: "sk_live_abc123def456",
+      secretKey: "sk_live_EXAMPLEdef456",
       authorization: "Bearer abc123def456ghi",
     };
     const out = redactObject(payload) as Record<string, any>;
@@ -88,13 +88,13 @@ describe("redactObject", () => {
     assert.equal(out.authorization, "[redacted]");
     assert.ok(!JSON.stringify(out).includes(BVN), "BVN leaked");
     assert.ok(!JSON.stringify(out).includes(ACCOUNT), "account number leaked");
-    assert.ok(!JSON.stringify(out).includes("sk_live_abc123def456"), "key leaked");
+    assert.ok(!JSON.stringify(out).includes("sk_live_EXAMPLEdef456"), "key leaked");
   });
 
   test("matches field names regardless of case or separators", () => {
     const out = redactObject({
-      secret_key: "sk_live_aaaaaaaaaaaa",
-      "SECRET-KEY": "sk_live_bbbbbbbbbbbb",
+      secret_key: "sk_live_EXAMPLEaaaaaa",
+      "SECRET-KEY": "sk_live_EXAMPLEbbbbbb",
       accountNumber: ACCOUNT,
       account_number: ACCOUNT,
     }) as Record<string, unknown>;
@@ -121,10 +121,10 @@ describe("redactObject", () => {
   });
 
   test("does not mutate the input, which the caller still intends to use", () => {
-    const original = { bvn: BVN, nested: { secretKey: "sk_live_abc123def456" } };
+    const original = { bvn: BVN, nested: { secretKey: "sk_live_EXAMPLEdef456" } };
     redactObject(original);
     assert.equal(original.bvn, BVN);
-    assert.equal(original.nested.secretKey, "sk_live_abc123def456");
+    assert.equal(original.nested.secretKey, "sk_live_EXAMPLEdef456");
   });
 });
 
@@ -141,9 +141,9 @@ describe("masking helpers", () => {
 
 describe("key environment detection", () => {
   test("recognises live keys", () => {
-    assert.ok(looksLikeLiveKey("sk_live_abc123"));
-    assert.ok(looksLikeLiveKey("FLWSECK-abc123"));
-    assert.ok(looksLikeLiveKey("MK_PROD_abc123"));
+    assert.ok(looksLikeLiveKey("sk_live_EXAMPLE123"));
+    assert.ok(looksLikeLiveKey("FLWSECK-EXAMPLE123"));
+    assert.ok(looksLikeLiveKey("MK_PROD_EXAMPLE123"));
     assert.ok(!looksLikeLiveKey("sk_test_abc123"));
     assert.ok(!looksLikeLiveKey("FLWSECK_TEST-abc123"));
   });
@@ -153,17 +153,17 @@ describe("key environment detection", () => {
     assert.ok(looksLikeTestKey("sandbox_sk_abc123"));
     assert.ok(looksLikeTestKey("FLWSECK_TEST-abc123"));
     assert.ok(looksLikeTestKey("MK_TEST_GC3B8XG2XX"));
-    assert.ok(!looksLikeTestKey("sk_live_abc123"));
+    assert.ok(!looksLikeTestKey("sk_live_EXAMPLE123"));
   });
 
   test("a key is never both, which is what the environment check relies on", () => {
     for (const key of [
       "sk_test_abc123",
-      "sk_live_abc123",
+      "sk_live_EXAMPLE123",
       "FLWSECK_TEST-abc123",
-      "FLWSECK-abc123",
+      "FLWSECK-EXAMPLE123",
       "MK_TEST_abc",
-      "MK_PROD_abc",
+      "MK_PROD_EXAMPLE",
       "sandbox_sk_abc123",
     ]) {
       assert.ok(
