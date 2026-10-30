@@ -73,6 +73,12 @@ Nothing is published to npm or PyPI yet. See [PLAN.md](PLAN.md) for the mileston
   accordingly, and the observed responses are recorded as fixtures. The Python adapter made its first
   real HTTP calls over httpx in the process.
 
+- Settled on a funded sandbox balance: **Paystack transfer OTP is enabled by default**, so every
+  payout halts for a human until "Confirm transfers before sending" is unchecked on the dashboard.
+  The adapter reports this as `pending` with `awaitingOtp` rather than success. The sandbox harness
+  now distinguishes a probe _blocked by account configuration_ from a genuine failure, so the weekly
+  drift workflow will not cry wolf over features Paystack has not enabled.
+
 ### Changed
 
 - **Bank codes are no longer normalised onto a single CBN/NIBSS code.** Measuring the real data

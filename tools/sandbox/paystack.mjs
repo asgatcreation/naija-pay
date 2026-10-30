@@ -74,18 +74,36 @@ const run = Date.now().toString(36);
 const observations = [];
 let failures = 0;
 
-async function observe(question, fn) {
+/**
+ * Runs one probe.
+ *
+ * `expected` names an error class that is an acceptable outcome, with a reason. Some
+ * probes cannot succeed on an account that has not been granted a feature, and that is
+ * a fact about the account rather than a defect in the adapter — so it is recorded as
+ * "blocked" and does not fail the run. Without this, the weekly drift workflow would
+ * cry wolf every time.
+ */
+async function observe(question, fn, expected) {
   process.stdout.write(`  ${question} ... `);
   try {
     const note = await fn();
     console.log("ok");
     observations.push({ question, outcome: "ok", note });
   } catch (error) {
+    const name = error && typeof error === "object" && "name" in error ? error.name : "Error";
+    const detail = `${name}: ${error?.message ?? String(error)}`;
+
+    if (expected && name === expected.error) {
+      console.log(`blocked (expected) — ${expected.because}`);
+      observations.push({
+        question,
+        outcome: "blocked",
+        note: `${expected.because} Provider said: ${detail}`,
+      });
+      return;
+    }
+
     failures++;
-    const detail =
-      error && typeof error === "object" && "name" in error
-        ? `${error.name}: ${error.message}`
-        : String(error);
     console.log(`FAILED — ${detail}`);
     observations.push({ question, outcome: "failed", note: detail });
   }
@@ -224,17 +242,26 @@ await observe("QUESTION 2: is transfer OTP enabled by default?", async () => {
   );
 });
 
-await observe("a dedicated virtual account can be assigned with a BVN", async () => {
-  const result = await provider.createStaticVirtualAccount({
-    email: `ada+${run}@example.com`,
-    firstName: "Ada",
-    lastName: "Obi",
-    phone: "+2348100000000",
-    preferredBank: "test-bank",
-    bvn: "22222222222",
-  });
-  return `status=${result.status}, message="${result.message}"`;
-});
+await observe(
+  "a dedicated virtual account can be assigned with a BVN",
+  async () => {
+    const result = await provider.createStaticVirtualAccount({
+      email: `ada+${run}@example.com`,
+      firstName: "Ada",
+      lastName: "Obi",
+      phone: "+2348100000000",
+      preferredBank: "test-bank",
+      bvn: "22222222222",
+    });
+    return `status=${result.status}, message="${result.message}"`;
+  },
+  {
+    error: "ConfigurationError",
+    because:
+      "Dedicated Virtual Accounts must be enabled per business by Paystack, so this " +
+      "cannot be exercised until they switch it on. The adapter classified it correctly.",
+  },
+);
 
 // --- write up what we saw ---------------------------------------------------
 
@@ -257,7 +284,9 @@ const lines = [
       `| ${o.question.replace(/\|/g, "\\|")} | ${o.outcome} | ${String(o.note).replace(/\|/g, "\\|")} |`,
   ),
   "",
-  `${observations.length - failures} of ${observations.length} observations succeeded.`,
+  `${observations.filter((o) => o.outcome === "ok").length} of ${observations.length} probes ` +
+    `succeeded, ${observations.filter((o) => o.outcome === "blocked").length} were blocked by ` +
+    `account configuration, ${failures} failed.`,
   "",
 ];
 
@@ -265,7 +294,9 @@ const target = path.join(ROOT, "fixtures", "providers", "paystack", "SANDBOX.md"
 writeFileSync(target, `${lines.join("\n")}\n`, "utf8");
 
 console.log(`\nwrote ${path.relative(ROOT, target)}`);
-console.log(`${observations.length - failures}/${observations.length} observations succeeded`);
+const ok = observations.filter((o) => o.outcome === "ok").length;
+const blocked = observations.filter((o) => o.outcome === "blocked").length;
+console.log(`${ok} succeeded, ${blocked} blocked by account configuration, ${failures} failed`);
 
 if (failures > 0) {
   console.error("\nSome observations failed. That is information, not necessarily a defect —");

@@ -73,15 +73,29 @@ probes succeeded, and the three that did not were each informative rather than d
 - **Basis points convert exactly as intended:** 9000 bps was accepted and came back as `share: 90`.
 - An unknown reference returns `Transaction reference not found.`, which maps to `NotFoundError`.
 - The Nigerian bank list returned **293** entries, with the keys we recorded.
+- Paystack's test bank code `001` resolves successfully but matches **no** institution in
+  naija-data, because it is a Paystack test-only code rather than a real CBN or NIP code. The
+  matcher correctly returns no match instead of guessing. Worth knowing so an empty `institution`
+  in a test run is not mistaken for a matching bug.
 
-**Two things the sandbox could not settle:**
+**Settled on a funded test balance:**
 
-- **Whether transfer OTP is enabled by default is still unknown.** The probe was blocked earlier, by
-  a zero test balance. It needs a funded test balance to answer, so the adapter's OTP handling
-  remains verified only against the documented response shape. This is the one real gap in Paystack's
-  sandbox verification.
+- **Transfer OTP is enabled by default.** With NGN 200,000 of test balance, a transfer returned
+  `status: "otp"` — which the adapter reported as `pending` with `awaitingOtp: true`, exactly as
+  designed, rather than as success. **This matters for anyone building payouts on Paystack: out of
+  the box every payout halts, waiting for a human to enter a code sent to the business phone.** To
+  automate payouts you must uncheck **Confirm transfers before sending** on the dashboard's Transfer
+  approvals page, which is the only place that setting lives — there is no API for it.
+- A caveat on how much that proves: Paystack documents that _"test transfers always return success,
+  because there is no processing involved"_. So the sandbox can show whether the OTP gate intercepts,
+  but it says nothing about real transfer processing. A green sandboxed payout is not evidence that
+  live payouts work.
+
+**One thing the sandbox cannot settle:**
 - **Dedicated Virtual Accounts could not be exercised at all:** a fresh integration returns
-  `Dedicated NUBAN is not available for your business`. See below — this is a finding in itself.
+  `Dedicated NUBAN is not available for your business`. See below — this is a finding in itself. The
+  probe records it as _blocked by account configuration_ rather than failed, because the adapter
+  classified it correctly; only Paystack enabling the feature can unblock it.
 
 **Three things the sandbox taught us that the documentation does not say:**
 

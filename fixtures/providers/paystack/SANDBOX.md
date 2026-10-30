@@ -11,16 +11,16 @@ the sandbox disagree, the sandbox wins and PROVIDERS.md records both.
 | Observation | Outcome | What happened |
 | --- | --- | --- |
 | the bank list is reachable and shaped as recorded | ok | 293 banks; first entry keys: active, available_for_direct_debit, code, country, createdAt, currency, gateway, id, is_deleted, longcode, name, pay_with_bank, slug, supports_transfer, type, updatedAt |
-| account resolution returns a name | failed | RateLimitedError: Test mode daily limit of 3 live bank resolves exceeded. Use test bank codes 001 or upgrade to live mode. |
-| the balance endpoint works | ok | NGN 0 |
+| account resolution returns a name | ok | a name of 23 characters was returned; institution match none |
+| the balance endpoint works | ok | NGN 20000000 |
 | verifying an unknown reference raises NotFoundError | ok | NotFoundError: Transaction reference not found. |
-| a checkout can be initialized and the amount is accepted as a string | ok | checkout URL issued, reference naijapay-mvv6ar2l-checkout |
-| QUESTION 1: does /subaccount accept bank_code, settlement_bank, or both? | ok | accepted with BOTH fields sent; code ACCT_q7lwzlyshne7q3p, settlement bank reported as "Access Bank", verified=false |
+| a checkout can be initialized and the amount is accepted as a string | ok | checkout URL issued, reference naijapay-mvv75dsb-checkout |
+| QUESTION 1: does /subaccount accept bank_code, settlement_bank, or both? | ok | accepted with BOTH fields sent; code ACCT_epjubpryqqpmhk9, settlement bank reported as "Access Bank", verified=false |
 | QUESTION 1a: is bank_code alone accepted by /subaccount? | ok | HTTP 201, status=true, message="Subaccount created" |
 | QUESTION 1b: is settlement_bank alone accepted by /subaccount? | ok | HTTP 201, status=true, message="Subaccount created" |
-| a transaction split can be created from basis points | ok | split SPL_xX8wskzTBK created; 9000 bps came back as share=90 |
-| QUESTION 2: is transfer OTP enabled by default? | failed | ValidationError: Your balance is not enough to fulfil this request |
-| a dedicated virtual account can be assigned with a BVN | failed | AuthenticationError: Dedicated NUBAN is not available for your business |
+| a transaction split can be created from basis points | ok | split SPL_utP3caoeIu created; 9000 bps came back as share=90 |
+| QUESTION 2: is transfer OTP enabled by default? | ok | status=pending, awaitingOtp=true, providerReference=TRF_lqa0gpjor6igljzk |
+| a dedicated virtual account can be assigned with a BVN | blocked | Dedicated Virtual Accounts must be enabled per business by Paystack, so this cannot be exercised until they switch it on. The adapter classified it correctly. Provider said: ConfigurationError: paystack: Dedicated NUBAN is not available for your business — this feature exists but is not enabled on your integration. Ask Paystack support to enable it for your business; the API key is fine. |
 
-8 of 11 observations succeeded.
+10 of 11 probes succeeded, 1 were blocked by account configuration, 0 failed.
 
