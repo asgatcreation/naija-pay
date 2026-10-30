@@ -28,6 +28,10 @@ const { redact, redactObject, looksLikeLiveKey, looksLikeTestKey } = await load(
   "redact.ts",
 );
 const { errorClassForStatus } = await load("core", "errors.ts");
+const { SCHEMES, computeSignature, strengthOf, verifySignature } = await load(
+  "core",
+  "signatures.ts",
+);
 
 const cases = JSON.parse(
   readFileSync(path.join(ROOT, "fixtures", "parity", "core.json"), "utf8"),
@@ -82,6 +86,62 @@ out.keyDetection = cases.keyDetection.map((k) => ({
   test: looksLikeTestKey(k),
 }));
 out.errorForStatus = cases.errorForStatus.map((s) => errorClassForStatus(s).name);
+
+/** Async variant of `attempt`, for the WebCrypto-backed signature functions. */
+async function attemptAsync(fn) {
+  try {
+    return { ok: true, value: await fn() };
+  } catch (error) {
+    return { ok: false, error: error.name, message: error.message };
+  }
+}
+
+const encoder = new TextEncoder();
+
+out.signatures = [];
+for (const c of cases.signatures) {
+  const scheme = SCHEMES[c.scheme];
+  const body = encoder.encode(c.body);
+
+  const computed = await attemptAsync(() => computeSignature(scheme, body, c.secret));
+
+  // Verify with whatever was computed. For undocumented schemes nothing can be
+  // computed, so a fixed placeholder is used and both languages must agree that the
+  // result is unverified.
+  const signature = computed.ok ? computed.value : "cannot-be-computed";
+  const verification = await verifySignature({
+    scheme,
+    body,
+    headers: { [scheme.header]: signature },
+    secret: c.secret,
+  });
+
+  // Tampering must be detected identically in both languages.
+  const tamperedVerification = await verifySignature({
+    scheme,
+    body: encoder.encode(`${c.body} `),
+    headers: { [scheme.header]: signature },
+    secret: c.secret,
+  });
+
+  out.signatures.push({
+    scheme: c.scheme,
+    computed,
+    verified: verification.verified,
+    strength: verification.strength,
+    reason: verification.reason ?? null,
+    tamperedVerified: tamperedVerification.verified,
+    tamperedStrength: tamperedVerification.strength,
+  });
+}
+
+out.signatureStrengths = cases.signatureStrengths.map((name) => ({
+  scheme: name,
+  declared: SCHEMES[name].strength,
+  derived: strengthOf(SCHEMES[name]),
+  header: SCHEMES[name].header,
+  algorithm: SCHEMES[name].algorithm ?? null,
+}));
 
 /** Sort object keys recursively so key order can never cause a false difference. */
 function canonical(value) {

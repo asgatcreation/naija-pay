@@ -67,23 +67,39 @@ export const VERSION = "0.0.0";
  */
 export type Environment = "test" | "live";
 
-/**
- * How strongly a received webhook was actually verified.
- *
- * Providers differ enormously here — see the webhook table in PROVIDERS.md. Rather
- * than pretending they are equivalent, every parsed event reports which of these it
- * earned, so an application can refuse to act on a weak one.
- *
- * - `full-body`      HMAC over the whole raw body (Paystack, Flutterwave v4)
- * - `partial-body`   HMAC over only part of the payload (Korapay signs `data` only,
- *                    leaving the event name unauthenticated)
- * - `shared-secret`  a secret was presented but nothing binds it to the payload, so
- *                    there is no integrity and no replay protection (Flutterwave v3)
- * - `unverified`     the provider's scheme is undocumented, or verification was
- *                    explicitly skipped (Squad and Monnify, as of 2026-10-25)
- */
-export type SignatureStrength =
-  | "full-body"
-  | "partial-body"
-  | "shared-secret"
-  | "unverified";
+export {
+  SCHEMES,
+  type HashAlgorithm,
+  type SignatureKind,
+  type SignatureScheme,
+  type SignatureStrength,
+  type VerificationResult,
+  computeSignature,
+  constantTimeEqual,
+  strengthOf,
+  verifySignature,
+} from "./core/signatures.ts";
+
+export {
+  type Channel,
+  type Operation,
+  type OperationSupport,
+  type ProviderCapabilities,
+  assertSupported,
+  operationsNotSandboxVerified,
+  operationsRequiringApproval,
+  requiredKycFor,
+  supportFor,
+  supports,
+} from "./core/capabilities.ts";
+
+export {
+  DEFAULT_RETRY_POLICY,
+  HttpClient,
+  type HttpClientOptions,
+  type HttpResponse,
+  type LogEvent,
+  type RequestOptions,
+  type RequestSafety,
+  type RetryPolicy,
+} from "./core/http.ts";

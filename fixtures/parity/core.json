@@ -132,5 +132,73 @@
     "pk_test_abc123",
     "not-a-key"
   ],
-  "errorForStatus": [400, 401, 403, 404, 409, 422, 429, 500, 502, 503, 418]
+  "errorForStatus": [400, 401, 403, 404, 409, 422, 429, 500, 502, 503, 418],
+  "$signatureComment": "The TypeScript side computes these with WebCrypto and the Python side with hashlib, so parity here is a genuine cross-implementation check of every documented scheme.",
+  "signatures": [
+    {
+      "scheme": "paystack",
+      "body": "{\"event\":\"charge.success\",\"data\":{\"reference\":\"order_01HQ\",\"amount\":15000}}",
+      "secret": "sk_test_EXAMPLE123"
+    },
+    {
+      "scheme": "fincra",
+      "body": "{\"event\":\"charge.success\",\"data\":{\"reference\":\"order_01HQ\",\"amount\":15000}}",
+      "secret": "sk_test_EXAMPLE123"
+    },
+    {
+      "scheme": "flutterwaveV4",
+      "body": "{\"event\":\"charge.success\",\"data\":{\"reference\":\"order_01HQ\",\"amount\":15000}}",
+      "secret": "sk_test_EXAMPLE123"
+    },
+    {
+      "scheme": "flutterwaveV3",
+      "body": "{\"event\":\"charge.success\",\"data\":{\"reference\":\"order_01HQ\",\"amount\":15000}}",
+      "secret": "sk_test_EXAMPLE123"
+    },
+    {
+      "scheme": "korapay",
+      "body": "{\"event\":\"charge.success\",\"data\":{\"reference\":\"order_01HQ\",\"amount\":15000}}",
+      "secret": "sk_test_EXAMPLE123"
+    },
+    {
+      "scheme": "anchor",
+      "body": "{\"event\":\"charge.success\",\"data\":{\"reference\":\"order_01HQ\",\"amount\":15000}}",
+      "secret": "sk_test_EXAMPLE123"
+    },
+    {
+      "scheme": "squad",
+      "body": "{\"Event\":\"charge_successful\",\"TransactionRef\":\"SQ123\"}",
+      "secret": "sandbox_sk_EXAMPLE123"
+    },
+    {
+      "scheme": "monnify",
+      "body": "{\"eventType\":\"SUCCESSFUL_TRANSACTION\"}",
+      "secret": "MK_TEST_EXAMPLE123"
+    },
+    {
+      "scheme": "korapay",
+      "body": "{\"event\":\"charge.success\"}",
+      "secret": "sk_test_EXAMPLE123"
+    },
+    {
+      "scheme": "korapay",
+      "body": "<html>not json</html>",
+      "secret": "sk_test_EXAMPLE123"
+    },
+    {
+      "scheme": "paystack",
+      "body": "{\"event\":\"charge.success\",\"data\":{\"amount\":1}}",
+      "secret": "sk_test_EXAMPLEother"
+    }
+  ],
+  "signatureStrengths": [
+    "paystack",
+    "fincra",
+    "flutterwaveV3",
+    "flutterwaveV4",
+    "korapay",
+    "anchor",
+    "squad",
+    "monnify"
+  ]
 }

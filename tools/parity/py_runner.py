@@ -18,6 +18,13 @@ from typing import Any, Callable
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "packages" / "python" / "src"))
 
+from naija_pay.core.signatures import (  # noqa: E402
+    SCHEMES,
+    compute_signature,
+    strength_of,
+    verify_signature,
+)
+
 from naija_pay.core import (  # noqa: E402
     Share,
     error_class_for_status,
@@ -110,6 +117,57 @@ out["keyDetection"] = [
     for k in CASES["keyDetection"]
 ]
 out["errorForStatus"] = [error_class_for_status(s).__name__ for s in CASES["errorForStatus"]]
+
+signature_results: list[dict[str, Any]] = []
+for case in CASES["signatures"]:
+    scheme = SCHEMES[case["scheme"]]
+    body = case["body"].encode("utf-8")
+
+    computed = attempt(lambda s=scheme, b=body, k=case["secret"]: compute_signature(s, b, k))  # type: ignore[misc]
+
+    # Verify with whatever was computed. For undocumented schemes nothing can be
+    # computed, so a fixed placeholder is used and both languages must agree that the
+    # result is unverified.
+    signature = computed["value"] if computed["ok"] else "cannot-be-computed"
+    verification = verify_signature(
+        scheme=scheme,
+        body=body,
+        headers={scheme.header: signature},
+        secret=case["secret"],
+    )
+
+    # Tampering must be detected identically in both languages.
+    tampered = verify_signature(
+        scheme=scheme,
+        body=(case["body"] + " ").encode("utf-8"),
+        headers={scheme.header: signature},
+        secret=case["secret"],
+    )
+
+    signature_results.append(
+        {
+            "scheme": case["scheme"],
+            "computed": computed,
+            "verified": verification.verified,
+            "strength": verification.strength,
+            "reason": verification.reason,
+            "tamperedVerified": tampered.verified,
+            "tamperedStrength": tampered.strength,
+        }
+    )
+
+out["signatures"] = signature_results
+
+out["signatureStrengths"] = [
+    {
+        "scheme": name,
+        "declared": SCHEMES[name].strength,
+        "derived": strength_of(SCHEMES[name]),
+        "header": SCHEMES[name].header,
+        "algorithm": SCHEMES[name].algorithm,
+    }
+    for name in CASES["signatureStrengths"]
+]
 
 
 def canonical(value: Any) -> Any:
