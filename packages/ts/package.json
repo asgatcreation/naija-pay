@@ -45,6 +45,11 @@
       "types": "./dist/providers/mock/index.d.ts",
       "import": "./dist/providers/mock/index.js",
       "require": "./dist/providers/mock/index.cjs"
+    },
+    "./paystack": {
+      "types": "./dist/providers/paystack/index.d.ts",
+      "import": "./dist/providers/paystack/index.js",
+      "require": "./dist/providers/paystack/index.cjs"
     }
   },
   "files": [

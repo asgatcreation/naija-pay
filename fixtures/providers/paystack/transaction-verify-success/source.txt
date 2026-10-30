@@ -1,0 +1,4 @@
+https://paystack.com/docs/api/transaction/ - Verify Transaction
+Verified: 2026-10-30
+Recorded from Paystack's own documented sample response. Identifiers replaced
+with this repository's standard fake values.

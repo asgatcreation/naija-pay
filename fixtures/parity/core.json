@@ -597,5 +597,73 @@
       "duplicate": true,
       "rules": null
     }
+  ],
+  "$paystackComment": "Both languages normalise the same recorded Paystack fixture and must produce identical output. This is the check that keeps the two adapters honest.",
+  "paystackNormalise": [
+    {
+      "fixture": "transaction-verify-success",
+      "shape": "transaction"
+    },
+    {
+      "fixture": "transaction-verify-pending",
+      "shape": "transaction"
+    },
+    {
+      "fixture": "dedicated-account-get",
+      "shape": "virtual_account"
+    },
+    {
+      "fixture": "transfer-create",
+      "shape": "payout"
+    },
+    {
+      "fixture": "transfer-create-otp",
+      "shape": "payout"
+    },
+    {
+      "fixture": "refund-create",
+      "shape": "refund"
+    },
+    {
+      "fixture": "subaccount-create",
+      "shape": "split_account"
+    },
+    {
+      "fixture": "split-create",
+      "shape": "split"
+    }
+  ],
+  "paystackStatuses": [
+    "success",
+    "failed",
+    "abandoned",
+    "reversed",
+    "pending",
+    "ongoing",
+    "processing",
+    "queued",
+    "something-new",
+    ""
+  ],
+  "paystackTransferStatuses": [
+    "success",
+    "failed",
+    "reversed",
+    "pending",
+    "otp",
+    "abandoned",
+    "weird"
+  ],
+  "paystackChannels": [
+    "card",
+    "bank",
+    "bank_transfer",
+    "ussd",
+    "qr",
+    "mobile_money",
+    "apple_pay",
+    "eft",
+    "capitec_pay",
+    "payattitude"
   ]
 }

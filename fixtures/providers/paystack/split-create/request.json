@@ -1,0 +1,16 @@
+{
+  "method": "POST",
+  "path": "/split",
+  "body": {
+    "name": "marketplace",
+    "type": "percentage",
+    "currency": "NGN",
+    "subaccounts": [
+      {
+        "subaccount": "ACCT_6uujpqtzmnufzkw",
+        "share": 90.0
+      }
+    ],
+    "bearer_type": "all-proportional"
+  }
+}

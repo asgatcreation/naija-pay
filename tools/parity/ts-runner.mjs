@@ -217,6 +217,11 @@ out.inflowDecisions = cases.inflowDecisions.map((c) => {
   };
 });
 
+const { paystackParity } = await import(
+  pathToFileURL(path.join(ROOT, "tools", "parity", "paystack-ts.mjs")).href
+);
+Object.assign(out, await paystackParity(ROOT, load, cases));
+
 /** Sort object keys recursively so key order can never cause a false difference. */
 function canonical(value) {
   if (Array.isArray(value)) return value.map(canonical);

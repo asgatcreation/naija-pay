@@ -1,0 +1,18 @@
+{
+  "status": true,
+  "message": "Transfer recipient created successfully",
+  "data": {
+    "active": true,
+    "currency": "NGN",
+    "id": 20317609,
+    "name": "ADA OBI",
+    "recipient_code": "RCP_m7ljkv8leesep7p",
+    "type": "nuban",
+    "details": {
+      "account_number": "0123456789",
+      "account_name": "ADA OBI",
+      "bank_code": "044",
+      "bank_name": "Access Bank"
+    }
+  }
+}

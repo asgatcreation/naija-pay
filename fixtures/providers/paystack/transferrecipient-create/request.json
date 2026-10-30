@@ -1,0 +1,11 @@
+{
+  "method": "POST",
+  "path": "/transferrecipient",
+  "body": {
+    "type": "nuban",
+    "name": "ADA OBI",
+    "account_number": "0123456789",
+    "bank_code": "044",
+    "currency": "NGN"
+  }
+}

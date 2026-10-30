@@ -1,0 +1,9 @@
+{
+  "method": "POST",
+  "path": "/transaction/initialize",
+  "body": {
+    "email": "ada@example.com",
+    "amount": "500000",
+    "reference": "order_01HQ"
+  }
+}

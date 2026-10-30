@@ -1,0 +1,7 @@
+{
+  "method": "POST",
+  "path": "/refund",
+  "body": {
+    "transaction": "order_01HQ"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "method": "POST",
+  "path": "/transfer",
+  "body": {
+    "source": "balance",
+    "amount": 2500000,
+    "currency": "NGN",
+    "recipient": "RCP_m7ljkv8leesep7p",
+    "reference": "payout-01hq-abcdefgh",
+    "reason": "Vendor settlement"
+  }
+}

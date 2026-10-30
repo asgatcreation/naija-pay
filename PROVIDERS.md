@@ -28,7 +28,8 @@ sandbox verified ships with a `notYetSandboxVerified` flag and a visible note in
 | | |
 | --- | --- |
 | Docs | <https://paystack.com/docs/api/> |
-| Verified | 2026-10-25 — **Docs verified** |
+| Verified | 2026-10-25, extended 2026-10-30 — **Docs verified**, adapter implemented, **not yet sandbox-verified** |
+| Adapter | Implemented in both languages (milestone 4). Collections, verify, list, refunds, dedicated virtual accounts, subaccounts, transaction splits, payouts, account resolution, balance, webhooks. Recurring billing and direct debit land in milestone 7; `wallets.*` is absent permanently, because Paystack has no product that opens a deposit account holding a balance. |
 | API version | Unversioned REST (no version in path or header) |
 | Base URL | `https://api.paystack.co` — **same host for test and live**; the key decides the environment |
 | Auth | `Authorization: Bearer sk_test_... / sk_live_...` |
@@ -63,10 +64,28 @@ and DVA assignment success/failure events. A Webhook Events API can list, filter
 1. The signature is over the **raw bytes**. Any framework that re-serialises the JSON before you hash
    it will produce mismatches. Our handlers always capture the raw body.
 2. The Create Subaccount reference lists `bank_code` as the field name, but the cURL sample on the
-   same page sends `settlement_bank`. We will confirm which the API actually accepts in milestone 4,
-   and accept both on our side.
+   same page sends `settlement_bank`. The adapter sends **both**, which costs nothing and tolerates
+   either; which one the API actually requires will be settled by the sandbox run.
 3. One host for both environments means a live key in a staging deploy moves real money with no URL
-   change to catch it. This is the main argument for our loud live-key warning.
+   change to catch it. This is the main argument for our loud live-key warning, and the adapter
+   refuses to construct when a `sk_live_` key is supplied with `environment: "test"`.
+4. **Transfer references are strictly formatted**, and the constraint is easy to miss: 16 to 50
+   characters, and only lowercase letters, digits, dash and underscore. A reference that works
+   everywhere else in the API is rejected here. The adapter validates locally and explains.
+5. **A transfer can return HTTP 200 with status `otp`.** If OTP is enabled on the integration the
+   payout has *not* happened — it waits for a human to enter a code sent to the business phone.
+   Reading that as success would be a serious bug, so the adapter reports `pending` with
+   `awaitingOtp` set.
+6. `requested_amount` and `amount` are both returned on a verification and are **not the same
+   thing**: the first is what was asked for, the second what actually arrived. Conflating them hides
+   over- and under-payments, so the adapter keeps them apart as `amount` and `amountPaid`.
+7. The transfer response's `recipient` field is a **numeric recipient id**, not the `RCP_` code. Our
+   cross-language parity check caught the two implementations disagreeing about it, which is why it
+   is named `recipientId` rather than `recipientCode`.
+8. The `assign` endpoint returns only an acknowledgement — the account number arrives later by
+   webhook, and identification is reported asynchronously through `customeridentification.*`. The
+   adapter therefore returns a pending record and reports `kycStatus: "pending"`, rather than
+   inventing an account number a caller might act on.
 
 ### Flutterwave
 

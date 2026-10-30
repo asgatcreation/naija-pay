@@ -277,6 +277,12 @@ for case in CASES["inflowDecisions"]:
 out["inflowDecisions"] = inflow_decisions
 
 
+sys.path.insert(0, str(ROOT / "tools" / "parity"))
+from paystack_py import paystack_parity  # noqa: E402
+
+out.update(paystack_parity(ROOT, CASES))
+
+
 def canonical(value: Any) -> Any:
     """Sort mapping keys recursively so key order can never cause a false difference."""
     if isinstance(value, dict):

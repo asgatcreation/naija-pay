@@ -1,0 +1,34 @@
+{
+  "status": true,
+  "message": "Verification successful",
+  "data": {
+    "id": 4099260516,
+    "domain": "test",
+    "status": "success",
+    "reference": "order_01HQ",
+    "amount": 40333,
+    "gateway_response": "Successful",
+    "paid_at": "2024-08-22T09:15:02.000Z",
+    "created_at": "2024-08-22T09:14:24.000Z",
+    "channel": "card",
+    "currency": "NGN",
+    "fees": 10283,
+    "requested_amount": 30050,
+    "authorization": {
+      "authorization_code": "AUTH_uh8bcl3zbn",
+      "last4": "4081",
+      "brand": "visa",
+      "bank": "TEST BANK",
+      "reusable": true,
+      "signature": "SIG_yEXu7dLBeqG0kU7g95Ke"
+    },
+    "customer": {
+      "id": 181873746,
+      "first_name": "Ada",
+      "last_name": "Obi",
+      "email": "ada@example.com",
+      "customer_code": "CUS_1rkzaqsv4rrhqo6",
+      "phone": null
+    }
+  }
+}

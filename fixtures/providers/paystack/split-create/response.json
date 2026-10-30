@@ -1,0 +1,26 @@
+{
+  "status": true,
+  "message": "Split created",
+  "data": {
+    "id": 2703655,
+    "name": "marketplace",
+    "type": "percentage",
+    "currency": "NGN",
+    "split_code": "SPL_RcScyW5jp2",
+    "active": true,
+    "bearer_type": "all-proportional",
+    "subaccounts": [
+      {
+        "subaccount": {
+          "id": 1151727,
+          "subaccount_code": "ACCT_6uujpqtzmnufzkw",
+          "business_name": "Ada Fabrics",
+          "settlement_bank": "Access Bank",
+          "account_number": "0123456789"
+        },
+        "share": 90
+      }
+    ],
+    "total_subaccounts": 1
+  }
+}

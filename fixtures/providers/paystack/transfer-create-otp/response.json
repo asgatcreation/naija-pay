@@ -1,0 +1,12 @@
+{
+  "status": true,
+  "message": "Transfer requires OTP to continue",
+  "data": {
+    "amount": 2500000,
+    "currency": "NGN",
+    "reference": "payout-01hq-otpcase1",
+    "status": "otp",
+    "transfer_code": "TRF_otp123456789",
+    "id": 860703115
+  }
+}

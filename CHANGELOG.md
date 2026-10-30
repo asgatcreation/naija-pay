@@ -55,6 +55,15 @@ Nothing is published to npm or PyPI yet. See [PLAN.md](PLAN.md) for the mileston
   edge case, replays events to exercise duplicate handling, and can emit a deliberately invalid
   signature. Needs no keys and reaches no network.
 
+- **Paystack adapter** in both languages, from 13 fixtures recorded out of Paystack's own documented
+  samples: checkout, verification, transaction listing, refunds, dedicated virtual accounts,
+  subaccounts, transaction splits, payouts with recipient creation, account resolution, balance and
+  webhook verification. It refuses to construct when a live key is paired with
+  `environment: "test"`, validates Paystack's strict transfer-reference format locally, reports an
+  OTP-gated transfer as pending rather than successful, and keeps `requested_amount` and `amount`
+  apart as `amount` and `amountPaid`. `wallets.*` is absent deliberately: Paystack has no product
+  that opens a deposit account holding a balance.
+
 ### Changed
 
 - **Bank codes are no longer normalised onto a single CBN/NIBSS code.** Measuring the real data

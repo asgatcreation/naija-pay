@@ -1,0 +1,4 @@
+{
+  "method": "GET",
+  "path": "/transaction/verify/order_pending"
+}

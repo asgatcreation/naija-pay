@@ -1,0 +1,16 @@
+{
+  "status": true,
+  "message": "Transfer has been queued",
+  "data": {
+    "amount": 2500000,
+    "currency": "NGN",
+    "reference": "payout-01hq-abcdefgh",
+    "source": "balance",
+    "reason": "Vendor settlement",
+    "status": "success",
+    "transfer_code": "TRF_v5tip3zx8nna9o78",
+    "id": 860703114,
+    "recipient": 56824902,
+    "createdAt": "2025-08-04T10:32:40.000Z"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "method": "POST",
+  "path": "/subaccount",
+  "body": {
+    "business_name": "Ada Fabrics",
+    "bank_code": "044",
+    "settlement_bank": "044",
+    "account_number": "0123456789",
+    "percentage_charge": 2.5
+  }
+}

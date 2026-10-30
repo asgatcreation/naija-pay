@@ -1,0 +1,13 @@
+{
+  "method": "POST",
+  "path": "/dedicated_account/assign",
+  "body": {
+    "email": "ada@example.com",
+    "first_name": "Ada",
+    "last_name": "Obi",
+    "phone": "+2348100000000",
+    "preferred_bank": "wema-bank",
+    "country": "NG",
+    "bvn": "22222222222"
+  }
+}

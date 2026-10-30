@@ -1,0 +1,14 @@
+{
+  "method": "POST",
+  "path": "/transaction/initialize",
+  "body": {
+    "email": "ada@example.com",
+    "amount": "500000",
+    "currency": "NGN",
+    "reference": "order_01HQ",
+    "channels": [
+      "card",
+      "bank_transfer"
+    ]
+  }
+}

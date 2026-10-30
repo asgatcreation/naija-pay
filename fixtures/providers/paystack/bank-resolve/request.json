@@ -1,0 +1,8 @@
+{
+  "method": "GET",
+  "path": "/bank/resolve",
+  "query": {
+    "account_number": "0123456789",
+    "bank_code": "044"
+  }
+}
