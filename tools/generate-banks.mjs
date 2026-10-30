@@ -158,11 +158,22 @@ const out = {
   banks,
 };
 
-mkdirSync(path.dirname(OUT), { recursive: true });
-writeFileSync(OUT, `${JSON.stringify(out, null, 2)}\n`, "utf8");
+// The canonical copy lives at the repository root for review, and each package gets a
+// byte-identical copy so the published npm and PyPI artifacts carry the data without a
+// runtime dependency on naija-data. CI asserts the three stay identical.
+const COPIES = [
+  path.join(ROOT, "packages", "ts", "src", "data", "banks.json"),
+  path.join(ROOT, "packages", "python", "src", "naija_pay", "_data", "banks.json"),
+];
+
+const serialised = `${JSON.stringify(out, null, 2)}\n`;
+for (const target of [OUT, ...COPIES]) {
+  mkdirSync(path.dirname(target), { recursive: true });
+  writeFileSync(target, serialised, "utf8");
+}
 
 const kb = (JSON.stringify(out).length / 1024).toFixed(1);
-console.log(`wrote ${path.relative(ROOT, OUT)}`);
+console.log(`wrote ${path.relative(ROOT, OUT)} and ${COPIES.length} package copies`);
 console.log(`  data version      ${out.source.dataVersion}`);
 console.log(`  in source         ${out.counts.institutionsInSource}`);
 console.log(`  kept              ${out.counts.kept} (${out.counts.active} active, ${out.counts.merged} merged)`);

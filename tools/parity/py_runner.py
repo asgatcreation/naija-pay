@@ -18,6 +18,14 @@ from typing import Any, Callable
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "packages" / "python" / "src"))
 
+from naija_pay.core.banks import (  # noqa: E402
+    bank_data_source,
+    institutions,
+    match_institution,
+    merger_warning_for,
+    normalise_bank_name,
+    unverified_codes_for,
+)
 from naija_pay.core.signatures import (  # noqa: E402
     SCHEMES,
     compute_signature,
@@ -168,6 +176,34 @@ out["signatureStrengths"] = [
     }
     for name in CASES["signatureStrengths"]
 ]
+
+
+out["bankNames"] = [normalise_bank_name(n) for n in CASES["bankNames"]]
+
+bank_matches: list[dict[str, Any]] = []
+for probe in CASES["bankMatches"]:
+    found = match_institution(code=probe.get("code"), name=probe.get("name"))
+    if found is None:
+        bank_matches.append({"matched": False})
+        continue
+    warning = merger_warning_for(found.institution)
+    bank_matches.append(
+        {
+            "matched": True,
+            "id": found.institution.id,
+            "matchedBy": found.matched_by,
+            "name": found.institution.name,
+            "type": found.institution.type,
+            "status": found.institution.status,
+            "nipCode": found.institution.nip_code,
+            "cbnCode": found.institution.cbn_code,
+            "unverified": sorted(unverified_codes_for(found.institution)),
+            "mergerMessage": warning.message if warning else None,
+        }
+    )
+
+out["bankMatches"] = bank_matches
+out["bankDataVersion"] = [bank_data_source().data_version, len(institutions())]
 
 
 def canonical(value: Any) -> Any:

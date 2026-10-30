@@ -21,6 +21,7 @@
     "test:parity": "node tools/check-parity.mjs",
     "check": "npm run test && npm run test:python && npm run test:parity && npm run check:data",
     "build:banks": "node tools/generate-banks.mjs",
-    "check:data": "node tools/check-generated-data.mjs"
+    "check:data": "node tools/check-generated-data.mjs",
+    "report:banks": "node tools/report-banks.mjs"
   }
 }

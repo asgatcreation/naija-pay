@@ -28,6 +28,7 @@ const { redact, redactObject, looksLikeLiveKey, looksLikeTestKey } = await load(
   "redact.ts",
 );
 const { errorClassForStatus } = await load("core", "errors.ts");
+const banksModule = await load("core", "banks.ts");
 const { SCHEMES, computeSignature, strengthOf, verifySignature } = await load(
   "core",
   "signatures.ts",
@@ -142,6 +143,28 @@ out.signatureStrengths = cases.signatureStrengths.map((name) => ({
   header: SCHEMES[name].header,
   algorithm: SCHEMES[name].algorithm ?? null,
 }));
+
+out.bankNames = cases.bankNames.map((n) => banksModule.normaliseBankName(n));
+
+out.bankMatches = cases.bankMatches.map((probe) => {
+  const match = banksModule.matchInstitution(probe);
+  if (!match) return { matched: false };
+  const warning = banksModule.mergerWarningFor(match.institution);
+  return {
+    matched: true,
+    id: match.institution.id,
+    matchedBy: match.matchedBy,
+    name: match.institution.name,
+    type: match.institution.type,
+    status: match.institution.status,
+    nipCode: match.institution.nipCode ?? null,
+    cbnCode: match.institution.cbnCode ?? null,
+    unverified: [...banksModule.unverifiedCodesFor(match.institution)].sort(),
+    mergerMessage: warning?.message ?? null,
+  };
+});
+
+out.bankDataVersion = [banksModule.bankDataSource.dataVersion, banksModule.institutions.length];
 
 /** Sort object keys recursively so key order can never cause a false difference. */
 function canonical(value) {

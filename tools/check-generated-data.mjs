@@ -131,6 +131,28 @@ if (JSON.stringify(banks.map((b) => b.id)) !== JSON.stringify(sortedIds)) {
   fail("banks are not sorted by id, which makes every regeneration a noisy diff");
 }
 
+// --- package copies are byte-identical --------------------------------------
+// Each package ships its own copy so the published artifacts need no runtime
+// dependency on naija-data. If a copy drifts, one language would resolve banks
+// differently from the other, which the parity tests would not necessarily catch.
+const canonical = readFileSync(FILE, "utf8");
+for (const relative of [
+  "packages/ts/src/data/banks.json",
+  "packages/python/src/naija_pay/_data/banks.json",
+]) {
+  const target = path.join(ROOT, relative);
+  let copy;
+  try {
+    copy = readFileSync(target, "utf8");
+  } catch {
+    fail(`${relative} is missing; run \`npm run build:banks\``);
+    continue;
+  }
+  if (copy !== canonical) {
+    fail(`${relative} differs from data/banks.generated.json; run \`npm run build:banks\``);
+  }
+}
+
 if (failed) process.exit(1);
 
 console.log(

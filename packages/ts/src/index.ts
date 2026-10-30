@@ -103,3 +103,21 @@ export {
   type RequestSafety,
   type RetryPolicy,
 } from "./core/http.ts";
+
+export {
+  type BankDataSource,
+  type CoverageReport,
+  type Institution,
+  type InstitutionMatch,
+  type InstitutionType,
+  type MatchedBy,
+  type MergerWarning,
+  bankDataSource,
+  coverageFor,
+  institutionById,
+  institutions,
+  matchInstitution,
+  mergerWarningFor,
+  normaliseBankName,
+  unverifiedCodesFor,
+} from "./core/banks.ts";

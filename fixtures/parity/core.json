@@ -1,88 +1,235 @@
 {
   "$comment": "Shared parity cases. Both the TypeScript and Python runners execute these and must emit byte-identical canonical JSON. See fixtures/README.md.",
   "fromMajor": [
-    { "major": 150, "currency": "NGN" },
-    { "major": 150.75, "currency": "NGN" },
-    { "major": 1.15, "currency": "NGN" },
-    { "major": 0.07, "currency": "NGN" },
-    { "major": 0.01, "currency": "NGN" },
-    { "major": 0, "currency": "NGN" },
-    { "major": 99999.99, "currency": "NGN" },
-    { "major": 2.5, "currency": "USD" },
-    { "major": 100, "currency": "XOF" },
-    { "major": 1.005, "currency": "NGN" },
-    { "major": 100.5, "currency": "XOF" },
-    { "major": -1, "currency": "NGN" }
+    {
+      "major": 150,
+      "currency": "NGN"
+    },
+    {
+      "major": 150.75,
+      "currency": "NGN"
+    },
+    {
+      "major": 1.15,
+      "currency": "NGN"
+    },
+    {
+      "major": 0.07,
+      "currency": "NGN"
+    },
+    {
+      "major": 0.01,
+      "currency": "NGN"
+    },
+    {
+      "major": 0,
+      "currency": "NGN"
+    },
+    {
+      "major": 99999.99,
+      "currency": "NGN"
+    },
+    {
+      "major": 2.5,
+      "currency": "USD"
+    },
+    {
+      "major": 100,
+      "currency": "XOF"
+    },
+    {
+      "major": 1.005,
+      "currency": "NGN"
+    },
+    {
+      "major": 100.5,
+      "currency": "XOF"
+    },
+    {
+      "major": -1,
+      "currency": "NGN"
+    }
   ],
   "format": [
-    { "amount": 15075, "currency": "NGN" },
-    { "amount": 5, "currency": "NGN" },
-    { "amount": 0, "currency": "NGN" },
-    { "amount": 100000000, "currency": "NGN" },
-    { "amount": 250, "currency": "USD" }
+    {
+      "amount": 15075,
+      "currency": "NGN"
+    },
+    {
+      "amount": 5,
+      "currency": "NGN"
+    },
+    {
+      "amount": 0,
+      "currency": "NGN"
+    },
+    {
+      "amount": 100000000,
+      "currency": "NGN"
+    },
+    {
+      "amount": 250,
+      "currency": "USD"
+    }
   ],
   "splitByBasisPoints": [
     {
-      "total": { "amount": 10000, "currency": "NGN" },
-      "shares": [{ "account": "vendor", "share": 9000 }]
-    },
-    {
-      "total": { "amount": 10001, "currency": "NGN" },
+      "total": {
+        "amount": 10000,
+        "currency": "NGN"
+      },
       "shares": [
-        { "account": "a", "share": 3333 },
-        { "account": "b", "share": 3333 },
-        { "account": "c", "share": 3333 }
+        {
+          "account": "vendor",
+          "share": 9000
+        }
       ]
     },
     {
-      "total": { "amount": 1, "currency": "NGN" },
-      "shares": [{ "account": "a", "share": 5000 }]
-    },
-    {
-      "total": { "amount": 333, "currency": "NGN" },
+      "total": {
+        "amount": 10001,
+        "currency": "NGN"
+      },
       "shares": [
-        { "account": "a", "share": 1234 },
-        { "account": "b", "share": 4321 }
+        {
+          "account": "a",
+          "share": 3333
+        },
+        {
+          "account": "b",
+          "share": 3333
+        },
+        {
+          "account": "c",
+          "share": 3333
+        }
       ]
     },
     {
-      "total": { "amount": 99999999, "currency": "NGN" },
+      "total": {
+        "amount": 1,
+        "currency": "NGN"
+      },
       "shares": [
-        { "account": "a", "share": 1 },
-        { "account": "b", "share": 9999 }
+        {
+          "account": "a",
+          "share": 5000
+        }
       ]
     },
     {
-      "total": { "amount": 10000, "currency": "NGN" },
-      "shares": [{ "account": "a", "share": 10000 }]
-    },
-    {
-      "total": { "amount": 10000, "currency": "NGN" },
-      "shares": [{ "account": "a", "share": 0 }]
-    },
-    {
-      "total": { "amount": 10000, "currency": "NGN" },
+      "total": {
+        "amount": 333,
+        "currency": "NGN"
+      },
       "shares": [
-        { "account": "a", "share": 6000 },
-        { "account": "b", "share": 5000 }
+        {
+          "account": "a",
+          "share": 1234
+        },
+        {
+          "account": "b",
+          "share": 4321
+        }
+      ]
+    },
+    {
+      "total": {
+        "amount": 99999999,
+        "currency": "NGN"
+      },
+      "shares": [
+        {
+          "account": "a",
+          "share": 1
+        },
+        {
+          "account": "b",
+          "share": 9999
+        }
+      ]
+    },
+    {
+      "total": {
+        "amount": 10000,
+        "currency": "NGN"
+      },
+      "shares": [
+        {
+          "account": "a",
+          "share": 10000
+        }
+      ]
+    },
+    {
+      "total": {
+        "amount": 10000,
+        "currency": "NGN"
+      },
+      "shares": [
+        {
+          "account": "a",
+          "share": 0
+        }
+      ]
+    },
+    {
+      "total": {
+        "amount": 10000,
+        "currency": "NGN"
+      },
+      "shares": [
+        {
+          "account": "a",
+          "share": 6000
+        },
+        {
+          "account": "b",
+          "share": 5000
+        }
       ]
     }
   ],
   "splitByFlatAmounts": [
     {
-      "total": { "amount": 10000, "currency": "NGN" },
-      "shares": [{ "account": "a", "share": 2500 }]
-    },
-    {
-      "total": { "amount": 10000, "currency": "NGN" },
+      "total": {
+        "amount": 10000,
+        "currency": "NGN"
+      },
       "shares": [
-        { "account": "a", "share": 2500 },
-        { "account": "b", "share": 7500 }
+        {
+          "account": "a",
+          "share": 2500
+        }
       ]
     },
     {
-      "total": { "amount": 1000, "currency": "NGN" },
-      "shares": [{ "account": "a", "share": 2000 }]
+      "total": {
+        "amount": 10000,
+        "currency": "NGN"
+      },
+      "shares": [
+        {
+          "account": "a",
+          "share": 2500
+        },
+        {
+          "account": "b",
+          "share": 7500
+        }
+      ]
+    },
+    {
+      "total": {
+        "amount": 1000,
+        "currency": "NGN"
+      },
+      "shares": [
+        {
+          "account": "a",
+          "share": 2000
+        }
+      ]
     }
   ],
   "redact": [
@@ -106,8 +253,15 @@
       "event": "charge.success",
       "reference": "order_01HQ",
       "amount": 15000,
-      "customer": { "email": "ada@example.com", "phone": "+2348100000000", "bvn": "22222222222" },
-      "account": { "accountNumber": "0123456789", "bankCode": "058" },
+      "customer": {
+        "email": "ada@example.com",
+        "phone": "+2348100000000",
+        "bvn": "22222222222"
+      },
+      "account": {
+        "accountNumber": "0123456789",
+        "bankCode": "058"
+      },
       "secretKey": "sk_live_EXAMPLEdef456",
       "authorization": "Bearer abc123def456ghi"
     },
@@ -117,9 +271,27 @@
       "accountNumber": "0123456789",
       "account_number": "0123456789"
     },
-    { "reason": "BVN 22222222222 does not match account 0123456789" },
-    { "items": [{ "bvn": "22222222222" }, { "accountNumber": "0123456789" }] },
-    { "nested": { "deeper": { "nin": "12345678901", "note": "fine" } } }
+    {
+      "reason": "BVN 22222222222 does not match account 0123456789"
+    },
+    {
+      "items": [
+        {
+          "bvn": "22222222222"
+        },
+        {
+          "accountNumber": "0123456789"
+        }
+      ]
+    },
+    {
+      "nested": {
+        "deeper": {
+          "nin": "12345678901",
+          "note": "fine"
+        }
+      }
+    }
   ],
   "keyDetection": [
     "sk_test_abc123",
@@ -132,7 +304,19 @@
     "pk_test_abc123",
     "not-a-key"
   ],
-  "errorForStatus": [400, 401, 403, 404, 409, 422, 429, 500, 502, 503, 418],
+  "errorForStatus": [
+    400,
+    401,
+    403,
+    404,
+    409,
+    422,
+    429,
+    500,
+    502,
+    503,
+    418
+  ],
   "$signatureComment": "The TypeScript side computes these with WebCrypto and the Python side with hashlib, so parity here is a genuine cross-implementation check of every documented scheme.",
   "signatures": [
     {
@@ -200,5 +384,63 @@
     "anchor",
     "squad",
     "monnify"
+  ],
+  "$bankComment": "Both languages load the same generated dataset and must resolve every probe identically, including merger warnings and unverified-code flags.",
+  "bankMatches": [
+    {
+      "code": "044",
+      "name": "Access Bank"
+    },
+    {
+      "code": "000014"
+    },
+    {
+      "code": "063",
+      "name": "Access Bank (Diamond)"
+    },
+    {
+      "code": "000005"
+    },
+    {
+      "name": "GTBank"
+    },
+    {
+      "name": "Guaranty Trust Bank Plc"
+    },
+    {
+      "name": "First Bank of Nigeria Limited"
+    },
+    {
+      "name": "Stanbic IBTC Bank"
+    },
+    {
+      "code": "51455",
+      "name": "5TT MFB"
+    },
+    {
+      "code": "MFB50094",
+      "name": "Astrapolaris MFB LTD"
+    },
+    {
+      "code": "035A",
+      "name": "ALAT by WEMA"
+    },
+    {
+      "code": "1234567890"
+    },
+    {
+      "name": "Definitely Not A Real Bank Zzz"
+    },
+    {}
+  ],
+  "bankNames": [
+    "Guaranty Trust Bank Plc",
+    "Access Bank Plc",
+    "ACCESS BANK",
+    "First Bank of Nigeria Limited",
+    "Stanbic IBTC Bank",
+    "Taj & Co Bank",
+    "  Spaced   Out  Bank  ",
+    "Zenith Bank"
   ]
 }
