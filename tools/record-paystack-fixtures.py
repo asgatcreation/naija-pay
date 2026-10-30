@@ -387,6 +387,52 @@ write(
     f"{DOCS}/errors/ - envelope with status false",
 )
 
+
+# --- Observed against the real sandbox on 2026-10-30 -------------------------
+# These are more valuable than the documented samples: they are what Paystack
+# actually returns, in wording the documentation never shows.
+
+SANDBOX = "Observed against the Paystack sandbox by tools/sandbox/paystack.mjs"
+
+write(
+    "error-insufficient-balance",
+    {
+        "method": "POST",
+        "path": "/transfer",
+        "body": {"source": "balance", "amount": 10000, "recipient": "RCP_EXAMPLE"},
+    },
+    {"status": False, "message": "Your balance is not enough to fulfil this request"},
+    f"{SANDBOX} - wording contains neither 'insufficient' nor 'funds'",
+)
+
+write(
+    "error-feature-not-enabled",
+    {
+        "method": "POST",
+        "path": "/dedicated_account/assign",
+        "body": {"email": "ada@example.com", "preferred_bank": "test-bank"},
+    },
+    {"status": False, "message": "Dedicated NUBAN is not available for your business"},
+    f"{SANDBOX} - Dedicated Virtual Accounts must be enabled per business",
+)
+
+write(
+    "error-resolve-rate-limited",
+    {
+        "method": "GET",
+        "path": "/bank/resolve",
+        "query": {"account_number": "0000000000", "bank_code": "044"},
+    },
+    {
+        "status": False,
+        "message": (
+            "Test mode daily limit of 3 live bank resolves exceeded. "
+            "Use test bank codes 001 or upgrade to live mode."
+        ),
+    },
+    f"{SANDBOX} - an undocumented test-mode quota",
+)
+
 directories = sorted(p.name for p in BASE.iterdir() if p.is_dir())
 print(f"wrote {len(directories)} fixture directories:")
 for name in directories:

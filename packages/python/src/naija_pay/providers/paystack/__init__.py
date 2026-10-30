@@ -91,8 +91,22 @@ def _classify_paystack_error(
 
     if "duplicate" in message or "already exist" in message:
         return (DuplicateReferenceError, None)
-    if "insufficient" in message:
+    # Paystack's actual wording for an empty balance is "Your balance is not enough to
+    # fulfil this request", which contains neither "insufficient" nor anything else we
+    # were matching on. Found by running against the sandbox; see fixtures SANDBOX.md.
+    if "insufficient" in message or "balance is not enough" in message:
         return (InsufficientFundsError, None)
+    # A feature that exists in the API but is not switched on for this integration.
+    # Dedicated Virtual Accounts are the common case: Paystack must enable them per
+    # business. A configuration problem, not an authentication one.
+    if "not available for your business" in message:
+        raw = body.get("message") if isinstance(body, dict) else ""
+        return (
+            ConfigurationError,
+            f"paystack: {raw} -- this feature exists but is not enabled on your "
+            "integration. Ask Paystack support to enable it for your business; the API "
+            "key is fine.",
+        )
     if "bvn" in message or "identification" in message:
         return (KycRequiredError, None)
     if status == 404 or "not found" in message:

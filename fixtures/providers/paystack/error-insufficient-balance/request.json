@@ -1,0 +1,9 @@
+{
+  "method": "POST",
+  "path": "/transfer",
+  "body": {
+    "source": "balance",
+    "amount": 10000,
+    "recipient": "RCP_EXAMPLE"
+  }
+}

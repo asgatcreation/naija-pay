@@ -12,12 +12,18 @@ from typing import Any
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1] / "src"))
 
-from naija_pay.core.capabilities import assert_supported, supports
+from naija_pay.core.capabilities import (
+    assert_supported,
+    operations_requiring_approval,
+    supports,
+)
 from naija_pay.core.errors import (
     ConfigurationError,
     DuplicateReferenceError,
+    InsufficientFundsError,
     KycRequiredError,
     PayoutStatusUnknownError,
+    RateLimitedError,
     UnsupportedOperationError,
     ValidationError,
 )
@@ -404,6 +410,42 @@ class TestErrors(unittest.TestCase):
             provider.verify_transaction("order_01HQ")
 
 
+class TestErrorsObservedAgainstSandbox(unittest.TestCase):
+    def test_empty_balance_is_insufficient_funds(self) -> None:
+        # Paystack's actual wording contains neither "insufficient" nor "funds". The
+        # classifier missed it until the sandbox run; see fixtures SANDBOX.md.
+        provider, _ = make([(400, fixture("error-insufficient-balance"))])
+        with self.assertRaises(InsufficientFundsError):
+            provider.create_payout(
+                amount=naira(100),
+                account_number="0123456789",
+                bank_code="044",
+                account_name="ADA OBI",
+                reference="payout-01hq-abcdefgh",
+            )
+
+    def test_feature_not_enabled_is_a_configuration_error(self) -> None:
+        # Reporting this as an authentication failure would send a developer hunting
+        # for a key problem that does not exist.
+        provider, _ = make([(403, fixture("error-feature-not-enabled"))])
+        with self.assertRaises(ConfigurationError) as ctx:
+            provider.create_static_virtual_account(
+                email="ada@example.com",
+                first_name="Ada",
+                last_name="Obi",
+                phone="+2348100000000",
+                preferred_bank="test-bank",
+                bvn="22222222222",
+            )
+        self.assertIn("not enabled on your integration", str(ctx.exception))
+        self.assertIn("API key is fine", str(ctx.exception))
+
+    def test_resolve_quota_is_a_rate_limit(self) -> None:
+        provider, _ = make([(429, fixture("error-resolve-rate-limited"))])
+        with self.assertRaises(RateLimitedError):
+            provider.resolve_account(account_number="0000000000", bank_code="044")
+
+
 class TestCapabilities(unittest.TestCase):
     def test_declares_what_it_implements(self) -> None:
         provider, _ = make([])
@@ -422,6 +464,19 @@ class TestCapabilities(unittest.TestCase):
         with self.assertRaises(UnsupportedOperationError) as ctx:
             assert_supported(provider.capabilities, "wallets.open")
         self.assertIn("paystack does not support wallets.open", str(ctx.exception))
+
+    def test_marks_dva_as_needing_paystack_to_enable_it(self) -> None:
+        # Established by the sandbox run, not by the docs, which do not mention it.
+        provider, _ = make([])
+        self.assertEqual(
+            operations_requiring_approval(provider.capabilities),
+            [
+                "virtualAccounts.createStatic",
+                "virtualAccounts.deactivate",
+                "virtualAccounts.get",
+                "virtualAccounts.list",
+            ],
+        )
 
     def test_declares_full_body_signature(self) -> None:
         provider, _ = make([])

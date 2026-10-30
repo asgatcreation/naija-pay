@@ -64,6 +64,15 @@ Nothing is published to npm or PyPI yet. See [PLAN.md](PLAN.md) for the mileston
   apart as `amount` and `amountPaid`. `wallets.*` is absent deliberately: Paystack has no product
   that opens a deposit account holding a balance.
 
+- Paystack **sandbox-verified** on 2026-10-30, and the run changed the code. It established that
+  `/subaccount` accepts `bank_code` alone, `settlement_bank` alone or both, settling a
+  contradiction in Paystack's own documentation; that basis points convert exactly; and three things
+  the documentation does not mention — Dedicated Virtual Accounts must be enabled per business, an
+  empty balance reads "Your balance is not enough to fulfil this request", and test mode allows only
+  three live bank resolves a day. The error classifier and capability declarations were corrected
+  accordingly, and the observed responses are recorded as fixtures. The Python adapter made its first
+  real HTTP calls over httpx in the process.
+
 ### Changed
 
 - **Bank codes are no longer normalised onto a single CBN/NIBSS code.** Measuring the real data

@@ -100,7 +100,25 @@ function classifyPaystackError(
   if (message.includes("duplicate") || message.includes("already exist")) {
     return { error: DuplicateReferenceError };
   }
-  if (message.includes("insufficient")) return { error: InsufficientFundsError };
+  // Paystack's actual wording for an empty balance is "Your balance is not enough to
+  // fulfil this request", which contains neither "insufficient" nor anything else we
+  // were matching on. Found by running against the sandbox; see fixtures SANDBOX.md.
+  if (message.includes("insufficient") || message.includes("balance is not enough")) {
+    return { error: InsufficientFundsError };
+  }
+  // A feature that exists in the API but is not switched on for this integration.
+  // Dedicated Virtual Accounts are the common case: Paystack must enable them per
+  // business. This is a configuration problem, not an authentication one, and the
+  // message says what to do about it.
+  if (message.includes("not available for your business")) {
+    return {
+      error: ConfigurationError,
+      message:
+        `paystack: ${bag.message} — this feature exists but is not enabled on your ` +
+        "integration. Ask Paystack support to enable it for your business; the API key " +
+        "is fine.",
+    };
+  }
   if (message.includes("bvn") || message.includes("identification")) {
     return { error: KycRequiredError };
   }

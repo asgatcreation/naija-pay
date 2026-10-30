@@ -2,12 +2,18 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import path from "node:path";
 import { describe, test } from "node:test";
-import { assertSupported, supports } from "../src/core/capabilities.ts";
+import {
+  assertSupported,
+  operationsRequiringApproval,
+  supports,
+} from "../src/core/capabilities.ts";
 import {
   ConfigurationError,
   DuplicateReferenceError,
+  InsufficientFundsError,
   KycRequiredError,
   PayoutStatusUnknownError,
+  RateLimitedError,
   UnsupportedOperationError,
   ValidationError,
 } from "../src/core/errors.ts";
@@ -489,6 +495,61 @@ describe("errors", () => {
   });
 });
 
+describe("errors observed against the real sandbox", () => {
+  test("an empty balance is InsufficientFundsError, not a validation error", async () => {
+    // Paystack's actual wording contains neither "insufficient" nor "funds". The
+    // classifier missed it until the sandbox run; see fixtures SANDBOX.md.
+    const { provider } = harness([
+      { status: 400, body: fixture("error-insufficient-balance").response },
+    ]);
+    await assert.rejects(
+      provider.createPayout({
+        amount: naira(100),
+        accountNumber: "0123456789",
+        bankCode: "044",
+        accountName: "ADA OBI",
+        reference: "payout-01hq-abcdefgh",
+      }),
+      InsufficientFundsError,
+    );
+  });
+
+  test("a feature not enabled on the integration is a ConfigurationError", async () => {
+    // Dedicated Virtual Accounts must be enabled per business. Reporting that as an
+    // authentication failure would send a developer hunting for a key problem that
+    // does not exist.
+    const { provider } = harness([
+      { status: 403, body: fixture("error-feature-not-enabled").response },
+    ]);
+    await assert.rejects(
+      provider.createStaticVirtualAccount({
+        email: "ada@example.com",
+        firstName: "Ada",
+        lastName: "Obi",
+        phone: "+2348100000000",
+        preferredBank: "test-bank",
+        bvn: "22222222222",
+      }),
+      (error: unknown) => {
+        assert.ok(error instanceof ConfigurationError);
+        assert.match(error.message, /not enabled on your integration/);
+        assert.match(error.message, /API key is fine/);
+        return true;
+      },
+    );
+  });
+
+  test("the undocumented test-mode resolve quota is reported as a rate limit", async () => {
+    const { provider } = harness([
+      { status: 429, body: fixture("error-resolve-rate-limited").response },
+    ]);
+    await assert.rejects(
+      provider.resolveAccount({ accountNumber: "0000000000", bankCode: "044" }),
+      RateLimitedError,
+    );
+  });
+});
+
 describe("capabilities", () => {
   test("declares what it implements", () => {
     const provider = paystack({ secretKey: TEST_KEY, environment: "test" });
@@ -510,6 +571,17 @@ describe("capabilities", () => {
         return true;
       },
     );
+  });
+
+  test("marks dedicated virtual accounts as needing Paystack to enable them", () => {
+    // Established by the sandbox run, not by the docs, which do not mention it.
+    const provider = paystack({ secretKey: TEST_KEY, environment: "test" });
+    assert.deepEqual(operationsRequiringApproval(provider.capabilities), [
+      "virtualAccounts.createStatic",
+      "virtualAccounts.deactivate",
+      "virtualAccounts.get",
+      "virtualAccounts.list",
+    ]);
   });
 
   test("declares the full-body webhook signature it actually uses", () => {

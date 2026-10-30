@@ -1,0 +1,8 @@
+{
+  "method": "POST",
+  "path": "/dedicated_account/assign",
+  "body": {
+    "email": "ada@example.com",
+    "preferred_bank": "test-bank"
+  }
+}

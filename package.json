@@ -31,7 +31,10 @@
     "build": "npm run build:js --workspace @asgatcreation/naija-pay && npm run build:types --workspace @asgatcreation/naija-pay",
     "size": "node tools/bundle-size.mjs",
     "smoke": "node tools/smoke-dist.mjs",
-    "verify": "npm run build && npm run size && npm run smoke"
+    "verify": "npm run build && npm run size && npm run smoke",
+    "sandbox:paystack": "node tools/sandbox/paystack.mjs",
+    "sandbox:paystack:python": "python tools/sandbox/paystack_sandbox.py",
+    "sandbox": "npm run sandbox:paystack && npm run sandbox:paystack:python"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.6.4",

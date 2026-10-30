@@ -1,0 +1,4 @@
+Observed against the Paystack sandbox by tools/sandbox/paystack.mjs - an undocumented test-mode quota
+Verified: 2026-10-30
+Recorded from Paystack's own documented sample response. Identifiers replaced
+with this repository's standard fake values.

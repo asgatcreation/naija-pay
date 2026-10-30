@@ -16,7 +16,7 @@ All product and company names are the trademarks of their respective owners.
 | **Docs blocked**     | Portal is private, down, or unreachable at time of checking. Build from fixtures, mark unverified. |
 | **Sandbox verified** | Additionally exercised against the provider's sandbox with real test keys.                         |
 
-No provider is **Sandbox verified** yet — that starts in milestone 4. Any adapter that is not
+**Paystack is Sandbox verified** as of 2026-10-30 (milestone 4), with the two caveats recorded in its section. No other provider is yet. Any adapter that is not
 sandbox verified ships with a `notYetSandboxVerified` flag and a visible note in the docs site.
 
 ---
@@ -28,7 +28,7 @@ sandbox verified ships with a `notYetSandboxVerified` flag and a visible note in
 |                      |                                                                                                                                                                                                                                                                                                                                                                          |
 | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | Docs                 | <https://paystack.com/docs/api/>                                                                                                                                                                                                                                                                                                                                         |
-| Verified             | 2026-10-25, extended 2026-10-30 — **Docs verified**, adapter implemented, **not yet sandbox-verified**                                                                                                                                                                                                                                                                   |
+| Verified             | 2026-10-25, extended 2026-10-30 — **Docs verified** and **Sandbox verified** (2026-10-30), with two caveats below                                                                                                                                                                                                                                                        |
 | Adapter              | Implemented in both languages (milestone 4). Collections, verify, list, refunds, dedicated virtual accounts, subaccounts, transaction splits, payouts, account resolution, balance, webhooks. Recurring billing and direct debit land in milestone 7; `wallets.*` is absent permanently, because Paystack has no product that opens a deposit account holding a balance. |
 | API version          | Unversioned REST (no version in path or header)                                                                                                                                                                                                                                                                                                                          |
 | Base URL             | `https://api.paystack.co` — **same host for test and live**; the key decides the environment                                                                                                                                                                                                                                                                             |
@@ -58,6 +58,49 @@ Documented events include `charge.success`, `transfer.success`, `transfer.failed
 `transfer.reversed`, `refund.processed` / `.pending` / `.failed` / `.processing`, `subscription.*`,
 `invoice.*`, `paymentrequest.*`, `charge.dispute.*`, `customeridentification.success` / `.failed`,
 and DVA assignment success/failure events. A Webhook Events API can list, filter and resend events.
+
+### What the sandbox established, 2026-10-30
+
+Run by `npm run sandbox:paystack` against a `sk_test_` key; the full table of observations is in
+[fixtures/providers/paystack/SANDBOX.md](fixtures/providers/paystack/SANDBOX.md). Eight of eleven
+probes succeeded, and the three that did not were each informative rather than defective.
+
+**Resolved, where the documentation was ambiguous:**
+
+- **`/subaccount` accepts `bank_code` alone, `settlement_bank` alone, or both.** All three returned
+  HTTP 201. The contradiction between Paystack's field reference and its own cURL sample is therefore
+  harmless. The adapter keeps sending both, which costs nothing and needs no further thought.
+- **Basis points convert exactly as intended:** 9000 bps was accepted and came back as `share: 90`.
+- An unknown reference returns `Transaction reference not found.`, which maps to `NotFoundError`.
+- The Nigerian bank list returned **293** entries, with the keys we recorded.
+
+**Two things the sandbox could not settle:**
+
+- **Whether transfer OTP is enabled by default is still unknown.** The probe was blocked earlier, by
+  a zero test balance. It needs a funded test balance to answer, so the adapter's OTP handling
+  remains verified only against the documented response shape. This is the one real gap in Paystack's
+  sandbox verification.
+- **Dedicated Virtual Accounts could not be exercised at all:** a fresh integration returns
+  `Dedicated NUBAN is not available for your business`. See below — this is a finding in itself.
+
+**Three things the sandbox taught us that the documentation does not say:**
+
+1. **Dedicated Virtual Accounts must be enabled per business by Paystack.** This is the same class of
+   gate as Monnify's transfer and sub-account APIs, and it is now declared `requiresApproval` on all
+   four `virtualAccounts.*` operations so the capability matrix shows it. Nothing in Paystack's
+   documentation mentions it.
+2. **An empty balance reads "Your balance is not enough to fulfil this request"** — wording that
+   contains neither "insufficient" nor "funds". Our error classifier missed it and returned a
+   validation error; it now returns `InsufficientFundsError`. Recorded as a fixture.
+3. **Test mode allows only three live bank resolves per day**, after which it returns
+   `Test mode daily limit of 3 live bank resolves exceeded. Use test bank codes 001 or upgrade to
+   live mode.` Use bank code **001** for resolution in tests. This quota appears nowhere in the docs
+   and would be baffling in CI.
+
+A fourth, smaller lesson: `Dedicated NUBAN is not available for your business` arrives as a 403, so
+the obvious mapping is an authentication error — which would send a developer hunting for a key
+problem that does not exist. It is now a `ConfigurationError` whose message says the feature needs
+enabling and that the key is fine.
 
 **Findings to encapsulate**
 

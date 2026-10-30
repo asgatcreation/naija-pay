@@ -56,15 +56,18 @@ const SUPPORTED: Partial<Record<Operation, OperationSupport>> = {
   "refunds.status": {},
 
   "virtualAccounts.createStatic": {
+    // Confirmed against the sandbox on 2026-10-30: a fresh integration returns
+    // "Dedicated NUBAN is not available for your business" until Paystack enables it.
+    requiresApproval: true,
     requiredKyc: ["bvn"],
     notes:
       "Dedicated Virtual Accounts. Paystack accepts BVN on assignment and reports the " +
       "outcome asynchronously through customeridentification.* events, so a created " +
       "account may still be pending verification.",
   },
-  "virtualAccounts.get": {},
-  "virtualAccounts.list": {},
-  "virtualAccounts.deactivate": {},
+  "virtualAccounts.get": { requiresApproval: true },
+  "virtualAccounts.list": { requiresApproval: true },
+  "virtualAccounts.deactivate": { requiresApproval: true },
   "virtualAccounts.listInflows": {
     notes: "Served from the transaction list filtered to the account's customer.",
   },

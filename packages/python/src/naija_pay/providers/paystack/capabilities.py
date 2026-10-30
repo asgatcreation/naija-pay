@@ -56,6 +56,9 @@ _SUPPORTED: dict[str, OperationSupport] = {
     ),
     "refunds.status": OperationSupport(),
     "virtualAccounts.createStatic": OperationSupport(
+        # Confirmed against the sandbox on 2026-10-30: a fresh integration returns
+        # "Dedicated NUBAN is not available for your business" until Paystack enables it.
+        requires_approval=True,
         required_kyc=("bvn",),
         notes=(
             "Dedicated Virtual Accounts. Paystack accepts BVN on assignment and reports "
@@ -63,9 +66,9 @@ _SUPPORTED: dict[str, OperationSupport] = {
             "created account may still be pending verification."
         ),
     ),
-    "virtualAccounts.get": OperationSupport(),
-    "virtualAccounts.list": OperationSupport(),
-    "virtualAccounts.deactivate": OperationSupport(),
+    "virtualAccounts.get": OperationSupport(requires_approval=True),
+    "virtualAccounts.list": OperationSupport(requires_approval=True),
+    "virtualAccounts.deactivate": OperationSupport(requires_approval=True),
     "virtualAccounts.listInflows": OperationSupport(
         notes="Served from the transaction list filtered to the account's customer."
     ),
