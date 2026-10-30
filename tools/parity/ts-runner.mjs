@@ -29,6 +29,10 @@ const { redact, redactObject, looksLikeLiveKey, looksLikeTestKey } = await load(
 );
 const { errorClassForStatus } = await load("core", "errors.ts");
 const banksModule = await load("core", "banks.ts");
+const eventsModule = await load("core", "events.ts");
+const mockModule = await import(
+  pathToFileURL(path.join(SRC, "providers", "mock", "index.ts")).href
+);
 const { SCHEMES, computeSignature, strengthOf, verifySignature } = await load(
   "core",
   "signatures.ts",
@@ -165,6 +169,53 @@ out.bankMatches = cases.bankMatches.map((probe) => {
 });
 
 out.bankDataVersion = [banksModule.bankDataSource.dataVersion, banksModule.institutions.length];
+
+const FIXED_NOW = () => new Date("2026-10-30T12:00:00.000Z");
+const EXPIRED_AT = new Date("2026-10-30T10:00:00.000Z");
+const PAID_LATE_AT = new Date("2026-10-30T10:20:00.000Z");
+const ngn = (amount) => ({ amount, currency: "NGN" });
+
+out.mockWebhooks = [];
+for (const c of cases.mockWebhooks) {
+  const provider = mockModule.mock({ now: FIXED_NOW });
+  let webhook;
+  if (c.kind === "inflow") {
+    webhook = await provider.simulateInflow({
+      expectedAmount: c.expected === null ? null : ngn(c.expected),
+      amountPaid: ngn(c.paid),
+      ...(c.late ? { expiresAt: EXPIRED_AT, paidAt: PAID_LATE_AT } : {}),
+    });
+  } else if (c.kind === "payment") {
+    webhook = await provider.simulatePayment({ status: c.status });
+  } else {
+    webhook = await provider.simulateTransfer({ status: c.status });
+  }
+  out.mockWebhooks.push({
+    text: webhook.text,
+    signature: webhook.headers[mockModule.MOCK_SCHEME.header],
+    eventId: webhook.event.id,
+    eventType: webhook.event.type,
+    strength: webhook.event.signatureStrength,
+  });
+}
+
+out.inflowDecisions = cases.inflowDecisions.map((c) => {
+  const decision = eventsModule.decideInflow({
+    inflow: {
+      expectedAmount: c.expected === null ? null : ngn(c.expected),
+      amountPaid: ngn(c.paid),
+      variance: c.variance,
+      isLate: c.late,
+    },
+    ...(c.rules ? { rules: c.rules } : {}),
+    alreadyProcessed: c.duplicate,
+  });
+  return {
+    action: decision.action,
+    amount: decision.action === "credit" ? decision.amount.amount : null,
+    reason: decision.reason,
+  };
+});
 
 /** Sort object keys recursively so key order can never cause a false difference. */
 function canonical(value) {

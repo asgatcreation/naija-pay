@@ -40,6 +40,11 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
+    },
+    "./mock": {
+      "types": "./dist/providers/mock/index.d.ts",
+      "import": "./dist/providers/mock/index.js",
+      "require": "./dist/providers/mock/index.cjs"
     }
   },
   "files": [

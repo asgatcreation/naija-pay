@@ -139,9 +139,9 @@ report of what I actually ran.
 
 | # | Milestone | What you need to do |
 | --- | --- | --- |
-| 1 | **Research, PROVIDERS.md, capability matrix, API design, plan** — done, awaiting your OK | Answer DECISION 1, 2, 3 |
-| 2 | Scaffold repo, MIT licence, CI, contributing files, first commit and push | Create the empty public repo `naija-pay` at github.com/new; I add the remote and push |
-| 3 | Core: money, errors, HTTP with retries and idempotency, redaction, capabilities, bank-code generation from naija-data, mock provider, parity harness | — |
+| 1 | **Research, PROVIDERS.md, capability matrix, API design, plan** — **done** 2026-10-25 | — |
+| 2 | **Scaffold repo, MIT licence, CI, contributing files** — **done** 2026-10-26, 9 CI jobs green | — |
+| 3 | **Core: money, errors, HTTP with retries and idempotency, redaction, capabilities, signature schemes, bank matching from naija-data, normalised events and inflow rules, mock provider, parity harness** — **done** 2026-10-30 | — |
 | 4 | **Paystack** adapter, both languages, all features, webhooks, tests; then sandbox-verified | Create a free Paystack account, paste the **test** secret key into `.env` and into GitHub Actions secrets. I will tell you exactly where to click |
 | 5 | **Flutterwave** adapter (v4 + v3, its own milestone) | Flutterwave test account: v3 keys and v4 client ID/secret |
 | 6 | **Monnify** and **Fincra** adapters | Monnify needs nothing at first — they publish public test credentials. Fincra: a sandbox account |
@@ -161,6 +161,20 @@ report of what I actually ran.
 - Commit or print a secret, or read your `.env` back to you.
 - Delete anything substantial.
 - Kill a process I did not start — your dev servers on ports 8000 and 3000 are left alone.
+
+## 6a. Carried forward out of milestone 3
+
+- **The Python async client is not written yet.** The retry, backoff and error-mapping helpers are
+  shared and ready for it, but it lands alongside the first real adapter in milestone 4 rather than
+  shipping untested async code now.
+- **The dev toolchain is still not installed.** Everything so far runs on Node's built-in test
+  runner and Python's `unittest`, with zero installs, which is why CI is genuinely green rather
+  than aspirational. Biome, tsup, TypeScript, mypy, ruff and pytest arrive in milestone 4, and I
+  will show you the exact install list first. A `tsc --noEmit` typecheck job and a build job that
+  runs the compiled output on Node 20 arrive with them.
+- **Bank coverage is 61.4%** against Paystack's live list (180 of 293). Two fixable gaps are
+  upstream in naija-data: `ALAT by WEMA` needs an alias on Wema Bank, and NIP code coverage is 49
+  of 898. Worth a data-correction issue on naija-data, which would lift coverage for every adapter.
 
 ## 7. Open questions for later milestones, recorded so they are not forgotten
 

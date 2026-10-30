@@ -18,6 +18,11 @@ from typing import Any, Callable
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "packages" / "python" / "src"))
 
+from datetime import datetime, timezone  # noqa: E402
+
+from naija_pay.core.events import InflowRules, decide_inflow  # noqa: E402
+from naija_pay.providers.mock import MOCK_SCHEME, mock  # noqa: E402
+
 from naija_pay.core.banks import (  # noqa: E402
     bank_data_source,
     institutions,
@@ -204,6 +209,72 @@ for probe in CASES["bankMatches"]:
 
 out["bankMatches"] = bank_matches
 out["bankDataVersion"] = [bank_data_source().data_version, len(institutions())]
+
+
+FIXED_NOW = datetime(2026, 10, 30, 12, 0, 0, tzinfo=timezone.utc)
+EXPIRED_AT = datetime(2026, 10, 30, 10, 0, 0, tzinfo=timezone.utc)
+PAID_LATE_AT = datetime(2026, 10, 30, 10, 20, 0, tzinfo=timezone.utc)
+
+
+def _ngn(amount: int) -> Any:
+    return money(amount, "NGN")
+
+
+mock_webhooks: list[dict[str, Any]] = []
+for case in CASES["mockWebhooks"]:
+    provider = mock(now=lambda: FIXED_NOW)
+    if case["kind"] == "inflow":
+        extra: dict[str, Any] = (
+            {"expires_at": EXPIRED_AT, "paid_at": PAID_LATE_AT} if case.get("late") else {}
+        )
+        webhook = provider.simulate_inflow(
+            expected_amount=None if case["expected"] is None else _ngn(case["expected"]),
+            amount_paid=_ngn(case["paid"]),
+            **extra,
+        )
+    elif case["kind"] == "payment":
+        webhook = provider.simulate_payment(status=case["status"])
+    else:
+        webhook = provider.simulate_transfer(status=case["status"])
+
+    mock_webhooks.append(
+        {
+            "text": webhook.text,
+            "signature": webhook.headers[MOCK_SCHEME.header],
+            "eventId": webhook.event.id,
+            "eventType": webhook.event.type,
+            "strength": webhook.event.signature_strength,
+        }
+    )
+
+out["mockWebhooks"] = mock_webhooks
+
+inflow_decisions: list[dict[str, Any]] = []
+for case in CASES["inflowDecisions"]:
+    rules = None
+    if case["rules"]:
+        rules = InflowRules(
+            overpayment=case["rules"]["overpayment"],
+            underpayment=case["rules"]["underpayment"],
+            late_payment=case["rules"]["latePayment"],
+        )
+    decision = decide_inflow(
+        variance=case["variance"],
+        amount_paid=_ngn(case["paid"]),
+        expected_amount=None if case["expected"] is None else _ngn(case["expected"]),
+        is_late=case["late"],
+        rules=rules,
+        already_processed=case["duplicate"],
+    )
+    inflow_decisions.append(
+        {
+            "action": decision.action,
+            "amount": decision.amount.amount if decision.amount else None,
+            "reason": decision.reason,
+        }
+    )
+
+out["inflowDecisions"] = inflow_decisions
 
 
 def canonical(value: Any) -> Any:

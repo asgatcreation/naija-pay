@@ -442,5 +442,160 @@
     "Taj & Co Bank",
     "  Spaced   Out  Bank  ",
     "Zenith Bank"
+  ],
+  "$mockComment": "The mock's wire payload must be byte-identical across languages, so a fixture recorded from it can drive either test suite. Signatures are compared too.",
+  "mockWebhooks": [
+    {
+      "kind": "inflow",
+      "expected": 500000,
+      "paid": 500000
+    },
+    {
+      "kind": "inflow",
+      "expected": 500000,
+      "paid": 550000
+    },
+    {
+      "kind": "inflow",
+      "expected": 500000,
+      "paid": 490000
+    },
+    {
+      "kind": "inflow",
+      "expected": null,
+      "paid": 1200000
+    },
+    {
+      "kind": "inflow",
+      "expected": 500000,
+      "paid": 500000,
+      "late": true
+    },
+    {
+      "kind": "payment",
+      "status": "successful"
+    },
+    {
+      "kind": "payment",
+      "status": "failed"
+    },
+    {
+      "kind": "payment",
+      "status": "reversed"
+    },
+    {
+      "kind": "transfer",
+      "status": "successful"
+    },
+    {
+      "kind": "transfer",
+      "status": "reversed"
+    }
+  ],
+  "inflowDecisions": [
+    {
+      "variance": "exact",
+      "paid": 500000,
+      "expected": 500000,
+      "late": false,
+      "duplicate": false,
+      "rules": null
+    },
+    {
+      "variance": "overpayment",
+      "paid": 550000,
+      "expected": 500000,
+      "late": false,
+      "duplicate": false,
+      "rules": null
+    },
+    {
+      "variance": "overpayment",
+      "paid": 550000,
+      "expected": 500000,
+      "late": false,
+      "duplicate": false,
+      "rules": {
+        "overpayment": "credit_expected",
+        "underpayment": "manual_review",
+        "latePayment": "accept"
+      }
+    },
+    {
+      "variance": "overpayment",
+      "paid": 550000,
+      "expected": 500000,
+      "late": false,
+      "duplicate": false,
+      "rules": {
+        "overpayment": "reject",
+        "underpayment": "manual_review",
+        "latePayment": "accept"
+      }
+    },
+    {
+      "variance": "underpayment",
+      "paid": 490000,
+      "expected": 500000,
+      "late": false,
+      "duplicate": false,
+      "rules": null
+    },
+    {
+      "variance": "underpayment",
+      "paid": 490000,
+      "expected": 500000,
+      "late": false,
+      "duplicate": false,
+      "rules": {
+        "overpayment": "credit_full",
+        "underpayment": "credit_partial",
+        "latePayment": "accept"
+      }
+    },
+    {
+      "variance": "exact",
+      "paid": 500000,
+      "expected": 500000,
+      "late": true,
+      "duplicate": false,
+      "rules": null
+    },
+    {
+      "variance": "exact",
+      "paid": 500000,
+      "expected": 500000,
+      "late": true,
+      "duplicate": false,
+      "rules": {
+        "overpayment": "credit_full",
+        "underpayment": "manual_review",
+        "latePayment": "reject"
+      }
+    },
+    {
+      "variance": "underpayment",
+      "paid": 400000,
+      "expected": 500000,
+      "late": true,
+      "duplicate": false,
+      "rules": null
+    },
+    {
+      "variance": "unexpected",
+      "paid": 1200000,
+      "expected": null,
+      "late": false,
+      "duplicate": false,
+      "rules": null
+    },
+    {
+      "variance": "exact",
+      "paid": 500000,
+      "expected": 500000,
+      "late": false,
+      "duplicate": true,
+      "rules": null
+    }
   ]
 }

@@ -178,6 +178,42 @@ Every event arrives in one normalised, typed shape, keeps its raw payload, and c
 `signatureStrength` so you can refuse to act on a weak one. Ready-made handlers for Express,
 Fastify, Next.js and Hono/edge; Django, DRF, FastAPI and Flask.
 
+## Test the whole flow before you have any provider account
+
+The mock provider signs its webhooks with a real scheme, so the verification code that runs in
+production runs here too. Nothing is stubbed out on the security path.
+
+```ts
+import { mock, INFLOW_SCENARIOS } from "@asgatcreation/naija-pay/mock";
+import { verifySignature } from "@asgatcreation/naija-pay";
+
+const provider = mock();
+
+// Money arrives in a virtual account — 500 naira more than the invoice asked for
+const webhook = await provider.simulateInflow({
+  expectedAmount: naira(5_000),
+  amountPaid: naira(5_500),
+});
+
+await provider.deliver(webhook, "http://localhost:3000/webhooks");
+```
+
+Every awkward case is a ready-made scenario, because these are exactly the ones each provider
+leaves to you: exact payment, overpayment, underpayment, static-account funding with no expected
+amount, payment after the account expired, and late-and-underpaid at once. Duplicate delivery and
+a deliberately invalid signature are both reachable too.
+
+```python
+from naija_pay.providers import mock
+
+provider = mock()
+webhook = provider.simulate_inflow(expected_amount=naira(5_000), amount_paid=naira(4_900))
+assert webhook.event.data["variance"] == "underpayment"
+```
+
+The mock's wire payload is byte-identical in both languages, so a fixture recorded from it drives
+either test suite.
+
 ## Capability matrix
 
 Which provider supports what — generated from the adapters themselves, so it cannot go stale.

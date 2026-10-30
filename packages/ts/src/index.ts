@@ -121,3 +121,21 @@ export {
   normaliseBankName,
   unverifiedCodesFor,
 } from "./core/banks.ts";
+
+export {
+  DEFAULT_INFLOW_RULES,
+  type EventSender,
+  type EventType,
+  type IdempotencyStore,
+  type InflowDecision,
+  type InflowRules,
+  type InflowVariance,
+  type LatePaymentAction,
+  type NaijaPayEvent,
+  type OverpaymentAction,
+  type UnderpaymentAction,
+  type VirtualAccountInflow,
+  classifyInflow,
+  decideInflow,
+  memoryStore,
+} from "./core/events.ts";
