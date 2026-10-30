@@ -114,7 +114,11 @@ for (const pass of ["active", "merged"] as const) {
 
 for (const institution of DATASET.banks) {
   byId.set(institution.id, institution);
-  for (const candidate of [institution.name, institution.shortName, ...(institution.aliases ?? [])]) {
+  for (const candidate of [
+    institution.name,
+    institution.shortName,
+    ...(institution.aliases ?? []),
+  ]) {
     if (!candidate) continue;
     const key = normaliseBankName(candidate);
     // First writer wins, so a commercial bank is not displaced by a microfinance bank

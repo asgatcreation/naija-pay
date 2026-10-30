@@ -50,6 +50,11 @@
       "types": "./dist/providers/paystack/index.d.ts",
       "import": "./dist/providers/paystack/index.js",
       "require": "./dist/providers/paystack/index.cjs"
+    },
+    "./banks": {
+      "types": "./dist/banks.d.ts",
+      "import": "./dist/banks.js",
+      "require": "./dist/banks.cjs"
     }
   },
   "files": [
@@ -59,6 +64,8 @@
   ],
   "dependencies": {},
   "scripts": {
-    "test": "node --test test/"
+    "test": "node --test test/",
+    "build:js": "tsup",
+    "build:types": "tsc -p tsconfig.build.json"
   }
 }

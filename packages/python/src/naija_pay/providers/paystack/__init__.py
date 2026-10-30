@@ -25,7 +25,8 @@ import json
 import os
 import re
 import sys
-from typing import Any, Callable, Mapping, Sequence
+from collections.abc import Callable, Mapping, Sequence
+from typing import Any
 
 from naija_pay.core.capabilities import assert_supported
 from naija_pay.core.errors import (
@@ -157,8 +158,7 @@ class PaystackProvider:
         if declared == "live" and not _is_production_environment():
             warn = on_live_key_warning or _default_live_key_warning
             warn(
-                "paystack: using a LIVE key outside a production environment. "
-                "Real money will move."
+                "paystack: using a LIVE key outside a production environment. Real money will move."
             )
 
         self.name = PAYSTACK_PROVIDER_NAME
@@ -502,7 +502,7 @@ class PaystackProvider:
             share = party.get("share")
             if isinstance(share, bool) or not isinstance(share, int) or share < 0:
                 raise ValidationError(
-                    f"paystack: the share for \"{party.get('account')}\" must be a "
+                    f'paystack: the share for "{party.get("account")}" must be a '
                     "non-negative integer (basis points for a percentage split, minor "
                     f"units for a flat one), got {share}",
                     provider=PAYSTACK_PROVIDER_NAME,
@@ -549,17 +549,13 @@ class PaystackProvider:
         return to_split(data)
 
     def list_splits(self) -> tuple[Split, ...]:
-        data, _, _ = self._call(
-            method="GET", path="/split", operation="splits.list", safety="safe"
-        )
+        data, _, _ = self._call(method="GET", path="/split", operation="splits.list", safety="safe")
         rows = data if isinstance(data, list) else []
         return tuple(to_split(row) for row in rows)
 
     # ------------------------------------------------------------------ payouts
 
-    def list_banks(
-        self, *, country: str = "nigeria", per_page: int = 1_000
-    ) -> tuple[Any, ...]:
+    def list_banks(self, *, country: str = "nigeria", per_page: int = 1_000) -> tuple[Any, ...]:
         data, _, _ = self._call(
             method="GET",
             path="/bank",
@@ -666,9 +662,7 @@ class PaystackProvider:
 
     # ----------------------------------------------------------------- webhooks
 
-    def verify_webhook(
-        self, *, body: bytes, headers: Mapping[str, str]
-    ) -> VerificationResult:
+    def verify_webhook(self, *, body: bytes, headers: Mapping[str, str]) -> VerificationResult:
         """Verify a webhook from Paystack.
 
         ``body`` must be the raw bytes exactly as received. Parsing or re-serialising

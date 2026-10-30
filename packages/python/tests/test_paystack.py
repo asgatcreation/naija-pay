@@ -12,8 +12,8 @@ from typing import Any
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1] / "src"))
 
-from naija_pay.core.capabilities import assert_supported, supports  # noqa: E402
-from naija_pay.core.errors import (  # noqa: E402
+from naija_pay.core.capabilities import assert_supported, supports
+from naija_pay.core.errors import (
     ConfigurationError,
     DuplicateReferenceError,
     KycRequiredError,
@@ -21,10 +21,10 @@ from naija_pay.core.errors import (  # noqa: E402
     UnsupportedOperationError,
     ValidationError,
 )
-from naija_pay.core.http import TransportRequest, TransportResponse  # noqa: E402
-from naija_pay.core.money import money, naira  # noqa: E402
-from naija_pay.core.signatures import SCHEMES, compute_signature  # noqa: E402
-from naija_pay.providers.paystack import paystack  # noqa: E402
+from naija_pay.core.http import TransportRequest, TransportResponse
+from naija_pay.core.money import money, naira
+from naija_pay.core.signatures import SCHEMES, compute_signature
+from naija_pay.providers.paystack import paystack
 
 FIXTURES = pathlib.Path(__file__).resolve().parents[3] / "fixtures" / "providers" / "paystack"
 TEST_KEY = "sk_test_EXAMPLEpaystack"
@@ -394,9 +394,7 @@ class TestErrors(unittest.TestCase):
         self.assertIn("Duplicate Transaction Reference", str(ctx.exception))
 
     def test_classifies_duplicate_reference(self) -> None:
-        provider, _ = make(
-            [(400, {"status": False, "message": "Duplicate Transaction Reference"})]
-        )
+        provider, _ = make([(400, {"status": False, "message": "Duplicate Transaction Reference"})])
         with self.assertRaises(DuplicateReferenceError):
             provider.verify_transaction("order_01HQ")
 
@@ -429,9 +427,7 @@ class TestCapabilities(unittest.TestCase):
         provider, _ = make([])
         assert provider.capabilities.webhook_signature is not None
         self.assertEqual(provider.capabilities.webhook_signature.strength, "full-body")
-        self.assertEqual(
-            provider.capabilities.webhook_signature.header, "x-paystack-signature"
-        )
+        self.assertEqual(provider.capabilities.webhook_signature.header, "x-paystack-signature")
 
     def test_records_what_is_not_yet_implemented(self) -> None:
         provider, _ = make([])
@@ -445,9 +441,7 @@ class TestWebhooks(unittest.TestCase):
         body = b'{"event":"charge.success","data":{"reference":"order_01HQ"}}'
         signature = compute_signature(SCHEMES["paystack"], body, TEST_KEY)
 
-        result = provider.verify_webhook(
-            body=body, headers={"x-paystack-signature": signature}
-        )
+        result = provider.verify_webhook(body=body, headers={"x-paystack-signature": signature})
         self.assertTrue(result.verified)
         self.assertEqual(result.strength, "full-body")
 

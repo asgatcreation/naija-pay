@@ -13,32 +13,15 @@ from __future__ import annotations
 import json
 import pathlib
 import sys
-from typing import Any, Callable
+from collections.abc import Callable
+from typing import Any
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "packages" / "python" / "src"))
 
-from datetime import datetime, timezone  # noqa: E402
+from datetime import datetime, timezone
 
-from naija_pay.core.events import InflowRules, decide_inflow  # noqa: E402
-from naija_pay.providers.mock import MOCK_SCHEME, mock  # noqa: E402
-
-from naija_pay.core.banks import (  # noqa: E402
-    bank_data_source,
-    institutions,
-    match_institution,
-    merger_warning_for,
-    normalise_bank_name,
-    unverified_codes_for,
-)
-from naija_pay.core.signatures import (  # noqa: E402
-    SCHEMES,
-    compute_signature,
-    strength_of,
-    verify_signature,
-)
-
-from naija_pay.core import (  # noqa: E402
+from naija_pay.core import (
     Share,
     error_class_for_status,
     format_money,
@@ -51,6 +34,22 @@ from naija_pay.core import (  # noqa: E402
     split_by_basis_points,
     split_by_flat_amounts,
 )
+from naija_pay.core.banks import (
+    bank_data_source,
+    institutions,
+    match_institution,
+    merger_warning_for,
+    normalise_bank_name,
+    unverified_codes_for,
+)
+from naija_pay.core.events import InflowRules, decide_inflow
+from naija_pay.core.signatures import (
+    SCHEMES,
+    compute_signature,
+    strength_of,
+    verify_signature,
+)
+from naija_pay.providers.mock import MOCK_SCHEME, mock
 
 CASES = json.loads((ROOT / "fixtures" / "parity" / "core.json").read_text(encoding="utf-8"))
 
@@ -64,7 +63,7 @@ def attempt(fn: Callable[[], Any]) -> dict[str, Any]:
     """Both languages must describe a rejection identically."""
     try:
         return {"ok": True, "value": fn()}
-    except Exception as exc:  # noqa: BLE001 - parity output, not control flow
+    except Exception as exc:
         name = type(exc).__name__
         return {"ok": False, "error": ERROR_NAMES.get(name, name), "message": str(exc)}
 
@@ -278,7 +277,7 @@ out["inflowDecisions"] = inflow_decisions
 
 
 sys.path.insert(0, str(ROOT / "tools" / "parity"))
-from paystack_py import paystack_parity  # noqa: E402
+from paystack_py import paystack_parity
 
 out.update(paystack_parity(ROOT, CASES))
 

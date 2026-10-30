@@ -231,8 +231,7 @@ def to_transaction(data: Any) -> Transaction:
         status=normalise_status(bag.get("status")),
         # `requested_amount` is what was asked for; `amount` is what was actually paid.
         # Paystack returns both, and conflating them hides partial and over payments.
-        amount=_money(bag.get("requested_amount"), currency)
-        or _money(bag.get("amount"), currency),
+        amount=_money(bag.get("requested_amount"), currency) or _money(bag.get("amount"), currency),
         amount_paid=_money(bag.get("amount"), currency),
         fees=_money(bag.get("fees"), currency),
         channel=normalise_channel(bag.get("channel")),
@@ -423,9 +422,10 @@ class Split:
 
 def to_split(data: Any) -> Split:
     bag = _record(data)
-    subaccounts = bag.get("subaccounts") if isinstance(bag.get("subaccounts"), list) else []
+    raw_subaccounts = bag.get("subaccounts")
+    subaccounts: list[Any] = raw_subaccounts if isinstance(raw_subaccounts, list) else []
 
-    parties = []
+    parties: list[dict[str, Any]] = []
     for entry in subaccounts:
         row = _record(entry)
         inner = _record(row.get("subaccount"))

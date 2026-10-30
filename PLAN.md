@@ -5,11 +5,11 @@ marked **DECISION** below.
 
 ## 1. Package names — one problem
 
-| Registry | `naija-pay` | Verdict |
-| --- | --- | --- |
-| **npm** | **TAKEN** | `naija-pay@1.0.0`, "Simplified Paystack integration for React", published 2026-03-27 by `softcode96`. One version, no repository link. |
-| **PyPI** | free | available |
-| GitHub | free | `github.com/asgatcreation/naija-pay` does not exist yet |
+| Registry | `naija-pay` | Verdict                                                                                                                                |
+| -------- | ----------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| **npm**  | **TAKEN**   | `naija-pay@1.0.0`, "Simplified Paystack integration for React", published 2026-03-27 by `softcode96`. One version, no repository link. |
+| **PyPI** | free        | available                                                                                                                              |
+| GitHub   | free        | `github.com/asgatcreation/naija-pay` does not exist yet                                                                                |
 
 Also checked and free: `naijapay` and `naija-pay-sdk` on both registries, and the npm scope
 `@asgatcreation/naija-pay`.
@@ -59,7 +59,7 @@ whole set, and Paga's Subsidiary Accounts make it useful for wallets as well as 
 **Then:** Interswitch, Remita, Budpay, PalmPay, Credo.
 
 **Demote:** **OPay**. Its docs site returned HTTP 502, and — more to the point — OPay wallet payments
-are already reachable *through* Flutterwave, Fincra and Korapay, which are Tier 1. A direct OPay
+are already reachable _through_ Flutterwave, Fincra and Korapay, which are Tier 1. A direct OPay
 adapter adds much less than its position on the original list suggests.
 
 **Blocked until access improves:** **SeerBit** (docs private, 401) and **Payaza** (docs host did not
@@ -137,19 +137,19 @@ exactly what each command installs first.
 Milestone 1 is this document set. Each later milestone ends with tests passing, a commit, and a short
 report of what I actually ran.
 
-| # | Milestone | What you need to do |
-| --- | --- | --- |
-| 1 | **Research, PROVIDERS.md, capability matrix, API design, plan** — **done** 2026-10-25 | — |
-| 2 | **Scaffold repo, MIT licence, CI, contributing files** — **done** 2026-10-26, 9 CI jobs green | — |
-| 3 | **Core: money, errors, HTTP with retries and idempotency, redaction, capabilities, signature schemes, bank matching from naija-data, normalised events and inflow rules, mock provider, parity harness** — **done** 2026-10-30 | — |
-| 4 | **Paystack** adapter, both languages, all features, webhooks, tests; then sandbox-verified | Create a free Paystack account, paste the **test** secret key into `.env` and into GitHub Actions secrets. I will tell you exactly where to click |
-| 5 | **Flutterwave** adapter (v4 + v3, its own milestone) | Flutterwave test account: v3 keys and v4 client ID/secret |
-| 6 | **Monnify** and **Fincra** adapters | Monnify needs nothing at first — they publish public test credentials. Fincra: a sandbox account |
-| 7 | **Squad** and **Korapay** adapters; webhook schemes for Squad and Monnify established against sandbox; capability matrix generated from code | Squad sandbox account, Korapay test account |
-| 8 | Router and failover, fee calculator, reconciliation, CLI, framework webhook handlers, direct debit | — |
-| 9 | Docs site and both example apps deployed; weekly sandbox drift workflow | Approve GitHub Pages being switched on |
-| 10 | Release automation; publish `0.1.0` pre-release **with your explicit approval**, test installs from the real registries, then `1.0.0` with your approval; README polish; launch posts for X, LinkedIn and dev.to | Create npm and PyPI accounts, enable PyPI trusted publishing, approve each publish |
-| 11 | After 1.0, when you say go: Tier 2 gateways, Tier 3 BaaS wallet accounts, bills/VTU, Go client — one provider at a time | — |
+| #   | Milestone                                                                                                                                                                                                                      | What you need to do                                                                                                                               |
+| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1   | **Research, PROVIDERS.md, capability matrix, API design, plan** — **done** 2026-10-25                                                                                                                                          | —                                                                                                                                                 |
+| 2   | **Scaffold repo, MIT licence, CI, contributing files** — **done** 2026-10-26, 9 CI jobs green                                                                                                                                  | —                                                                                                                                                 |
+| 3   | **Core: money, errors, HTTP with retries and idempotency, redaction, capabilities, signature schemes, bank matching from naija-data, normalised events and inflow rules, mock provider, parity harness** — **done** 2026-10-30 | —                                                                                                                                                 |
+| 4   | **Paystack** adapter, both languages, all features, webhooks, tests; then sandbox-verified                                                                                                                                     | Create a free Paystack account, paste the **test** secret key into `.env` and into GitHub Actions secrets. I will tell you exactly where to click |
+| 5   | **Flutterwave** adapter (v4 + v3, its own milestone)                                                                                                                                                                           | Flutterwave test account: v3 keys and v4 client ID/secret                                                                                         |
+| 6   | **Monnify** and **Fincra** adapters                                                                                                                                                                                            | Monnify needs nothing at first — they publish public test credentials. Fincra: a sandbox account                                                  |
+| 7   | **Squad** and **Korapay** adapters; webhook schemes for Squad and Monnify established against sandbox; capability matrix generated from code                                                                                   | Squad sandbox account, Korapay test account                                                                                                       |
+| 8   | Router and failover, fee calculator, reconciliation, CLI, framework webhook handlers, direct debit                                                                                                                             | —                                                                                                                                                 |
+| 9   | Docs site and both example apps deployed; weekly sandbox drift workflow                                                                                                                                                        | Approve GitHub Pages being switched on                                                                                                            |
+| 10  | Release automation; publish `0.1.0` pre-release **with your explicit approval**, test installs from the real registries, then `1.0.0` with your approval; README polish; launch posts for X, LinkedIn and dev.to               | Create npm and PyPI accounts, enable PyPI trusted publishing, approve each publish                                                                |
+| 11  | After 1.0, when you say go: Tier 2 gateways, Tier 3 BaaS wallet accounts, bills/VTU, Go client — one provider at a time                                                                                                        | —                                                                                                                                                 |
 
 **DECISION 3:** approve the milestone order, in particular Flutterwave getting its own milestone
 (which makes it 11 milestones rather than 10).

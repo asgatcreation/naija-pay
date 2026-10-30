@@ -13,7 +13,7 @@ from typing import Any
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1] / "src"))
 
-from naija_pay.core.errors import (  # noqa: E402
+from naija_pay.core.errors import (
     AuthenticationError,
     DuplicateReferenceError,
     InsufficientFundsError,
@@ -24,14 +24,14 @@ from naija_pay.core.errors import (  # noqa: E402
     RateLimitedError,
     ValidationError,
 )
-from naija_pay.core.http import (  # noqa: E402
+from naija_pay.core.http import (
     HttpClient,
     HttpClientOptions,
     RetryPolicy,
-    TransportFailure,
+    TransportError,
     TransportRequest,
     TransportResponse,
-    TransportTimeout,
+    TransportTimeoutError,
 )
 
 
@@ -116,14 +116,14 @@ class TestRetryingSafeRequests(unittest.TestCase):
         self.assertEqual(slept, [2.0])
 
     def test_retries_transport_failure(self) -> None:
-        t = FakeTransport([TransportFailure("connection reset"), ok()])
+        t = FakeTransport([TransportError("connection reset"), ok()])
         client, _ = make_client(t)
 
         response = client.request(method="GET", path="/x", safety="safe")
         self.assertEqual(response.attempts, 2)
 
     def test_retries_timeout(self) -> None:
-        t = FakeTransport([TransportTimeout("too slow"), ok()])
+        t = FakeTransport([TransportTimeoutError("too slow"), ok()])
         client, _ = make_client(t)
 
         self.assertEqual(client.request(method="GET", path="/x", safety="safe").attempts, 2)
@@ -151,7 +151,7 @@ class TestMoneyMovingNeverRetried(unittest.TestCase):
         self.assertEqual(t.attempts, 1, "the payout must be sent exactly once")
 
     def test_transport_failure_becomes_payout_status_unknown(self) -> None:
-        t = FakeTransport([TransportFailure("socket hang up")])
+        t = FakeTransport([TransportError("socket hang up")])
         client, _ = make_client(t)
 
         with self.assertRaises(PayoutStatusUnknownError) as ctx:
@@ -162,7 +162,7 @@ class TestMoneyMovingNeverRetried(unittest.TestCase):
         self.assertEqual(t.attempts, 1)
 
     def test_falls_back_to_idempotency_key_as_reference(self) -> None:
-        t = FakeTransport([TransportFailure("boom")])
+        t = FakeTransport([TransportError("boom")])
         client, _ = make_client(t)
 
         with self.assertRaises(PayoutStatusUnknownError) as ctx:
@@ -187,7 +187,7 @@ class TestMoneyMovingNeverRetried(unittest.TestCase):
 
 class TestUnsafeRequests(unittest.TestCase):
     def test_not_retried_but_ordinary_network_error(self) -> None:
-        t = FakeTransport([TransportFailure("connection reset")])
+        t = FakeTransport([TransportError("connection reset")])
         client, _ = make_client(t)
 
         with self.assertRaises(NetworkError):
@@ -214,13 +214,13 @@ class TestErrorClassification(unittest.TestCase):
                 client.request(method="GET", path="/x", safety="safe")
 
     def test_keeps_provider_message_and_code(self) -> None:
-        t = FakeTransport([(400, {"message": "Invalid account number", "code": "invalid_account"}, None)])
+        t = FakeTransport(
+            [(400, {"message": "Invalid account number", "code": "invalid_account"}, None)]
+        )
         client, _ = make_client(t)
 
         with self.assertRaises(ValidationError) as ctx:
-            client.request(
-                method="GET", path="/x", safety="safe", operation="banks.resolveAccount"
-            )
+            client.request(method="GET", path="/x", safety="safe", operation="banks.resolveAccount")
         error = ctx.exception
         self.assertEqual(error.provider_message, "Invalid account number")
         self.assertEqual(error.provider_code, "invalid_account")

@@ -19,9 +19,24 @@
     "test": "node --test \"packages/ts/test/**/*.test.ts\"",
     "test:python": "python -m unittest discover -s packages/python/tests -t packages/python -v",
     "test:parity": "node tools/check-parity.mjs",
-    "check": "npm run test && npm run test:python && npm run test:parity && npm run check:data",
+    "check": "npm run typecheck && npm run lint && npm run test && npm run test:python && npm run test:parity && npm run check:data",
     "build:banks": "node tools/generate-banks.mjs",
     "check:data": "node tools/check-generated-data.mjs",
-    "report:banks": "node tools/report-banks.mjs"
+    "report:banks": "node tools/report-banks.mjs",
+    "typecheck": "tsc --noEmit -p packages/ts/tsconfig.json",
+    "lint": "biome check .",
+    "lint:fix": "biome check --write .",
+    "lint:python": "ruff check . && ruff format --check .",
+    "typecheck:python": "mypy --config-file packages/python/pyproject.toml packages/python/src/naija_pay",
+    "build": "npm run build:js --workspace @asgatcreation/naija-pay && npm run build:types --workspace @asgatcreation/naija-pay",
+    "size": "node tools/bundle-size.mjs",
+    "smoke": "node tools/smoke-dist.mjs",
+    "verify": "npm run build && npm run size && npm run smoke"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.6.4",
+    "@types/node": "^26.6.6",
+    "tsup": "^9.0.0",
+    "typescript": "^7.0.2"
   }
 }

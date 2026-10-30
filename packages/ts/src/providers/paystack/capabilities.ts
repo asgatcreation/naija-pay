@@ -7,7 +7,12 @@
  * fails locally with a clear message rather than appearing to work.
  */
 
-import type { Channel, Operation, OperationSupport, ProviderCapabilities } from "../../core/capabilities.ts";
+import type {
+  Channel,
+  Operation,
+  OperationSupport,
+  ProviderCapabilities,
+} from "../../core/capabilities.ts";
 
 export const PAYSTACK_PROVIDER_NAME = "paystack";
 

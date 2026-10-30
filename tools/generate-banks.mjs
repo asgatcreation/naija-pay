@@ -13,13 +13,12 @@
  * the generated file and must stay there.
  */
 
-import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
+import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const CSV_URL =
-  "https://raw.githubusercontent.com/asgatcreation/naija-data/main/data/banks.csv";
+const CSV_URL = "https://raw.githubusercontent.com/asgatcreation/naija-data/main/data/banks.csv";
 const META_URL =
   "https://raw.githubusercontent.com/asgatcreation/naija-data/main/packages/js/src/data/meta.json";
 const OUT = path.join(ROOT, "data", "banks.generated.json");
@@ -176,7 +175,9 @@ const kb = (JSON.stringify(out).length / 1024).toFixed(1);
 console.log(`wrote ${path.relative(ROOT, OUT)} and ${COPIES.length} package copies`);
 console.log(`  data version      ${out.source.dataVersion}`);
 console.log(`  in source         ${out.counts.institutionsInSource}`);
-console.log(`  kept              ${out.counts.kept} (${out.counts.active} active, ${out.counts.merged} merged)`);
+console.log(
+  `  kept              ${out.counts.kept} (${out.counts.active} active, ${out.counts.merged} merged)`,
+);
 console.log(`  with NIP code     ${out.counts.withNipCode}`);
 console.log(`  with CBN code     ${out.counts.withCbnCode}`);
 console.log(`  unverified codes  ${out.counts.withUnverifiedCode}`);

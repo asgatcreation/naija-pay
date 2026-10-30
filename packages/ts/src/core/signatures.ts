@@ -136,6 +136,19 @@ function toBase64(bytes: ArrayBuffer | Uint8Array): string {
   return btoa(binary);
 }
 
+/**
+ * Copies bytes into a buffer WebCrypto will accept.
+ *
+ * `Uint8Array` defaults to being backed by `ArrayBufferLike`, which could be a
+ * `SharedArrayBuffer`, and `BufferSource` requires a plain `ArrayBuffer`. Copying is
+ * cheap at webhook sizes and avoids pushing the generic parameter onto every caller.
+ */
+function toBufferSource(bytes: Uint8Array): Uint8Array<ArrayBuffer> {
+  const copy = new Uint8Array(bytes.byteLength);
+  copy.set(bytes);
+  return copy;
+}
+
 async function hmac(
   algorithm: HashAlgorithm,
   secret: string,
@@ -143,12 +156,12 @@ async function hmac(
 ): Promise<ArrayBuffer> {
   const key = await subtle().importKey(
     "raw",
-    encoder.encode(secret),
+    toBufferSource(encoder.encode(secret)),
     { name: "HMAC", hash: algorithm },
     false,
     ["sign"],
   );
-  return await subtle().sign("HMAC", key, payload);
+  return await subtle().sign("HMAC", key, toBufferSource(payload));
 }
 
 /**

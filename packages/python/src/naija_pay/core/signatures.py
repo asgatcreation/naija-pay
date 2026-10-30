@@ -26,8 +26,9 @@ import base64
 import hashlib
 import hmac as _hmac
 import json
+from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
-from typing import Any, Literal, Mapping, Sequence
+from typing import Any, Literal
 
 #: How strongly a received webhook was actually verified.
 #:
@@ -114,8 +115,7 @@ def _payload_to_sign(scheme: SignatureScheme, body: bytes) -> bytes:
     for key in scheme.json_path:
         if not isinstance(cursor, dict):
             raise SignatureSchemeError(
-                f'the webhook body has no "{path}" to sign, so its signature cannot be '
-                "checked"
+                f'the webhook body has no "{path}" to sign, so its signature cannot be checked'
             )
         cursor = cursor.get(key, missing)
 
@@ -123,8 +123,7 @@ def _payload_to_sign(scheme: SignatureScheme, body: bytes) -> bytes:
     # string "null" and then verify against itself -- accepting an unsigned event.
     if cursor is missing:
         raise SignatureSchemeError(
-            f'the webhook body has no "{path}" to sign, so its signature cannot be '
-            "checked"
+            f'the webhook body has no "{path}" to sign, so its signature cannot be checked'
         )
 
     # separators matter: this must match what the provider's own JSON encoder produced.
@@ -290,10 +289,10 @@ SCHEMES: dict[str, SignatureScheme] = {
 
 __all__: Sequence[str] = [
     "SCHEMES",
-    "SignatureSchemeError",
     "HashAlgorithm",
     "SignatureKind",
     "SignatureScheme",
+    "SignatureSchemeError",
     "SignatureStrength",
     "VerificationResult",
     "compute_signature",

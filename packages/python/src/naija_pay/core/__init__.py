@@ -26,19 +26,6 @@ from naija_pay.core.capabilities import (
     support_for,
     supports,
 )
-from naija_pay.core.events import (
-    DEFAULT_INFLOW_RULES,
-    EventSender,
-    IdempotencyStore,
-    InflowClassification,
-    InflowDecision,
-    InflowRules,
-    MemoryStore,
-    NaijaPayEvent,
-    VirtualAccountInflow,
-    classify_inflow,
-    decide_inflow,
-)
 from naija_pay.core.errors import (
     AuthenticationError,
     ConfigurationError,
@@ -56,6 +43,19 @@ from naija_pay.core.errors import (
     ValidationError,
     WebhookVerificationError,
     error_class_for_status,
+)
+from naija_pay.core.events import (
+    DEFAULT_INFLOW_RULES,
+    EventSender,
+    IdempotencyStore,
+    InflowClassification,
+    InflowDecision,
+    InflowRules,
+    MemoryStore,
+    NaijaPayEvent,
+    VirtualAccountInflow,
+    classify_inflow,
+    decide_inflow,
 )
 from naija_pay.core.money import (
     BASIS_POINTS_TOTAL,
@@ -75,6 +75,14 @@ from naija_pay.core.money import (
     split_by_flat_amounts,
     subtract,
 )
+from naija_pay.core.redact import (
+    looks_like_live_key,
+    looks_like_test_key,
+    mask_account_number,
+    mask_identity_number,
+    redact,
+    redact_object,
+)
 from naija_pay.core.signatures import (
     SCHEMES,
     SignatureScheme,
@@ -85,22 +93,15 @@ from naija_pay.core.signatures import (
     strength_of,
     verify_signature,
 )
-from naija_pay.core.redact import (
-    looks_like_live_key,
-    looks_like_test_key,
-    mask_account_number,
-    mask_identity_number,
-    redact,
-    redact_object,
-)
 
 __all__ = [
-    "AuthenticationError",
     "BASIS_POINTS_TOTAL",
+    "DEFAULT_INFLOW_RULES",
+    "SCHEMES",
+    "AuthenticationError",
     "BankDataSource",
     "ConfigurationError",
     "CoverageReport",
-    "DEFAULT_INFLOW_RULES",
     "DuplicateReferenceError",
     "EventSender",
     "IdempotencyStore",
@@ -125,7 +126,6 @@ __all__ = [
     "ProviderDownError",
     "ProviderError",
     "RateLimitedError",
-    "SCHEMES",
     "Share",
     "SignatureScheme",
     "SignatureSchemeError",

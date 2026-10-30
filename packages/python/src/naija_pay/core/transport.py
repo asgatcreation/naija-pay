@@ -16,10 +16,10 @@ from __future__ import annotations
 from typing import Any
 
 from naija_pay.core.http import (
-    TransportFailure,
+    TransportError,
     TransportRequest,
     TransportResponse,
-    TransportTimeout,
+    TransportTimeoutError,
 )
 
 
@@ -57,10 +57,10 @@ class HttpxTransport:
                 timeout=request.timeout_seconds,
             )
         except httpx.TimeoutException as exc:
-            raise TransportTimeout(str(exc)) from exc
+            raise TransportTimeoutError(str(exc)) from exc
         except httpx.HTTPError as exc:
             # Connection errors, DNS failures, TLS problems, protocol errors.
-            raise TransportFailure(str(exc)) from exc
+            raise TransportError(str(exc)) from exc
         finally:
             if owns_client:
                 client.close()

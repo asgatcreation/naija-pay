@@ -147,7 +147,10 @@ export class RateLimitedError extends NaijaPayError {
   /** Seconds to wait, when the provider says. Flutterwave documents 429 but no value. */
   readonly retryAfterSeconds: number | undefined;
 
-  constructor(message: string, context: NaijaPayErrorContext & { retryAfterSeconds?: number } = {}) {
+  constructor(
+    message: string,
+    context: NaijaPayErrorContext & { retryAfterSeconds?: number } = {},
+  ) {
     super(message, context);
     this.retryAfterSeconds = context.retryAfterSeconds;
   }

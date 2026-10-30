@@ -1,17 +1,18 @@
-import { test, describe } from "node:test";
 import assert from "node:assert/strict";
+import { describe, test } from "node:test";
+import { assertSupported, requiredKycFor, supports } from "../src/core/capabilities.ts";
+import { UnsupportedOperationError } from "../src/core/errors.ts";
 import {
-  DEFAULT_INFLOW_RULES,
-  type InflowRules,
   classifyInflow,
+  DEFAULT_INFLOW_RULES,
   decideInflow,
+  hasProcessed,
+  type InflowRules,
   memoryStore,
 } from "../src/core/events.ts";
 import { naira } from "../src/core/money.ts";
 import { verifySignature } from "../src/core/signatures.ts";
 import { INFLOW_SCENARIOS, MOCK_SCHEME, mock } from "../src/providers/mock/index.ts";
-import { assertSupported, requiredKycFor, supports } from "../src/core/capabilities.ts";
-import { UnsupportedOperationError } from "../src/core/errors.ts";
 
 const FIXED_NOW = () => new Date("2026-10-30T12:00:00.000Z");
 
@@ -108,7 +109,10 @@ describe("deciding what to do with an inflow", () => {
       isLate: false,
     };
 
-    const full = decideInflow({ inflow, rules: { ...DEFAULT_INFLOW_RULES, overpayment: "credit_full" } });
+    const full = decideInflow({
+      inflow,
+      rules: { ...DEFAULT_INFLOW_RULES, overpayment: "credit_full" },
+    });
     assert.equal(full.action, "credit");
     assert.equal(full.action === "credit" && full.amount.amount, 550_000);
 
@@ -214,6 +218,58 @@ describe("the idempotency store", () => {
   });
 });
 
+describe("the un-awaited store guard", () => {
+  test("refuses a Promise for alreadyProcessed, instead of treating it as a duplicate", () => {
+    // An async store returns a Promise, and an un-awaited Promise is ALWAYS truthy.
+    // Without this guard every inflow would look like a duplicate and nobody would ever
+    // be credited — a silent money bug. The TypeScript types catch it too, but a
+    // JavaScript caller has no types.
+    const inflow = {
+      expectedAmount: naira(5_000),
+      amountPaid: naira(5_000),
+      variance: "exact" as const,
+      isLate: false,
+    };
+
+    assert.throws(
+      () =>
+        decideInflow({
+          inflow,
+          alreadyProcessed: Promise.resolve(false) as unknown as boolean,
+        }),
+      (error: unknown) => {
+        assert.ok(error instanceof TypeError);
+        assert.match(error.message, /must be a boolean/);
+        assert.match(error.message, /always truthy/);
+        assert.match(error.message, /hasProcessed/);
+        return true;
+      },
+    );
+  });
+
+  test("hasProcessed awaits a store that returns a Promise", async () => {
+    const asyncStore = {
+      has: async (id: string) => id === "seen",
+      mark: async () => {},
+    };
+
+    assert.equal(await hasProcessed(asyncStore, "seen"), true);
+    assert.equal(await hasProcessed(asyncStore, "fresh"), false);
+
+    // And the decision made with the awaited value is the correct one.
+    const decision = decideInflow({
+      inflow: {
+        expectedAmount: naira(5_000),
+        amountPaid: naira(5_000),
+        variance: "exact",
+        isLate: false,
+      },
+      alreadyProcessed: await hasProcessed(asyncStore, "fresh"),
+    });
+    assert.equal(decision.action, "credit");
+  });
+});
+
 describe("the mock provider", () => {
   test("emits webhooks that pass real signature verification", async () => {
     // The whole point: the security path is not stubbed. The same verifier that runs
@@ -231,7 +287,7 @@ describe("the mock provider", () => {
       secret: provider.secret,
     });
 
-    assert.ok(result.verified, result.reason);
+    assert.ok(result.verified, result.reason ?? "");
     assert.equal(result.strength, "full-body");
   });
 
@@ -332,7 +388,8 @@ describe("the mock provider", () => {
         variance: "exact",
         isLate: false,
       },
-      alreadyProcessed: store.has(replay.event.id),
+      // Awaited deliberately: see the guard in decideInflow.
+      alreadyProcessed: await hasProcessed(store, replay.event.id),
     });
     assert.equal(decision.action, "ignore");
   });

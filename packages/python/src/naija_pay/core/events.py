@@ -15,9 +15,10 @@ Mirrors ``packages/ts/src/core/events.ts``.
 
 from __future__ import annotations
 
+from collections.abc import Sequence
 from dataclasses import dataclass, field
 from datetime import datetime
-from typing import Any, Literal, Sequence
+from typing import Any, Literal
 
 from naija_pay.core.money import Money, compare, money, subtract
 from naija_pay.core.signatures import SignatureStrength
@@ -188,6 +189,15 @@ def decide_inflow(
     be reachable through configuration.
     """
     active = rules or DEFAULT_INFLOW_RULES
+
+    # A guard, not an assumption. An async store's coroutine is always truthy, which
+    # would make every inflow look like a duplicate and silently credit nobody.
+    if not isinstance(already_processed, bool):
+        raise TypeError(
+            "decide_inflow: already_processed must be a bool. It looks like an "
+            "un-awaited coroutine was passed -- a coroutine is always truthy, so every "
+            "inflow would be treated as a duplicate and nobody would be credited."
+        )
 
     if already_processed:
         return InflowDecision(

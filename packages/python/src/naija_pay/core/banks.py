@@ -24,10 +24,11 @@ from __future__ import annotations
 
 import json
 import re
+from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
 from functools import lru_cache
 from importlib import resources
-from typing import Any, Literal, Mapping, Sequence
+from typing import Any, Literal, cast
 
 InstitutionType = Literal[
     "commercial",
@@ -100,10 +101,10 @@ def normalise_bank_name(name: str) -> str:
 
 
 def _load_raw() -> dict[str, Any]:
-    text = (
-        resources.files("naija_pay._data").joinpath("banks.json").read_text(encoding="utf-8")
-    )
-    return json.loads(text)
+    text = resources.files("naija_pay._data").joinpath("banks.json").read_text(encoding="utf-8")
+    # json.loads is Any; the shape is guaranteed by tools/check-generated-data.mjs,
+    # which CI runs on every push.
+    return cast(dict[str, Any], json.loads(text))
 
 
 @dataclass(frozen=True, slots=True)
@@ -238,9 +239,7 @@ def match_institution(
             # Distinguish a hit on the official name from one on an alias or short name,
             # so the caller can tell how confident the match is.
             official = normalise_bank_name(hit.name) == key
-            return InstitutionMatch(
-                institution=hit, matched_by="name" if official else "alias"
-            )
+            return InstitutionMatch(institution=hit, matched_by="name" if official else "alias")
 
     return None
 
@@ -287,9 +286,7 @@ class CoverageReport:
     unmatched: tuple[Mapping[str, Any], ...]
 
 
-def coverage_for(
-    provider: str, banks: Sequence[Mapping[str, Any]]
-) -> CoverageReport:
+def coverage_for(provider: str, banks: Sequence[Mapping[str, Any]]) -> CoverageReport:
     """How much of a provider's bank list can be matched to an institution.
 
     Unmatched banks are a naija-data issue to fix, not a reason to fail a build -- which

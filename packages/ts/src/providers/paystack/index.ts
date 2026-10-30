@@ -18,22 +18,22 @@
  *    as success.
  */
 
+import type { Channel } from "../../core/capabilities.ts";
 import { assertSupported, type Operation } from "../../core/capabilities.ts";
 import {
   ConfigurationError,
   DuplicateReferenceError,
+  errorClassForStatus,
   InsufficientFundsError,
   KycRequiredError,
   type NaijaPayError,
   NotFoundError,
   ValidationError,
-  errorClassForStatus,
 } from "../../core/errors.ts";
 import { HttpClient, type LogEvent, type RetryPolicy } from "../../core/http.ts";
 import { BASIS_POINTS_TOTAL, type Money } from "../../core/money.ts";
 import { looksLikeLiveKey, looksLikeTestKey } from "../../core/redact.ts";
 import { SCHEMES, verifySignature } from "../../core/signatures.ts";
-import type { Channel } from "../../core/capabilities.ts";
 import {
   CHANNEL_TO_PAYSTACK,
   PAYSTACK_BASE_URL,
@@ -43,19 +43,19 @@ import {
 } from "./capabilities.ts";
 import {
   type BankAccount,
+  enrich,
   type Payout,
   type Refund,
   type Split,
   type SplitAccount,
   type Transaction,
-  type VirtualAccount,
-  enrich,
   toPayout,
   toRefund,
   toSplit,
   toSplitAccount,
   toTransaction,
   toVirtualAccount,
+  type VirtualAccount,
 } from "./normalise.ts";
 
 export * from "./capabilities.ts";
@@ -288,14 +288,16 @@ export class PaystackProvider {
     return toTransaction(data);
   }
 
-  async listTransactions(options: {
-    readonly page?: number;
-    readonly perPage?: number;
-    readonly status?: string;
-    readonly from?: string;
-    readonly to?: string;
-    readonly customer?: string;
-  } = {}): Promise<{ readonly transactions: readonly Transaction[]; readonly meta: unknown }> {
+  async listTransactions(
+    options: {
+      readonly page?: number;
+      readonly perPage?: number;
+      readonly status?: string;
+      readonly from?: string;
+      readonly to?: string;
+      readonly customer?: string;
+    } = {},
+  ): Promise<{ readonly transactions: readonly Transaction[]; readonly meta: unknown }> {
     const { data, meta } = await this.#call<unknown[]>({
       method: "GET",
       path: "/transaction",
@@ -409,7 +411,11 @@ export class PaystackProvider {
   }
 
   async listVirtualAccounts(
-    options: { readonly active?: boolean; readonly currency?: string; readonly customer?: string } = {},
+    options: {
+      readonly active?: boolean;
+      readonly currency?: string;
+      readonly customer?: string;
+    } = {},
   ): Promise<readonly VirtualAccount[]> {
     const { data } = await this.#call<unknown[]>({
       method: "GET",

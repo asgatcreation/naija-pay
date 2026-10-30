@@ -1,13 +1,12 @@
 """Bank matching tests, mirroring packages/ts/test/banks.test.ts."""
 
 import pathlib
-import re
 import sys
 import unittest
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1] / "src"))
 
-from naija_pay.core.banks import (  # noqa: E402
+from naija_pay.core.banks import (
     bank_data_source,
     coverage_for,
     institution_by_id,
@@ -46,9 +45,7 @@ class TestNameNormalisation(unittest.TestCase):
         self.assertEqual(normalise_bank_name("Stanbic IBTC Bank"), "stanbic ibtc")
 
     def test_expands_ampersand(self) -> None:
-        self.assertEqual(
-            normalise_bank_name("Taj & Co Bank"), normalise_bank_name("Taj and Bank")
-        )
+        self.assertEqual(normalise_bank_name("Taj & Co Bank"), normalise_bank_name("Taj and Bank"))
 
 
 class TestMatching(unittest.TestCase):

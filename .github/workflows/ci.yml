@@ -23,9 +23,9 @@ jobs:
       matrix:
         # Only 22 and 24 here, because these tests execute the TypeScript sources
         # directly and Node gained native type stripping in 22.18 / 23.6. The
-        # PUBLISHED package supports Node 20+ — it ships compiled JavaScript — and
-        # milestone 3 adds a build job that runs the compiled output on Node 20 to
-        # prove it.
+        # PUBLISHED package supports Node 20+ — it ships compiled JavaScript — and the
+        # `build` job below runs the compiled output on Node 20 to prove it rather than
+        # assert it.
         node: ["22", "24"]
     steps:
       - uses: actions/checkout@v4
@@ -97,6 +97,93 @@ jobs:
       # the weekly workflow's job, where it opens an issue instead.
       - name: Validate committed bank data
         run: npm run check:data
+
+  typecheck:
+    name: Typecheck (TypeScript)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: npm
+
+      - run: npm ci
+
+      - name: tsc --noEmit
+        run: npm run typecheck
+
+  lint:
+    name: Lint and format
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: npm
+
+      - run: npm ci
+
+      - name: Biome
+        run: npm run lint
+
+  build:
+    name: Build, size and smoke (Node ${{ matrix.node }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # 20 is the floor the published package declares. The sources cannot run there,
+        # but the compiled output must, and this is what proves it.
+        node: ["20", "24"]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: npm
+
+      - run: npm ci
+
+      # Built with Node 24 because tsup and tsc need a modern Node...
+      - name: Build
+        run: npm run build
+
+      - name: Bundle size against budget
+        run: npm run size
+
+      # ...then the OUTPUT is exercised on the matrix version, which is the point.
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: Smoke-test the built package
+        run: node tools/smoke-dist.mjs
+
+  python-quality:
+    name: Lint and typecheck (Python)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      # Pinned so a new ruff or mypy release cannot fail an unrelated pull request.
+      # Dependabot proposes the bumps instead.
+      - name: Install the Python toolchain
+        run: python -m pip install --quiet ruff==0.17.3 mypy==2.4.1 httpx
+
+      - name: Ruff
+        run: npm run lint:python
+
+      - name: mypy --strict
+        run: npm run typecheck:python
 
   hygiene:
     name: Repository hygiene

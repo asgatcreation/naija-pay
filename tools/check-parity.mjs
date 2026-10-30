@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+
 /**
  * Cross-language parity.
  *
@@ -11,8 +12,8 @@
  * 0.3.0 on PyPI would make the README's "same concepts in both languages" promise false.
  */
 
-import { readFileSync } from "node:fs";
 import { spawnSync } from "node:child_process";
+import { readFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 

@@ -23,9 +23,7 @@ VERIFIED = "2026-10-30"
 def write(operation: str, request: dict, response: dict, source: str) -> None:
     directory = BASE / operation
     directory.mkdir(parents=True, exist_ok=True)
-    (directory / "request.json").write_text(
-        json.dumps(request, indent=2) + "\n", encoding="utf-8"
-    )
+    (directory / "request.json").write_text(json.dumps(request, indent=2) + "\n", encoding="utf-8")
     (directory / "response.json").write_text(
         json.dumps(response, indent=2) + "\n", encoding="utf-8"
     )

@@ -7,22 +7,22 @@ from datetime import datetime, timezone
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1] / "src"))
 
-from naija_pay.core.capabilities import (  # noqa: E402
+from naija_pay.core.capabilities import (
     assert_supported,
     required_kyc_for,
     supports,
 )
-from naija_pay.core.errors import UnsupportedOperationError  # noqa: E402
-from naija_pay.core.events import (  # noqa: E402
+from naija_pay.core.errors import UnsupportedOperationError
+from naija_pay.core.events import (
     DEFAULT_INFLOW_RULES,
     InflowRules,
     MemoryStore,
     classify_inflow,
     decide_inflow,
 )
-from naija_pay.core.money import naira  # noqa: E402
-from naija_pay.core.signatures import verify_signature  # noqa: E402
-from naija_pay.providers.mock import (  # noqa: E402
+from naija_pay.core.money import naira
+from naija_pay.core.signatures import verify_signature
+from naija_pay.providers.mock import (
     INFLOW_SCENARIOS,
     MOCK_SCHEME,
     mock,
@@ -196,14 +196,44 @@ class TestIdempotencyStore(unittest.TestCase):
         self.assertEqual(store.size(), 1)
 
 
+class TestUnawaitedStoreGuard(unittest.TestCase):
+    def test_refuses_a_coroutine_for_already_processed(self) -> None:
+        # An async store returns a coroutine, and a coroutine is ALWAYS truthy. Without
+        # this guard every inflow would look like a duplicate and nobody would ever be
+        # credited -- a silent money bug.
+        async def has(_event_id: str) -> bool:
+            return False
+
+        coroutine = has("evt_1")
+        try:
+            with self.assertRaises(TypeError) as ctx:
+                decide_inflow(
+                    variance="exact",
+                    amount_paid=naira(5_000),
+                    expected_amount=naira(5_000),
+                    already_processed=coroutine,  # type: ignore[arg-type]
+                )
+            self.assertIn("must be a bool", str(ctx.exception))
+            self.assertIn("always truthy", str(ctx.exception))
+        finally:
+            coroutine.close()
+
+    def test_accepts_a_real_bool(self) -> None:
+        decision = decide_inflow(
+            variance="exact",
+            amount_paid=naira(5_000),
+            expected_amount=naira(5_000),
+            already_processed=False,
+        )
+        self.assertEqual(decision.action, "credit")
+
+
 class TestMockProvider(unittest.TestCase):
     def test_webhooks_pass_real_signature_verification(self) -> None:
         # The whole point: the security path is not stubbed. The same verifier that runs
         # against Paystack runs against the mock.
         provider = mock(now=fixed_now)
-        webhook = provider.simulate_inflow(
-            expected_amount=naira(5_000), amount_paid=naira(5_000)
-        )
+        webhook = provider.simulate_inflow(expected_amount=naira(5_000), amount_paid=naira(5_000))
         result = verify_signature(
             scheme=MOCK_SCHEME,
             body=webhook.body,
@@ -227,9 +257,7 @@ class TestMockProvider(unittest.TestCase):
 
     def test_tampering_is_detected(self) -> None:
         provider = mock(now=fixed_now)
-        webhook = provider.simulate_inflow(
-            expected_amount=naira(5_000), amount_paid=naira(5_000)
-        )
+        webhook = provider.simulate_inflow(expected_amount=naira(5_000), amount_paid=naira(5_000))
         tampered = webhook.text.replace("500000", "99999999").encode("utf-8")
         result = verify_signature(
             scheme=MOCK_SCHEME,

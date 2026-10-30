@@ -1,7 +1,12 @@
 {
   "compilerOptions": {
     "target": "ES2023",
-    "lib": ["ES2023"],
+    // DOM is included for the web-platform globals this package is built on — fetch,
+    // Response, TextEncoder, crypto.subtle, btoa, AbortSignal — which exist on Node 18+,
+    // Bun, Deno and edge runtimes alike. It does not mean the package touches a browser
+    // document; it is how those standard APIs are typed.
+    "lib": ["ES2023", "DOM", "DOM.Iterable"],
+    "types": ["node"],
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
     "rewriteRelativeImportExtensions": true,

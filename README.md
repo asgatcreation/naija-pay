@@ -20,16 +20,16 @@ Today, every Nigerian startup writes separate, fragile integration code for each
 The field names differ. The bank codes differ. The error shapes differ. And the webhook signatures
 differ so much that getting them right is a research project in itself:
 
-| Provider | Webhook header | Algorithm | Signed over |
-| --- | --- | --- | --- |
-| Paystack | `x-paystack-signature` | HMAC-SHA512, hex | raw body |
-| Flutterwave v4 | `flutterwave-signature` | HMAC-SHA256, base64 | raw body |
-| Flutterwave v3 | `verif-hash` | none — literal string comparison | **nothing** |
-| Fincra | `signature` | HMAC-SHA512, hex | re-serialised `{event, data}` |
-| Korapay | `x-korapay-signature` | HMAC-SHA256, hex | the `data` object **only** |
-| Anchor | `x-anchor-signature` | HMAC-**SHA1**, base64 | body |
-| Monnify | undocumented | undocumented | — |
-| Squad | `x-squad-encrypted-body` | **undocumented** | — |
+| Provider       | Webhook header           | Algorithm                        | Signed over                   |
+| -------------- | ------------------------ | -------------------------------- | ----------------------------- |
+| Paystack       | `x-paystack-signature`   | HMAC-SHA512, hex                 | raw body                      |
+| Flutterwave v4 | `flutterwave-signature`  | HMAC-SHA256, base64              | raw body                      |
+| Flutterwave v3 | `verif-hash`             | none — literal string comparison | **nothing**                   |
+| Fincra         | `signature`              | HMAC-SHA512, hex                 | re-serialised `{event, data}` |
+| Korapay        | `x-korapay-signature`    | HMAC-SHA256, hex                 | the `data` object **only**    |
+| Anchor         | `x-anchor-signature`     | HMAC-**SHA1**, base64            | body                          |
+| Monnify        | undocumented             | undocumented                     | —                             |
+| Squad          | `x-squad-encrypted-body` | **undocumented**                 | —                             |
 
 Seven providers, seven schemes, three hash algorithms, two encodings, two kinds of key — and three
 where the published documentation does not let you verify correctly at all. Every one of these is
@@ -68,7 +68,7 @@ const pay = new NaijaPay({
 });
 
 const checkout = await pay.checkout.create({
-  amount: naira(5_000),                 // 500000 kobo — integers only, never floats
+  amount: naira(5_000), // 500000 kobo — integers only, never floats
   reference: "order_01HQ",
   customer: { email: "ada@example.com" },
   channels: ["card", "bank_transfer", "ussd"],
@@ -77,7 +77,9 @@ const checkout = await pay.checkout.create({
 console.log(checkout.checkoutUrl);
 
 const txn = await pay.transactions.verify("order_01HQ");
-if (txn.status === "successful") { /* give value */ }
+if (txn.status === "successful") {
+  /* give value */
+}
 ```
 
 ```python
@@ -104,11 +106,11 @@ expire. They are separate methods, because confusing them is a real production b
 ```ts
 const va = await pay.virtualAccounts.createStatic({
   customer: { email: "ada@example.com", name: "Ada Obi" },
-  kyc: { bvn: "22222222222" },          // required by CBN rules on most providers
+  kyc: { bvn: "22222222222" }, // required by CBN rules on most providers
   preferredBank: "wema",
 });
 
-console.log(va.accounts);  // [{ accountNumber, accountName, bankName, bankCode }]
+console.log(va.accounts); // [{ accountNumber, accountName, bankName, bankCode }]
 ```
 
 ```python
@@ -134,11 +136,11 @@ const split = await pay.splits.create({
   name: "marketplace",
   type: "percentage",
   currency: "NGN",
-  parties: [{ account: vendor.code, share: 9_000 }],   // basis points, integers
+  parties: [{ account: vendor.code, share: 9_000 }], // basis points, integers
   feeBearer: "all_proportional",
 });
 
-pay.splits.preview(naira(10_000), split);   // exact per-party kobo, before you use it
+pay.splits.preview(naira(10_000), split); // exact per-party kobo, before you use it
 ```
 
 naija-pay keeps the **two different kinds of sub-account** strictly apart: `pay.splitAccounts` settles
@@ -154,12 +156,16 @@ import express from "express";
 const app = express();
 app.post(
   "/webhooks",
-  express.raw({ type: "application/json" }),     // raw body — this is the usual mistake
+  express.raw({ type: "application/json" }), // raw body — this is the usual mistake
   pay.webhooks.expressHandler({
-    reverifyBeforeGivingValue: true,             // default on
+    reverifyBeforeGivingValue: true, // default on
     on: {
-      "payment.successful": async (e) => { /* e.data is a typed Transaction */ },
-      "virtual_account.credited": async (e) => { /* typed inflow, with sender and variance */ },
+      "payment.successful": async (e) => {
+        /* e.data is a typed Transaction */
+      },
+      "virtual_account.credited": async (e) => {
+        /* typed inflow, with sender and variance */
+      },
     },
   }),
 );
@@ -168,10 +174,15 @@ app.post(
 ```python
 from naija_pay.frameworks.fastapi import webhook_router
 
-app.include_router(webhook_router(pay, on={
-    "payment.successful": handle_payment,
-    "virtual_account.credited": handle_inflow,
-}))
+app.include_router(
+    webhook_router(
+        pay,
+        on={
+            "payment.successful": handle_payment,
+            "virtual_account.credited": handle_inflow,
+        },
+    )
+)
 ```
 
 Every event arrives in one normalised, typed shape, keeps its raw payload, and carries
@@ -240,17 +251,17 @@ See the full table in [PROVIDERS.md](PROVIDERS.md#capability-matrix).
 
 ## Compared with using each official SDK
 
-| | Official SDKs, one per provider | naija-pay |
-| --- | --- | --- |
-| Interfaces to learn | One per provider | One |
-| Amounts | Kobo, naira or float, depending | Integer kobo, enforced |
-| Webhook verification | Yours to write, 7 different ways | One call, with a strength rating |
-| Switching provider | A rewrite | A one-line config change |
-| Several providers with failover | Build it yourself | Built in, and it refuses to fail over a payout |
-| Bank codes | Each provider's own | Normalised CBN/NIBSS codes |
-| Testing without keys | Not possible | Mock provider that sends signed webhooks |
-| Virtual account edge cases | Rediscovered in production | Documented, configurable rules |
-| Typed errors | Rarely | Always, keeping the provider's original code |
+|                                 | Official SDKs, one per provider  | naija-pay                                      |
+| ------------------------------- | -------------------------------- | ---------------------------------------------- |
+| Interfaces to learn             | One per provider                 | One                                            |
+| Amounts                         | Kobo, naira or float, depending  | Integer kobo, enforced                         |
+| Webhook verification            | Yours to write, 7 different ways | One call, with a strength rating               |
+| Switching provider              | A rewrite                        | A one-line config change                       |
+| Several providers with failover | Build it yourself                | Built in, and it refuses to fail over a payout |
+| Bank codes                      | Each provider's own              | Normalised CBN/NIBSS codes                     |
+| Testing without keys            | Not possible                     | Mock provider that sends signed webhooks       |
+| Virtual account edge cases      | Rediscovered in production       | Documented, configurable rules                 |
+| Typed errors                    | Rarely                           | Always, keeping the provider's original code   |
 
 ## Documentation
 

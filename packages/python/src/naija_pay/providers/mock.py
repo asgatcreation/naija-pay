@@ -16,9 +16,10 @@ Mirrors ``packages/ts/src/providers/mock/index.ts``.
 from __future__ import annotations
 
 import json
+from collections.abc import Callable, Mapping, Sequence
 from dataclasses import dataclass
 from datetime import datetime, timezone
-from typing import Any, Callable, Mapping, Sequence
+from typing import Any
 
 from naija_pay.core.capabilities import (
     OperationSupport,
@@ -219,9 +220,7 @@ class MockProvider:
 
         signature = (
             # Deliberately wrong, and obviously so if it ever shows up in a log.
-            "0" * 128
-            if invalid_signature
-            else compute_signature(self.scheme, body, self.secret)
+            "0" * 128 if invalid_signature else compute_signature(self.scheme, body, self.secret)
         )
         strength = "unverified" if invalid_signature else self.scheme.strength
 

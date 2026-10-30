@@ -7,10 +7,10 @@
  * Every normalised object keeps `raw`, so nothing Paystack returns is ever lost.
  */
 
-import { type Money, money } from "../../core/money.ts";
 import { matchInstitution, mergerWarningFor } from "../../core/banks.ts";
-import { CHANNEL_FROM_PAYSTACK, PAYSTACK_PROVIDER_NAME } from "./capabilities.ts";
 import type { Channel } from "../../core/capabilities.ts";
+import { type Money, money } from "../../core/money.ts";
+import { CHANNEL_FROM_PAYSTACK, PAYSTACK_PROVIDER_NAME } from "./capabilities.ts";
 
 export type TransactionStatus = "pending" | "successful" | "failed" | "abandoned" | "reversed";
 

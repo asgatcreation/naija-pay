@@ -23,7 +23,9 @@ export async function paystackParity(root, load, cases) {
     );
 
   const money = (value) =>
-    value === null || value === undefined ? null : { amount: value.amount, currency: value.currency };
+    value === null || value === undefined
+      ? null
+      : { amount: value.amount, currency: value.currency };
   const date = (value) => (value instanceof Date ? value.toISOString() : null);
 
   const flatten = {

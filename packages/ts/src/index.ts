@@ -8,31 +8,10 @@
  */
 
 export {
-  BASIS_POINTS_TOTAL,
-  type Currency,
-  type Money,
-  MoneyError,
-  type Share,
-  type SplitPart,
-  type SplitResult,
-  add,
-  compare,
-  equals,
-  format,
-  fromMajor,
-  isZero,
-  minorUnitExponent,
-  money,
-  naira,
-  splitByBasisPoints,
-  splitByFlatAmounts,
-  subtract,
-} from "./core/money.ts";
-
-export {
   AuthenticationError,
   ConfigurationError,
   DuplicateReferenceError,
+  errorClassForStatus,
   InsufficientFundsError,
   KycRequiredError,
   NaijaPayError,
@@ -46,8 +25,28 @@ export {
   UnsupportedOperationError,
   ValidationError,
   WebhookVerificationError,
-  errorClassForStatus,
 } from "./core/errors.ts";
+export {
+  add,
+  BASIS_POINTS_TOTAL,
+  type Currency,
+  compare,
+  equals,
+  format,
+  fromMajor,
+  isZero,
+  type Money,
+  MoneyError,
+  minorUnitExponent,
+  money,
+  naira,
+  type Share,
+  type SplitPart,
+  type SplitResult,
+  splitByBasisPoints,
+  splitByFlatAmounts,
+  subtract,
+} from "./core/money.ts";
 
 export {
   looksLikeLiveKey,
@@ -67,32 +66,41 @@ export const VERSION = "0.0.0";
  */
 export type Environment = "test" | "live";
 
-export {
-  SCHEMES,
-  type HashAlgorithm,
-  type SignatureKind,
-  type SignatureScheme,
-  type SignatureStrength,
-  type VerificationResult,
-  computeSignature,
-  constantTimeEqual,
-  strengthOf,
-  verifySignature,
-} from "./core/signatures.ts";
+// Bank matching is NOT re-exported here on purpose. It carries the naija-data
+// institution registry, which is ~20 KB gzipped, and an application that only needs
+// money helpers, typed errors or webhook verification should not pay for it. Import
+// it from "naija-pay/banks" instead; the provider adapters pull it in themselves.
 
 export {
+  assertSupported,
   type Channel,
   type Operation,
   type OperationSupport,
-  type ProviderCapabilities,
-  assertSupported,
   operationsNotSandboxVerified,
   operationsRequiringApproval,
+  type ProviderCapabilities,
   requiredKycFor,
   supportFor,
   supports,
 } from "./core/capabilities.ts";
-
+export {
+  classifyInflow,
+  DEFAULT_INFLOW_RULES,
+  decideInflow,
+  type EventSender,
+  type EventType,
+  hasProcessed,
+  type IdempotencyStore,
+  type InflowDecision,
+  type InflowRules,
+  type InflowVariance,
+  type LatePaymentAction,
+  memoryStore,
+  type NaijaPayEvent,
+  type OverpaymentAction,
+  type UnderpaymentAction,
+  type VirtualAccountInflow,
+} from "./core/events.ts";
 export {
   DEFAULT_RETRY_POLICY,
   HttpClient,
@@ -103,39 +111,15 @@ export {
   type RequestSafety,
   type RetryPolicy,
 } from "./core/http.ts";
-
 export {
-  type BankDataSource,
-  type CoverageReport,
-  type Institution,
-  type InstitutionMatch,
-  type InstitutionType,
-  type MatchedBy,
-  type MergerWarning,
-  bankDataSource,
-  coverageFor,
-  institutionById,
-  institutions,
-  matchInstitution,
-  mergerWarningFor,
-  normaliseBankName,
-  unverifiedCodesFor,
-} from "./core/banks.ts";
-
-export {
-  DEFAULT_INFLOW_RULES,
-  type EventSender,
-  type EventType,
-  type IdempotencyStore,
-  type InflowDecision,
-  type InflowRules,
-  type InflowVariance,
-  type LatePaymentAction,
-  type NaijaPayEvent,
-  type OverpaymentAction,
-  type UnderpaymentAction,
-  type VirtualAccountInflow,
-  classifyInflow,
-  decideInflow,
-  memoryStore,
-} from "./core/events.ts";
+  computeSignature,
+  constantTimeEqual,
+  type HashAlgorithm,
+  SCHEMES,
+  type SignatureKind,
+  type SignatureScheme,
+  type SignatureStrength,
+  strengthOf,
+  type VerificationResult,
+  verifySignature,
+} from "./core/signatures.ts";

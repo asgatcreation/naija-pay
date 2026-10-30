@@ -1,6 +1,5 @@
-import { test, describe } from "node:test";
 import assert from "node:assert/strict";
-import { HttpClient, type LogEvent } from "../src/core/http.ts";
+import { describe, test } from "node:test";
 import {
   AuthenticationError,
   DuplicateReferenceError,
@@ -12,6 +11,7 @@ import {
   RateLimitedError,
   ValidationError,
 } from "../src/core/errors.ts";
+import { HttpClient, type LogEvent } from "../src/core/http.ts";
 
 /** Builds a fake fetch that replays the given responses in order. */
 function fakeFetch(
@@ -23,6 +23,7 @@ function fakeFetch(
     calls.push({ url: String(url), init: init ?? {} });
     const next = responses[Math.min(i, responses.length - 1)];
     i++;
+    if (next === undefined) throw new Error("fakeFetch was given no responses");
     if (next instanceof Error) throw next;
     const body = typeof next.body === "string" ? next.body : JSON.stringify(next.body ?? {});
     return new Response(body, {
@@ -177,10 +178,14 @@ describe("money-moving requests are never retried", () => {
   test("a 4xx on a money-moving request is still an ordinary typed error", async () => {
     // A rejected payout definitely did not happen, so it is safe to report plainly.
     const f = fakeFetch([{ status: 400, body: { message: "insufficient balance" } }]);
-    const { c } = client(f.fn, {}, {
-      classifyError: (status: number) =>
-        status === 400 ? { error: InsufficientFundsError } : undefined,
-    });
+    const { c } = client(
+      f.fn,
+      {},
+      {
+        classifyError: (status: number) =>
+          status === 400 ? { error: InsufficientFundsError } : undefined,
+      },
+    );
 
     await assert.rejects(
       c.request({ method: "POST", path: "/transfer", safety: "money-moving", reference: "p1" }),
@@ -247,12 +252,16 @@ describe("error classification", () => {
     // Several providers return 200 with a failure in the body, or reuse 400 for
     // everything, so the adapter has the final say.
     const f = fakeFetch([{ status: 400, body: { code: "duplicate_reference" } }]);
-    const { c } = client(f.fn, {}, {
-      classifyError: (_status: number, body: unknown) =>
-        (body as { code?: string })?.code === "duplicate_reference"
-          ? { error: DuplicateReferenceError, message: "reference already used" }
-          : undefined,
-    });
+    const { c } = client(
+      f.fn,
+      {},
+      {
+        classifyError: (_status: number, body: unknown) =>
+          (body as { code?: string })?.code === "duplicate_reference"
+            ? { error: DuplicateReferenceError, message: "reference already used" }
+            : undefined,
+      },
+    );
 
     await assert.rejects(
       c.request({ method: "GET", path: "/x", safety: "safe" }),
@@ -266,7 +275,11 @@ describe("error classification", () => {
 
   test("survives a provider returning HTML instead of JSON", async () => {
     const f = fakeFetch([
-      { status: 502, body: "<html><body>Bad Gateway</body></html>", headers: { "content-type": "text/html" } },
+      {
+        status: 502,
+        body: "<html><body>Bad Gateway</body></html>",
+        headers: { "content-type": "text/html" },
+      },
     ]);
     const { c } = client(f.fn, {}, { retry: { attempts: 1, baseDelayMs: 1, maxDelayMs: 1 } });
 
@@ -328,12 +341,16 @@ describe("request construction", () => {
   test("resolves per-request auth headers, for token-based providers", async () => {
     const f = fakeFetch([{ status: 200, body: {} }]);
     let calls = 0;
-    const { c } = client(f.fn, {}, {
-      authorize: () => {
-        calls++;
-        return { authorization: "Bearer token-from-oauth" };
+    const { c } = client(
+      f.fn,
+      {},
+      {
+        authorize: () => {
+          calls++;
+          return { authorization: "Bearer token-from-oauth" };
+        },
       },
-    });
+    );
 
     await c.request({ method: "GET", path: "/x", safety: "safe" });
     const headers = f.calls[0]!.init.headers as Record<string, string>;
@@ -343,9 +360,7 @@ describe("request construction", () => {
 
   test("falls back to the global fetch when none is injected", () => {
     // Node, Bun, Deno and browsers all provide one, so this must not throw.
-    assert.doesNotThrow(
-      () => new HttpClient({ provider: "x", baseUrl: "https://example.test" }),
-    );
+    assert.doesNotThrow(() => new HttpClient({ provider: "x", baseUrl: "https://example.test" }));
   });
 
   test("refuses a fetch that is not callable, rather than failing at request time", () => {

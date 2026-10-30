@@ -129,9 +129,10 @@ export function redact(text: string): string {
     out = out.replace(re, (match) => {
       // Keep a short recognisable prefix so the masked form still identifies which
       // credential leaked, without revealing enough to use it.
-      const prefixMatch = /^(sandbox_sk_|sandbox_pk_|sk_test_|sk_live_|pk_test_|pk_live_|sk_|pk_|FLWSECK_TEST-|FLWSECK-|FLWPUBK_TEST-|FLWPUBK-|MK_TEST_|MK_PROD_|Bearer\s+|Basic\s+|eyJ)/i.exec(
-        match,
-      );
+      const prefixMatch =
+        /^(sandbox_sk_|sandbox_pk_|sk_test_|sk_live_|pk_test_|pk_live_|sk_|pk_|FLWSECK_TEST-|FLWSECK-|FLWPUBK_TEST-|FLWPUBK-|MK_TEST_|MK_PROD_|Bearer\s+|Basic\s+|eyJ)/i.exec(
+          match,
+        );
       const prefix = prefixMatch ? prefixMatch[0] : "";
       return `${prefix}${FULL_MASK}`;
     });

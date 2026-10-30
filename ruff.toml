@@ -1,0 +1,24 @@
+# Repository-wide ruff settings.
+#
+# The target version is the FLOOR the published package supports, not the version
+# installed locally. Without this, ruff happily suggests `datetime.UTC` (Python 3.11+)
+# in files outside packages/python, which would break the 3.10 job in CI.
+
+target-version = "py310"
+line-length = 100
+
+exclude = [
+  ".venv",
+  "node_modules",
+  "dist",
+  "fixtures",
+]
+
+[lint]
+select = ["E", "F", "I", "N", "UP", "B", "A", "C4", "SIM", "RUF"]
+
+[lint.per-file-ignores]
+# Test files import the package after a sys.path insert, which ruff reads as an
+# import that is not at the top of the file.
+"packages/python/tests/*" = ["E402"]
+"tools/parity/*" = ["E402"]

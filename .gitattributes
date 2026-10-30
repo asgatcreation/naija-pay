@@ -1,0 +1,14 @@
+# Normalise line endings to LF in the repository.
+#
+# Development happens on Windows and CI runs on Linux, and Biome enforces LF. Without
+# this, files authored on Windows arrive as CRLF and the formatter fights the editor.
+* text=auto eol=lf
+
+# Recorded webhook bodies are raw bytes whose signature is computed over them. Line
+# endings must never be touched, or every signature test breaks.
+fixtures/webhooks/**/body.raw -text -diff
+
+# Generated data: committed, but not worth reviewing line by line.
+data/banks.generated.json linguist-generated=true
+packages/ts/src/data/banks.json linguist-generated=true
+packages/python/src/naija_pay/_data/banks.json linguist-generated=true

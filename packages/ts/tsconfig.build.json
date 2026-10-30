@@ -1,0 +1,20 @@
+{
+  // Declaration emit, separate from the typecheck config.
+  //
+  // tsup's bundled `rollup-plugin-dts` is built against TypeScript 6 and crashes on
+  // TypeScript 7, so declarations are emitted by tsc directly — which is better anyway:
+  // the compiler that typechecks the code is the one that describes it. tsup still does
+  // the JavaScript build.
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": false,
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "declarationMap": true,
+    "outDir": "dist",
+    "rootDir": "src",
+    "resolveJsonModule": true
+  },
+  "include": ["src"],
+  "exclude": ["test", "dist"]
+}

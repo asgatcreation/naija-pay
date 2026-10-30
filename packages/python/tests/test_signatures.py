@@ -11,7 +11,7 @@ import unittest
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1] / "src"))
 
-from naija_pay.core.signatures import (  # noqa: E402
+from naija_pay.core.signatures import (
     SCHEMES,
     compute_signature,
     constant_time_equal,

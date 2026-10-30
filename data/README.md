@@ -13,18 +13,18 @@ generated file's `source` block and must stay there.
 
 ### What this file is, and what it is not
 
-It is an **institution registry used for enrichment**. It is *not* a lookup table of codes to send to
+It is an **institution registry used for enrichment**. It is _not_ a lookup table of codes to send to
 providers.
 
 Measured on 2026-10-26, from 899 institutions in the source:
 
-| | |
-| --- | --- |
-| Kept (active or merged) | 898 |
-| With a NIBSS NIP code | 49 |
-| With a CBN code | 141 |
-| With a code naija-data could not verify upstream | 165 |
-| Minified size | 91 KB |
+|                                                  |       |
+| ------------------------------------------------ | ----- |
+| Kept (active or merged)                          | 898   |
+| With a NIBSS NIP code                            | 49    |
+| With a CBN code                                  | 141   |
+| With a code naija-data could not verify upstream | 165   |
+| Minified size                                    | 91 KB |
 
 Institutions whose licence was revoked, or which are defunct, are dropped — nobody can be paid at
 one. **Merged** institutions are kept deliberately, because providers still return their old codes

@@ -1,8 +1,8 @@
-import { test, describe } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import path from "node:path";
-import { PaystackProvider, paystack } from "../src/providers/paystack/index.ts";
+import { describe, test } from "node:test";
+import { assertSupported, supports } from "../src/core/capabilities.ts";
 import {
   ConfigurationError,
   DuplicateReferenceError,
@@ -12,8 +12,8 @@ import {
   ValidationError,
 } from "../src/core/errors.ts";
 import { money, naira } from "../src/core/money.ts";
-import { SCHEMES, computeSignature } from "../src/core/signatures.ts";
-import { assertSupported, supports } from "../src/core/capabilities.ts";
+import { computeSignature, SCHEMES } from "../src/core/signatures.ts";
+import { PaystackProvider, paystack } from "../src/providers/paystack/index.ts";
 
 const FIXTURES = path.resolve(
   path.dirname(new URL(import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, "$1")),
@@ -55,6 +55,7 @@ function harness(operations: (string | { status: number; body: unknown })[]) {
 
     const next = operations[Math.min(index, operations.length - 1)];
     index++;
+    if (next === undefined) throw new Error("the harness was given no operations");
     const resolved =
       typeof next === "string" ? { status: 200, body: fixture(next).response } : next;
     return new Response(JSON.stringify(resolved.body), {
@@ -93,17 +94,11 @@ describe("construction and key safety", () => {
   });
 
   test("refuses a test key while the environment says live", () => {
-    assert.throws(
-      () => paystack({ secretKey: TEST_KEY, environment: "live" }),
-      /TEST secret key/,
-    );
+    assert.throws(() => paystack({ secretKey: TEST_KEY, environment: "live" }), /TEST secret key/);
   });
 
   test("refuses a public key, which cannot authorise server calls", () => {
-    assert.throws(
-      () => paystack({ secretKey: "pk_test_EXAMPLEpublic" }),
-      /must be a secret key/,
-    );
+    assert.throws(() => paystack({ secretKey: "pk_test_EXAMPLEpublic" }), /must be a secret key/);
   });
 
   test("refuses a missing key", () => {
@@ -173,7 +168,9 @@ describe("collections", () => {
       channels: ["bank_account", "ussd"],
     });
     // Ours is `bank_account`; Paystack calls the same thing `bank`.
-    assert.deepEqual((calls[0]?.body as Record<string, unknown>).channels, ["bank", "ussd"]);
+    const call = calls[0];
+    assert.ok(call, "the adapter should have made a request");
+    assert.deepEqual((call.body as Record<string, unknown>).channels, ["bank", "ussd"]);
   });
 
   test("refuses a channel Paystack does not offer, before any request", async () => {
@@ -277,7 +274,9 @@ describe("virtual accounts", () => {
     // number here would be a lie the caller could act on.
     assert.equal(result.status, "pending");
     assert.match(result.message, /in progress/);
-    assert.equal((calls[0]?.body as Record<string, unknown>).bvn, "22222222222");
+    const assignCall = calls[0];
+    assert.ok(assignCall, "the adapter should have made a request");
+    assert.equal((assignCall.body as Record<string, unknown>).bvn, "22222222222");
   });
 
   test("normalises a fetched account, enriching the bank from naija-data", async () => {
@@ -466,7 +465,9 @@ describe("errors", () => {
   test("treats status:false on a 200 as a failure", async () => {
     // Paystack normally uses correct HTTP statuses, but this envelope is possible and
     // reading it as success would be the worst kind of bug.
-    const { provider } = harness([{ status: 200, body: fixture("error-duplicate-reference").response }]);
+    const { provider } = harness([
+      { status: 200, body: fixture("error-duplicate-reference").response },
+    ]);
     await assert.rejects(
       provider.createCheckout({ amount: naira(5_000), email: "ada@example.com" }),
       /Duplicate Transaction Reference/,
@@ -477,10 +478,7 @@ describe("errors", () => {
     const { provider } = harness([
       { status: 400, body: { status: false, message: "Duplicate Transaction Reference" } },
     ]);
-    await assert.rejects(
-      provider.verifyTransaction("order_01HQ"),
-      DuplicateReferenceError,
-    );
+    await assert.rejects(provider.verifyTransaction("order_01HQ"), DuplicateReferenceError);
   });
 
   test("classifies a BVN failure as KycRequiredError", async () => {
@@ -524,7 +522,9 @@ describe("capabilities", () => {
 describe("webhooks", () => {
   test("verifies a webhook signed with the secret key", async () => {
     const provider = paystack({ secretKey: TEST_KEY, environment: "test" });
-    const body = new TextEncoder().encode('{"event":"charge.success","data":{"reference":"order_01HQ"}}');
+    const body = new TextEncoder().encode(
+      '{"event":"charge.success","data":{"reference":"order_01HQ"}}',
+    );
     const signature = await computeSignature(SCHEMES.paystack, body, TEST_KEY);
 
     const result = await provider.verifyWebhook({

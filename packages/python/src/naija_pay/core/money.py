@@ -14,8 +14,9 @@ Mirrors ``packages/ts/src/core/money.ts``; the parity tests assert the two agree
 from __future__ import annotations
 
 import math
+from collections.abc import Sequence
 from dataclasses import dataclass
-from typing import Literal, Sequence
+from typing import Literal
 
 #: Currencies the Tier 1 providers document support for.
 Currency = Literal["NGN", "GHS", "KES", "ZAR", "USD", "XOF"]
@@ -143,9 +144,7 @@ def add(a: Money, b: Money) -> Money:
 def subtract(a: Money, b: Money) -> Money:
     _assert_same_currency(a, b)
     if b.amount > a.amount:
-        raise MoneyError(
-            f"subtracting {b.amount} from {a.amount} would produce a negative amount"
-        )
+        raise MoneyError(f"subtracting {b.amount} from {a.amount} would produce a negative amount")
     return money(a.amount - b.amount, a.currency)
 
 
@@ -209,8 +208,7 @@ def split_by_basis_points(total: Money, shares: Sequence[Share]) -> SplitResult:
         total_bps += s.share
     if total_bps > BASIS_POINTS_TOTAL:
         raise MoneyError(
-            f"shares total {total_bps} basis points, which is more than 100% "
-            f"({BASIS_POINTS_TOTAL})"
+            f"shares total {total_bps} basis points, which is more than 100% ({BASIS_POINTS_TOTAL})"
         )
 
     parts: list[SplitPart] = []

@@ -14,12 +14,12 @@
 
 import {
   AuthenticationError,
+  errorClassForStatus,
   NaijaPayError,
   NetworkError,
   PayoutStatusUnknownError,
   ProviderDownError,
   RateLimitedError,
-  errorClassForStatus,
 } from "./errors.ts";
 import { redact, redactObject } from "./redact.ts";
 
@@ -137,6 +137,12 @@ function parseRetryAfter(value: string | undefined, now: number): number | undef
   return undefined;
 }
 
+/** The verdict on one attempt, so the retry decision can be read apart from the loop. */
+type AttemptOutcome<T> =
+  | { readonly kind: "return"; readonly response: HttpResponse<T> }
+  | { readonly kind: "retry"; readonly error: NaijaPayError; readonly delayMs: number }
+  | { readonly kind: "throw"; readonly error: NaijaPayError };
+
 const defaultSleep = (ms: number): Promise<void> =>
   new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -167,85 +173,125 @@ export class HttpClient {
 
   async request<T = unknown>(options: RequestOptions): Promise<HttpResponse<T>> {
     const url = this.#buildUrl(options);
-    // Only `safe` requests may ever be sent twice.
+    // Only `safe` requests may ever be sent twice. This single line is the whole
+    // money-safety guarantee: a money-moving request gets exactly one attempt.
     const maxAttempts = options.safety === "safe" ? Math.max(1, this.#retry.attempts) : 1;
 
     let lastError: NaijaPayError | undefined;
 
     for (let attempt = 1; attempt <= maxAttempts; attempt++) {
       const startedAt = Date.now();
+      let outcome: AttemptOutcome<T>;
+
       try {
         const response = await this.#send(url, options);
-        const durationMs = Date.now() - startedAt;
-        const requestId = this.#requestIdFrom(response.headers);
-
-        if (response.status >= 200 && response.status < 300) {
-          this.#log({
-            provider: this.#options.provider,
-            operation: options.operation,
-            method: options.method,
-            path: options.path,
-            attempt,
-            status: response.status,
-            durationMs,
-            outcome: "success",
-            ...(requestId === undefined ? {} : { requestId }),
-          });
-          return { ...response, requestId, attempts: attempt } as HttpResponse<T>;
-        }
-
-        const error = this.#errorFor(response, options, requestId);
-        lastError = error;
-
-        const canRetry = attempt < maxAttempts && error.retryable;
-        this.#log({
-          provider: this.#options.provider,
-          operation: options.operation,
-          method: options.method,
-          path: options.path,
-          attempt,
-          status: response.status,
-          durationMs,
-          outcome: canRetry ? "retrying" : "failed",
-          error: error.name,
-          ...(requestId === undefined ? {} : { requestId }),
-        });
-
-        if (!canRetry) throw error;
-
-        const retryAfter =
-          error instanceof RateLimitedError
-            ? parseRetryAfter(response.headers["retry-after"], Date.now())
-            : undefined;
-        await this.#sleep(retryAfter ?? backoffDelay(attempt, this.#retry, this.random));
-        continue;
+        outcome = this.#judgeResponse<T>(response, options, attempt, maxAttempts, startedAt);
       } catch (thrown) {
-        // A NaijaPayError here is one we just raised deliberately.
+        // A NaijaPayError here is one we raised deliberately inside #send.
         if (thrown instanceof NaijaPayError) throw thrown;
-
-        const durationMs = Date.now() - startedAt;
-        const transportError = this.#transportErrorFor(thrown, options);
-        lastError = transportError;
-
-        const canRetry = attempt < maxAttempts && transportError.retryable;
-        this.#log({
-          provider: this.#options.provider,
-          operation: options.operation,
-          method: options.method,
-          path: options.path,
-          attempt,
-          durationMs,
-          outcome: canRetry ? "retrying" : "failed",
-          error: transportError.name,
-        });
-
-        if (!canRetry) throw transportError;
-        await this.#sleep(backoffDelay(attempt, this.#retry, this.random));
+        outcome = this.#judgeTransportFailure(thrown, options, attempt, maxAttempts, startedAt);
       }
+
+      if (outcome.kind === "return") return outcome.response;
+      lastError = outcome.error;
+      if (outcome.kind === "throw") throw outcome.error;
+      await this.#sleep(outcome.delayMs);
     }
 
     /* c8 ignore next 2 -- unreachable: the loop always returns or throws */
     throw lastError ?? new NetworkError("request failed with no recorded error");
+  }
+
+  /**
+   * What to do after one attempt: return it, retry after a delay, or give up.
+   *
+   * Extracted from `request` so the retry decision can be read on its own. This is the
+   * logic that must never retry a payout, so it is worth being able to see in one piece.
+   */
+  #judgeResponse<T>(
+    response: { status: number; headers: Record<string, string>; body: unknown; raw: string },
+    options: RequestOptions,
+    attempt: number,
+    maxAttempts: number,
+    startedAt: number,
+  ): AttemptOutcome<T> {
+    const durationMs = Date.now() - startedAt;
+    const requestId = this.#requestIdFrom(response.headers);
+
+    if (response.status >= 200 && response.status < 300) {
+      this.#log({
+        provider: this.#options.provider,
+        operation: options.operation,
+        method: options.method,
+        path: options.path,
+        attempt,
+        status: response.status,
+        durationMs,
+        outcome: "success",
+        ...(requestId === undefined ? {} : { requestId }),
+      });
+      return {
+        kind: "return",
+        response: { ...response, requestId, attempts: attempt } as HttpResponse<T>,
+      };
+    }
+
+    const error = this.#errorFor(response, options, requestId);
+    const canRetry = attempt < maxAttempts && error.retryable;
+
+    this.#log({
+      provider: this.#options.provider,
+      operation: options.operation,
+      method: options.method,
+      path: options.path,
+      attempt,
+      status: response.status,
+      durationMs,
+      outcome: canRetry ? "retrying" : "failed",
+      error: error.name,
+      ...(requestId === undefined ? {} : { requestId }),
+    });
+
+    if (!canRetry) return { kind: "throw", error };
+
+    // A provider that tells us how long to wait is obeyed in preference to our backoff.
+    const retryAfter =
+      error instanceof RateLimitedError
+        ? parseRetryAfter(response.headers["retry-after"], Date.now())
+        : undefined;
+
+    return {
+      kind: "retry",
+      error,
+      delayMs: retryAfter ?? backoffDelay(attempt, this.#retry, this.random),
+    };
+  }
+
+  /** The same decision for a transport-level failure, where there is no response. */
+  #judgeTransportFailure<T>(
+    thrown: unknown,
+    options: RequestOptions,
+    attempt: number,
+    maxAttempts: number,
+    startedAt: number,
+  ): AttemptOutcome<T> {
+    const durationMs = Date.now() - startedAt;
+    const error = this.#transportErrorFor(thrown, options);
+    const canRetry = attempt < maxAttempts && error.retryable;
+
+    this.#log({
+      provider: this.#options.provider,
+      operation: options.operation,
+      method: options.method,
+      path: options.path,
+      attempt,
+      durationMs,
+      outcome: canRetry ? "retrying" : "failed",
+      error: error.name,
+    });
+
+    if (!canRetry) return { kind: "throw", error };
+    return { kind: "retry", error, delayMs: backoffDelay(attempt, this.#retry, this.random) };
   }
 
   #buildUrl(options: RequestOptions): string {
@@ -335,15 +381,16 @@ export class HttpClient {
       providerMessage ??
       `${this.#options.provider} returned HTTP ${response.status}`;
 
+    // Computed once and spread conditionally: with exactOptionalPropertyTypes, a
+    // `string | undefined` cannot be assigned to an optional `string` property.
+    const providerCode = extractCode(response.body);
     const context = {
       provider: this.#options.provider,
       ...(options.operation === undefined ? {} : { operation: options.operation }),
       httpStatus: response.status,
       ...(providerMessage === undefined ? {} : { providerMessage }),
       ...(requestId === undefined ? {} : { requestId }),
-      ...(extractCode(response.body) === undefined
-        ? {}
-        : { providerCode: extractCode(response.body) }),
+      ...(providerCode === undefined ? {} : { providerCode }),
     };
 
     if (ErrorClass === RateLimitedError) {

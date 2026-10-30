@@ -10,7 +10,7 @@ import unittest
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1] / "src"))
 
-from naija_pay.core import (  # noqa: E402
+from naija_pay.core import (
     BASIS_POINTS_TOTAL,
     AuthenticationError,
     DuplicateReferenceError,
@@ -79,7 +79,8 @@ class TestMoneyConstruction(unittest.TestCase):
 
     def test_is_frozen(self) -> None:
         m = naira(100)
-        with self.assertRaises(Exception):
+        # A frozen dataclass raises FrozenInstanceError, which subclasses AttributeError.
+        with self.assertRaises(AttributeError):
             m.amount = 999  # type: ignore[misc]
 
 
@@ -285,9 +286,7 @@ class TestRedactObject(unittest.TestCase):
     def test_walks_lists_and_survives_cycles(self) -> None:
         cyclic: dict[str, object] = {"bvn": BVN}
         cyclic["self"] = cyclic
-        out = redact_object(
-            {"items": [{"bvn": BVN}, {"accountNumber": ACCOUNT}], "cyclic": cyclic}
-        )
+        out = redact_object({"items": [{"bvn": BVN}, {"accountNumber": ACCOUNT}], "cyclic": cyclic})
         self.assertNotIn(BVN, json.dumps(out))
         self.assertEqual(out["cyclic"]["self"], "[circular]")
 

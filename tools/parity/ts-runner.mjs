@@ -38,9 +38,7 @@ const { SCHEMES, computeSignature, strengthOf, verifySignature } = await load(
   "signatures.ts",
 );
 
-const cases = JSON.parse(
-  readFileSync(path.join(ROOT, "fixtures", "parity", "core.json"), "utf8"),
-);
+const cases = JSON.parse(readFileSync(path.join(ROOT, "fixtures", "parity", "core.json"), "utf8"));
 
 /**
  * Both languages must describe a rejection identically. We compare the error's class

@@ -12,7 +12,7 @@
  * something each developer rediscovers in production.
  */
 
-import { type Money, compare, money, subtract } from "./money.ts";
+import { compare, type Money, money, subtract } from "./money.ts";
 import type { SignatureStrength } from "./signatures.ts";
 
 /**
@@ -133,7 +133,9 @@ export function classifyInflow(options: {
   const { expectedAmount, amountPaid, paidAt, expiresAt } = options;
 
   const isLate =
-    paidAt instanceof Date && expiresAt instanceof Date ? paidAt.getTime() > expiresAt.getTime() : false;
+    paidAt instanceof Date && expiresAt instanceof Date
+      ? paidAt.getTime() > expiresAt.getTime()
+      : false;
 
   if (expectedAmount === null) {
     // A static account has no expected amount, so no variance exists to report. This is
@@ -178,6 +180,19 @@ export function decideInflow(options: {
 }): InflowDecision {
   const { inflow, alreadyProcessed = false } = options;
   const rules = options.rules ?? DEFAULT_INFLOW_RULES;
+
+  // A guard rather than a type assertion, because JavaScript callers get no types.
+  // `IdempotencyStore.has` may return a Promise, and an un-awaited Promise here is
+  // ALWAYS truthy — which would make every inflow look like a duplicate and silently
+  // credit nobody. Use `hasProcessed(store, id)`, which awaits for you.
+  if (typeof alreadyProcessed !== "boolean") {
+    throw new TypeError(
+      "decideInflow: alreadyProcessed must be a boolean. It looks like a Promise was " +
+        "passed without awaiting it — an un-awaited Promise is always truthy, so every " +
+        "inflow would be treated as a duplicate and nobody would be credited. " +
+        "Use `await hasProcessed(store, event.id)`.",
+    );
+  }
 
   if (alreadyProcessed) {
     return {
@@ -263,6 +278,17 @@ export function decideInflow(options: {
 export interface IdempotencyStore {
   has(eventId: string): Promise<boolean> | boolean;
   mark(eventId: string): Promise<void> | void;
+}
+
+/**
+ * Whether this event has already been processed, awaiting the store for you.
+ *
+ * Always prefer this over calling `store.has()` directly: a store backed by Redis or a
+ * database returns a Promise, and passing that to `decideInflow` without awaiting it
+ * would make every inflow look like a duplicate.
+ */
+export async function hasProcessed(store: IdempotencyStore, eventId: string): Promise<boolean> {
+  return await store.has(eventId);
 }
 
 /**

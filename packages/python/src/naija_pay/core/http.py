@@ -20,9 +20,10 @@ from __future__ import annotations
 import json
 import random as _random
 import time
+from collections.abc import Callable, Mapping, Sequence
 from dataclasses import dataclass, field
 from email.utils import parsedate_to_datetime
-from typing import Any, Callable, Literal, Mapping, Protocol, Sequence
+from typing import Any, Literal, Protocol
 from urllib.parse import urlencode
 
 from naija_pay.core.errors import (
@@ -76,11 +77,11 @@ class TransportResponse:
     text: str
 
 
-class TransportTimeout(Exception):
+class TransportTimeoutError(Exception):
     """The transport timed out. Raised by transports, mapped to a typed error here."""
 
 
-class TransportFailure(Exception):
+class TransportError(Exception):
     """A connection-level failure: DNS, reset, TLS. Raised by transports."""
 
 
@@ -173,8 +174,6 @@ def _parse_retry_after(value: str | None, now: float) -> int | None:
             when = parsedate_to_datetime(value)
         except (TypeError, ValueError):
             return None
-        if when is None:
-            return None
         return max(0, int((when.timestamp() - now) * 1_000))
     if seconds >= 0:
         return int(seconds * 1_000)
@@ -248,7 +247,7 @@ class HttpClient:
                     idempotency_key=idempotency_key,
                     idempotency_header=idempotency_header,
                 )
-            except (TransportTimeout, TransportFailure, OSError) as exc:
+            except (TransportTimeoutError, TransportError, OSError) as exc:
                 duration_ms = int((time.monotonic() - started) * 1_000)
                 error = self._transport_error(exc, safety, operation, reference, idempotency_key)
                 can_retry = attempt < max_attempts and error.retryable
@@ -337,9 +336,7 @@ class HttpClient:
         suffix = path if path.startswith("/") else f"/{path}"
         url = base + suffix
         if query:
-            pairs: list[tuple[str, str]] = [
-                (k, str(v)) for k, v in query.items() if v is not None
-            ]
+            pairs: list[tuple[str, str]] = [(k, str(v)) for k, v in query.items() if v is not None]
             if pairs:
                 url = f"{url}?{urlencode(pairs)}"
         return url
@@ -458,7 +455,7 @@ class HttpClient:
         reference: str | None,
         idempotency_key: str | None,
     ) -> NaijaPayError:
-        if isinstance(exc, TransportTimeout):
+        if isinstance(exc, TransportTimeoutError):
             what = f"timed out after {self._o.timeout_seconds}s"
         else:
             what = f"failed: {redact(str(exc))}"
@@ -499,8 +496,8 @@ __all__: Sequence[str] = [
     "RequestSafety",
     "RetryPolicy",
     "Transport",
-    "TransportFailure",
+    "TransportError",
     "TransportRequest",
     "TransportResponse",
-    "TransportTimeout",
+    "TransportTimeoutError",
 ]

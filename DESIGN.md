@@ -29,11 +29,11 @@ import { paystack } from "naija-pay/paystack";
 
 const pay = new NaijaPay({
   providers: [paystack({ secretKey: process.env.PAYSTACK_SECRET_KEY })],
-  environment: "test",            // "test" | "live" — checked against the key's own prefix
+  environment: "test", // "test" | "live" — checked against the key's own prefix
   timeout: 30_000,
   retries: { attempts: 3, baseDelayMs: 200, maxDelayMs: 4_000 },
   redact: true,
-  onLog: (event) => logger.info(event),   // already redacted
+  onLog: (event) => logger.info(event), // already redacted
 });
 ```
 
@@ -122,12 +122,12 @@ a BVN, NIN or account number in a provider message is masked.
 ```ts
 const checkout = await pay.checkout.create({
   amount: naira(5_000),
-  reference: "order_01HQ...",          // yours, must be unique
+  reference: "order_01HQ...", // yours, must be unique
   customer: { email: "ada@example.com", name: "Ada Obi", phone: "+2348100000000" },
   channels: ["card", "bank_transfer", "ussd"],
   callbackUrl: "https://app.example.com/pay/return",
   metadata: { orderId: "1234" },
-  split: { code: "SPL_..." },          // optional, see sub-accounts
+  split: { code: "SPL_..." }, // optional, see sub-accounts
 });
 // → { reference, providerReference, checkoutUrl, accessCode?, provider, raw }
 
@@ -137,27 +137,33 @@ const txn = await pay.transactions.verify("order_01HQ...");
 
 ```ts
 interface Transaction {
-  reference: string;               // yours
+  reference: string; // yours
   providerReference: string;
   status: TransactionStatus;
-  amount: Money;                   // what you asked for
-  amountPaid: Money;               // what actually arrived — may differ, see virtual accounts
+  amount: Money; // what you asked for
+  amountPaid: Money; // what actually arrived — may differ, see virtual accounts
   fees: Money | null;
   settledAmount: Money | null;
   channel: Channel | null;
   paidAt: Date | null;
   customer: Customer | null;
-  authorization: CardAuthorization | null;   // token for later charges; never raw card data
+  authorization: CardAuthorization | null; // token for later charges; never raw card data
   provider: string;
   raw: unknown;
 }
 
-type TransactionStatus =
-  | "pending" | "successful" | "failed" | "abandoned" | "reversed";
+type TransactionStatus = "pending" | "successful" | "failed" | "abandoned" | "reversed";
 
 type Channel =
-  | "card" | "bank_transfer" | "ussd" | "bank_account" | "qr"
-  | "wallet" | "mobile_money" | "apple_pay" | "google_pay";
+  | "card"
+  | "bank_transfer"
+  | "ussd"
+  | "bank_account"
+  | "qr"
+  | "wallet"
+  | "mobile_money"
+  | "apple_pay"
+  | "google_pay";
 ```
 
 Statuses are normalised from each provider's vocabulary; the provider's own string stays on
@@ -179,9 +185,9 @@ The two kinds are separate methods, because confusing them is a real production 
 // STATIC / RESERVED — one per customer, lives forever, needs KYC
 const va = await pay.virtualAccounts.createStatic({
   customer: { email, name, phone },
-  kyc: { bvn: "22...", nin: "12..." },     // see KYC rules below
-  preferredBank: "wema",                   // optional; capability-checked
-  allBanks: false,                         // Monnify can return every partner bank at once
+  kyc: { bvn: "22...", nin: "12..." }, // see KYC rules below
+  preferredBank: "wema", // optional; capability-checked
+  allBanks: false, // Monnify can return every partner bank at once
   reference: "cust_8891",
 });
 
@@ -189,7 +195,7 @@ const va = await pay.virtualAccounts.createStatic({
 const va = await pay.virtualAccounts.createDynamic({
   amount: naira(12_500),
   reference: "order_01HQ...",
-  expiresIn: 1_800,          // seconds
+  expiresIn: 1_800, // seconds
   singleUse: true,
 });
 ```
@@ -197,11 +203,11 @@ const va = await pay.virtualAccounts.createDynamic({
 ```ts
 interface VirtualAccount {
   reference: string;
-  accounts: BankAccount[];   // plural: Monnify can reserve at several banks at once
+  accounts: BankAccount[]; // plural: Monnify can reserve at several banks at once
   kind: "static" | "dynamic";
   status: "active" | "inactive" | "expired" | "closed";
   expiresAt: Date | null;
-  amount: Money | null;      // dynamic accounts only
+  amount: Money | null; // dynamic accounts only
   customer: Customer | null;
   kycStatus: "pending" | "verified" | "failed" | "not_required";
   provider: string;
@@ -209,11 +215,11 @@ interface VirtualAccount {
 }
 
 interface BankAccount {
-  accountNumber: string;     // masked in logs and errors
+  accountNumber: string; // masked in logs and errors
   accountName: string;
   bankName: string;
-  bankCode: string;          // CBN/NIBSS code, mapped from naija-data
-  bankSlug: string | null;   // the provider's own slug, kept for round-tripping
+  bankCode: string; // CBN/NIBSS code, mapped from naija-data
+  bankSlug: string | null; // the provider's own slug, kept for round-tripping
 }
 ```
 
@@ -234,10 +240,10 @@ guidance here at all; the rest leave it to you.
 ```ts
 pay.webhooks.handler({
   inflowRules: {
-    overpayment:  "credit_full",     // credit_full | credit_expected | reject | manual_review
-    underpayment: "manual_review",   // credit_partial | reject | manual_review
-    latePayment:  "accept",          // accept | reject | manual_review
-    duplicate:    "ignore",          // always ignore; idempotency store decides
+    overpayment: "credit_full", // credit_full | credit_expected | reject | manual_review
+    underpayment: "manual_review", // credit_partial | reject | manual_review
+    latePayment: "accept", // accept | reject | manual_review
+    duplicate: "ignore", // always ignore; idempotency store decides
   },
 });
 ```
@@ -266,13 +272,13 @@ const vendor = await pay.splitAccounts.create({
 
 const split = await pay.splits.create({
   name: "order_01HQ marketplace split",
-  type: "percentage",                       // "percentage" | "flat"
+  type: "percentage", // "percentage" | "flat"
   currency: "NGN",
   parties: [
     { account: vendor.code, share: 9_000 }, // 90.00% as basis points, integers only
     { account: "ACCT_other", share: 500 },
   ],
-  feeBearer: "all_proportional",            // main | subaccount | all | all_proportional
+  feeBearer: "all_proportional", // main | subaccount | all | all_proportional
 });
 ```
 
@@ -288,9 +294,11 @@ A **real deposit account (NUBAN)** is opened under your main account, and it hol
 
 ```ts
 const customer = await pay.wallets.onboardCustomer({
-  type: "individual",                     // "individual" | "business"
+  type: "individual", // "individual" | "business"
   name: { first: "Ada", last: "Obi" },
-  email, phone, dateOfBirth,
+  email,
+  phone,
+  dateOfBirth,
   kyc: { bvn, nin, tier: 2 },
 });
 
@@ -299,8 +307,13 @@ const wallet = await pay.wallets.open({ customer: customer.id, currency: "NGN" }
 
 await pay.wallets.balance(wallet.id);
 await pay.wallets.statement(wallet.id, { from, to });
-await pay.wallets.transfer({                 // book transfer, stays inside the provider
-  from: wallet.id, to: otherWallet.id, amount: naira(2_000), reference, narration,
+await pay.wallets.transfer({
+  // book transfer, stays inside the provider
+  from: wallet.id,
+  to: otherWallet.id,
+  amount: naira(2_000),
+  reference,
+  narration,
 });
 await pay.wallets.freeze(wallet.id, { reason });
 await pay.wallets.unfreeze(wallet.id);
@@ -337,9 +350,9 @@ An earlier draft of this document said bank codes would be normalised onto a sin
 with the build failing on any bank that could not be mapped. Measuring the actual data showed that
 is not achievable, so the design changed:
 
-| Source | Reality, measured 2026-10-26 |
-| --- | --- |
-| naija-data `banks.csv` | 899 institutions, but only **50** have a NIP code and **142** a CBN code. **732 have neither.** Its strength is the institution registry — 796 microfinance banks — not payment codes. |
+| Source                  | Reality, measured 2026-10-26                                                                                                                                                                     |
+| ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| naija-data `banks.csv`  | 899 institutions, but only **50** have a NIP code and **142** a CBN code. **732 have neither.** Its strength is the institution registry — 796 microfinance banks — not payment codes.           |
 | Paystack's live NG list | **292** banks, whose `code` lengths are 177 five-digit, 60 three-digit, 45 six-digit, and a handful of 2, 4, 7, 8 and 9 digits. It is not a NIBSS 6-digit code; it is Paystack's own identifier. |
 
 There is no universal code to normalise onto. So:
@@ -354,7 +367,7 @@ There is no universal code to normalise onto. So:
 3. **Matching is by code where naija-data has one, otherwise by normalised name and alias.** Every
    match records how it was made, so a weak match is visible rather than assumed.
 4. **The build does not fail on unmapped banks.** It writes a coverage report, and CI fails only if
-   coverage *regresses* below a committed baseline. Blocking every build on a known upstream gap
+   coverage _regresses_ below a committed baseline. Blocking every build on a known upstream gap
    would just mean disabling the check; a regression gate keeps the signal useful.
 
 ```ts
@@ -414,15 +427,15 @@ One normalised, typed event shape from every provider, with the raw payload reta
 
 ```ts
 const event = await pay.webhooks.parse({
-  rawBody,                      // Buffer / bytes — never the parsed object
+  rawBody, // Buffer / bytes — never the parsed object
   headers,
-  provider: "paystack",         // or omitted: detected from the headers
+  provider: "paystack", // or omitted: detected from the headers
 });
 ```
 
 ```ts
 interface NaijaPayEvent {
-  id: string;                   // stable per provider event, for idempotency
+  id: string; // stable per provider event, for idempotency
   type: EventType;
   occurredAt: Date;
   provider: string;
@@ -432,14 +445,27 @@ interface NaijaPayEvent {
 }
 
 type EventType =
-  | "payment.successful" | "payment.failed" | "payment.pending" | "payment.reversed"
-  | "virtual_account.credited" | "virtual_account.assigned" | "virtual_account.assignment_failed"
-  | "transfer.successful" | "transfer.failed" | "transfer.reversed"
-  | "refund.processed" | "refund.failed"
-  | "subscription.created" | "subscription.disabled" | "subscription.charge_failed"
-  | "mandate.approved" | "mandate.cancelled" | "mandate.debited"
+  | "payment.successful"
+  | "payment.failed"
+  | "payment.pending"
+  | "payment.reversed"
+  | "virtual_account.credited"
+  | "virtual_account.assigned"
+  | "virtual_account.assignment_failed"
+  | "transfer.successful"
+  | "transfer.failed"
+  | "transfer.reversed"
+  | "refund.processed"
+  | "refund.failed"
+  | "subscription.created"
+  | "subscription.disabled"
+  | "subscription.charge_failed"
+  | "mandate.approved"
+  | "mandate.cancelled"
+  | "mandate.debited"
   | "subaccount.settled"
-  | "customer.identification_succeeded" | "customer.identification_failed"
+  | "customer.identification_succeeded"
+  | "customer.identification_failed"
   | "unknown";
 ```
 
@@ -496,15 +522,15 @@ const pay = new NaijaPay({
 **Which operations may fail over, and which may never.** This is a money-safety question, so it is
 a hard rule in code, not configuration:
 
-| Operation | Failover | Why |
-| --- | --- | --- |
-| Create checkout / virtual account | **Yes** | No money has moved; the customer simply gets a different page or account |
-| Verify, get, list, bank list, resolve account | **Yes** | Read-only |
-| Create split account, plan, customer | **Yes** | Idempotent by reference |
-| **Payout / transfer** | **Never** | Failing over could pay twice. A failed payout surfaces as `PayoutStatusUnknownError`; the caller checks status |
-| **Mandate debit** | **Never** | Same reason |
-| **Refund** | **Never** | Same reason |
-| Webhook handling | N/A | Events belong to the provider that sent them |
+| Operation                                     | Failover  | Why                                                                                                            |
+| --------------------------------------------- | --------- | -------------------------------------------------------------------------------------------------------------- |
+| Create checkout / virtual account             | **Yes**   | No money has moved; the customer simply gets a different page or account                                       |
+| Verify, get, list, bank list, resolve account | **Yes**   | Read-only                                                                                                      |
+| Create split account, plan, customer          | **Yes**   | Idempotent by reference                                                                                        |
+| **Payout / transfer**                         | **Never** | Failing over could pay twice. A failed payout surfaces as `PayoutStatusUnknownError`; the caller checks status |
+| **Mandate debit**                             | **Never** | Same reason                                                                                                    |
+| **Refund**                                    | **Never** | Same reason                                                                                                    |
+| Webhook handling                              | N/A       | Events belong to the provider that sent them                                                                   |
 
 A failover attempt is always visible in logs and in the returned object's `routing` field
 (`attempted`, `succeededWith`, `reason`). Silent failover on a money-moving call is exactly the kind
@@ -519,8 +545,9 @@ that these are estimates from published pricing and that negotiated rates differ
 
 ```ts
 const report = await pay.reconcile({
-  from, to,
-  records: myLedgerRows,       // { reference, amount, status }
+  from,
+  to,
+  records: myLedgerRows, // { reference, amount, status }
 });
 // → { matched[], missingFromProvider[], missingFromRecords[], amountMismatch[], statusMismatch[] }
 ```

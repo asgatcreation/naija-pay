@@ -12,24 +12,24 @@
  * after expiry, duplicate delivery, reversal, and a deliberately invalid signature.
  */
 
-import {
-  type Channel,
-  type Operation,
-  type OperationSupport,
-  type ProviderCapabilities,
+import type {
+  Channel,
+  Operation,
+  OperationSupport,
+  ProviderCapabilities,
 } from "../../core/capabilities.ts";
 import {
+  classifyInflow,
   type EventType,
   type InflowVariance,
   type NaijaPayEvent,
   type VirtualAccountInflow,
-  classifyInflow,
 } from "../../core/events.ts";
 import { type Money, naira } from "../../core/money.ts";
 import {
+  computeSignature,
   type SignatureScheme,
   type SignatureStrength,
-  computeSignature,
 } from "../../core/signatures.ts";
 
 export const MOCK_PROVIDER_NAME = "mock";
@@ -171,7 +171,11 @@ export interface SimulateInflowOptions {
   readonly reference?: string;
   readonly paidAt?: Date;
   readonly expiresAt?: Date;
-  readonly sender?: { readonly name?: string; readonly bank?: string; readonly accountNumber?: string };
+  readonly sender?: {
+    readonly name?: string;
+    readonly bank?: string;
+    readonly accountNumber?: string;
+  };
   readonly fees?: Money;
   readonly sessionId?: string;
   /** Produce a signature that will not verify, to test the failure path. */
@@ -378,10 +382,16 @@ export class MockProvider {
     url: string,
     send: typeof globalThis.fetch = globalThis.fetch,
   ): Promise<{ readonly status: number }> {
+    // Copied for the same reason as in signatures.ts: BodyInit requires bytes backed by
+    // a plain ArrayBuffer. The bytes themselves are unchanged, which is what matters for
+    // the signature.
+    const body = new Uint8Array(webhook.body.byteLength);
+    body.set(webhook.body);
+
     const response = await send(url, {
       method: "POST",
       headers: { ...webhook.headers },
-      body: webhook.body,
+      body,
     });
     return { status: response.status };
   }

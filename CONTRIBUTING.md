@@ -49,23 +49,23 @@ This is the checklist. Work top to bottom; each step is small on its own.
 ### 1. Research first, code second
 
 - [ ] Read the provider's **current** official docs end to end. Note the API version if they have
-      more than one, and use the one they currently recommend.
+  more than one, and use the one they currently recommend.
 - [ ] Add a section to [PROVIDERS.md](PROVIDERS.md) with: docs URL, API version, auth method, base
-      URLs for test and live, webhook signing scheme, rate limits, KYC requirements, supported
-      features, sandbox availability (self-serve or requires onboarding), and **the date you
+  URLs for test and live, webhook signing scheme, rate limits, KYC requirements, supported
+  features, sandbox availability (self-serve or requires onboarding), and **the date you
       verified it**.
 - [ ] Write down anything the docs get wrong or leave out, under "Findings to encapsulate". These
-      findings are a feature of this project, not a side note.
+  findings are a feature of this project, not a side note.
 
 ### 2. Fixtures before implementation
 
 - [ ] Record a request/response pair for every operation under
-      `fixtures/providers/<provider>/<operation>/`.
+  `fixtures/providers/<provider>/<operation>/`.
 - [ ] Record a raw webhook body plus its headers for every event under
-      `fixtures/webhooks/<provider>/<event>/`. Keep the body as **raw bytes**, exactly as sent —
-      signature verification depends on it.
+  `fixtures/webhooks/<provider>/<event>/`. Keep the body as **raw bytes**, exactly as sent —
+  signature verification depends on it.
 - [ ] Write the `normalised.json` you expect for each. This is the contract both languages must
-      satisfy.
+  satisfy.
 
 ### 3. Implement in both languages
 
@@ -74,14 +74,14 @@ Both `packages/ts/src/providers/<provider>/` and
 
 - [ ] `client` — auth, base URLs, key/environment detection
 - [ ] `capabilities` — what this provider supports, including `requiresApproval` for anything behind
-      a commercial gate, and which identity fields its virtual accounts need
+  a commercial gate, and which identity fields its virtual accounts need
 - [ ] `collections`, `virtual-accounts`, `split-accounts`, `wallets`, `payouts`, `recurring` —
-      implement what the provider has; omitted operations raise `UnsupportedOperationError`
-      automatically from the capability declaration
+  implement what the provider has; omitted operations raise `UnsupportedOperationError`
+  automatically from the capability declaration
 - [ ] `webhooks` — verification over the **raw bytes**, constant-time comparison, correct
-      `signatureStrength`
+  `signatureStrength`
 - [ ] `errors` — map the provider's codes onto our typed errors, always keeping `providerCode` and
-      `providerMessage`
+  `providerMessage`
 
 ### 4. Tests
 
@@ -98,8 +98,8 @@ Both `packages/ts/src/providers/<provider>/` and
 - [ ] Capability matrix regenerates cleanly (`npm run docs:matrix`).
 - [ ] A docs page for the provider, including anything surprising about it.
 - [ ] If you have sandbox keys, run the sandbox tests and change the provider's status in
-      PROVIDERS.md to **Sandbox verified**. If you do not, leave it and say so in the PR — the
-      adapter ships with `notYetSandboxVerified` until someone does.
+  PROVIDERS.md to **Sandbox verified**. If you do not, leave it and say so in the PR — the
+  adapter ships with `notYetSandboxVerified` until someone does.
 
 ## Reporting that a provider changed their API
 
@@ -110,7 +110,7 @@ it. The weekly drift workflow opens these automatically too, but a human usually
 ## Commit messages and PRs
 
 Plain, clear, imperative: `add Korapay virtual account support`, `fix Fincra webhook canonicalisation`.
-Explain *why* in the body if it is not obvious. One logical change per PR. No AI attribution lines.
+Explain _why_ in the body if it is not obvious. One logical change per PR. No AI attribution lines.
 
 ## Code style
 

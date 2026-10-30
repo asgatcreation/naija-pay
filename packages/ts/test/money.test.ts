@@ -1,13 +1,13 @@
-import { test, describe } from "node:test";
 import assert from "node:assert/strict";
+import { describe, test } from "node:test";
 import {
-  BASIS_POINTS_TOTAL,
-  MoneyError,
   add,
+  BASIS_POINTS_TOTAL,
   compare,
   equals,
   format,
   fromMajor,
+  MoneyError,
   money,
   naira,
   splitByBasisPoints,
@@ -26,12 +26,15 @@ describe("money construction", () => {
   });
 
   test("rejects a float amount, with a message that explains the unit", () => {
-    assert.throws(() => money(1.5, "NGN"), (e: unknown) => {
-      assert.ok(e instanceof MoneyError);
-      assert.match((e as Error).message, /must be an integer/);
-      assert.match((e as Error).message, /1\.50 is 150/);
-      return true;
-    });
+    assert.throws(
+      () => money(1.5, "NGN"),
+      (e: unknown) => {
+        assert.ok(e instanceof MoneyError);
+        assert.match((e as Error).message, /must be an integer/);
+        assert.match((e as Error).message, /1\.50 is 150/);
+        return true;
+      },
+    );
   });
 
   test("rejects negatives, NaN, Infinity and unsafe integers", () => {
