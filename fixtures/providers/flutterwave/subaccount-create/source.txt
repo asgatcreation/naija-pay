@@ -1,0 +1,8 @@
+https://developer.flutterwave.com/reference/create-a-sub-account.md - Create a collection subaccount
+updatedAt: 2026-10-19T10:10:41.000Z
+Verified: 2026-11-02
+Recorded from Flutterwave's documented sample response with identifiers replaced.
+
+split_value is a DECIMAL FRACTION, not a percentage: Flutterwave's split-payments
+page states that a 9% commission is 0.09. Our public API takes basis points, so
+900 bps becomes 0.09 here. See basisPointsToFraction in core/money.

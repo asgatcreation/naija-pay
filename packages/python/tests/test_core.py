@@ -25,6 +25,7 @@ from naija_pay.core import (
     UnsupportedOperationError,
     ValidationError,
     add,
+    basis_points_to_fraction,
     compare,
     error_class_for_status,
     format_money,
@@ -40,6 +41,7 @@ from naija_pay.core import (
     split_by_basis_points,
     split_by_flat_amounts,
     subtract,
+    to_major,
 )
 
 # Obviously fake values, matching the ones the fixtures use.
@@ -398,3 +400,64 @@ class TestErrors(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestDecimalConversion(unittest.TestCase):
+    """For providers whose wire format is not minor units -- Flutterwave, chiefly."""
+
+    def test_to_major_is_the_inverse_of_from_major(self) -> None:
+        for major in (0, 1, 1.5, 12.34, 150.75, 1200.09, 20_000.5, 3.29, 999_999.99):
+            with self.subTest(major=major):
+                self.assertEqual(to_major(from_major(major, "NGN")), major)
+
+    def test_the_cases_a_naive_multiply_by_100_gets_wrong(self) -> None:
+        # 1200.09 * 100 is 120008.99999999999 and 3.29 * 100 is 328.99999999999994.
+        # Truncating either loses a kobo; these are the exact values that must come out.
+        self.assertEqual(from_major(1200.09, "NGN").amount, 120_009)
+        self.assertEqual(from_major(3.29, "USD").amount, 329)
+        self.assertEqual(from_major(1.15, "NGN").amount, 115)
+        self.assertEqual(to_major(money(120_009, "NGN")), 1200.09)
+        self.assertEqual(to_major(money(329, "USD")), 3.29)
+
+    def test_the_decimal_a_provider_receives_serialises_as_the_decimal_we_meant(self) -> None:
+        # json.dumps prints the shortest round-tripping representation, which is the
+        # property that makes sending a converted number safe at all.
+        self.assertEqual(
+            json.dumps({"amount": to_major(money(120_009, "NGN"))}), '{"amount": 1200.09}'
+        )
+        self.assertEqual(
+            json.dumps({"amount": to_major(money(2_000_050, "NGN"))}), '{"amount": 20000.5}'
+        )
+
+    def test_every_kobo_value_up_to_a_thousand_naira_round_trips(self) -> None:
+        for kobo in range(0, 100_001):
+            if from_major(to_major(money(kobo, "NGN")), "NGN").amount != kobo:
+                self.fail(f"{kobo} kobo did not round-trip")
+
+    def test_refuses_a_fractional_amount_in_a_currency_with_no_subunit(self) -> None:
+        # Found by the cross-language parity cases: to_major used to emit 0.01 XOF, which
+        # from_major then rejected, so the round trip was broken for the one currency
+        # without a subunit. A provider would have dropped the fraction silently.
+        with self.assertRaises(MoneyError):
+            to_major(money(1, "XOF"))
+        with self.assertRaises(MoneyError):
+            to_major(money(150, "XOF"))
+        # A whole number of XOF is fine.
+        self.assertEqual(to_major(money(100, "XOF")), 1)
+        self.assertEqual(to_major(money(500_000, "XOF")), 5000)
+
+    def test_basis_points_become_the_decimal_fraction_a_provider_expects(self) -> None:
+        # Flutterwave's own documentation: a 9% commission is 0.09, not 9.
+        self.assertEqual(basis_points_to_fraction(900), 0.09)
+        self.assertEqual(basis_points_to_fraction(2000), 0.2)
+        self.assertEqual(basis_points_to_fraction(0), 0)
+        self.assertEqual(basis_points_to_fraction(10_000), 1)
+        self.assertEqual(basis_points_to_fraction(5000), 0.5)
+
+    def test_refuses_basis_points_that_are_not_whole_negative_or_over_100_percent(self) -> None:
+        with self.assertRaises(MoneyError):
+            basis_points_to_fraction(1.5)  # type: ignore[arg-type]
+        with self.assertRaises(MoneyError):
+            basis_points_to_fraction(-1)
+        with self.assertRaises(MoneyError):
+            basis_points_to_fraction(10_001)

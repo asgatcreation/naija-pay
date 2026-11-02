@@ -607,3 +607,50 @@ fixture. If the two languages ever disagree about what a Paystack webhook means,
 The same fixtures are what let a weekly sandbox run detect provider drift: when a real sandbox
 response stops matching the recorded fixture, the workflow opens an issue naming the provider, the
 operation and the diff.
+
+## Providers whose wire format is not minor units
+
+Added 2026-11-02, when the Flutterwave adapter landed.
+
+The contract above is unambiguous: an amount is an integer count of minor units, and never a float.
+That is a statement about **our** API, not about every provider's. Paystack happens to agree —
+it takes and returns integer kobo — but Flutterwave does not, in either API generation:
+
+|                         | Paystack                | Flutterwave                      |
+| ----------------------- | ----------------------- | -------------------------------- |
+| 5,000 naira on the wire | `500000` (integer kobo) | `5000` (decimal naira)           |
+| 20,000 naira 50 kobo    | `2000050`               | `20000.5`                        |
+| A balance               | `{"balance": 2000050}`  | `{"available_balance": 20000.5}` |
+| Minimum                 | 1 kobo                  | `0.01`                           |
+
+So conversion has to happen somewhere, and the only safe place is the adapter boundary. Two functions
+in `core/money` do it, and they are deliberately the _only_ place a float is allowed near money:
+
+- `fromMajor(major, currency)` — a provider's decimal to our integer. Rounds the scaled value and
+  then checks the result divides back to what arrived, refusing anything carrying more precision than
+  the currency has.
+- `toMajor(money)` — our integer to a provider's decimal. Divides once on the integer, then
+  **asserts the round trip**: if multiplying back does not land exactly on the integer we started
+  with, it throws rather than sending a wrong number.
+
+Why that is not paranoia: `1200.09 * 100` evaluates to `120008.99999999999`, and `3.29 * 100` to
+`328.99999999999994`. An adapter that multiplies and truncates loses a kobo on a large share of all
+transactions, in a direction nobody notices until reconciliation. Both languages implement the same
+two functions, cross-language parity cases pin the results and the rejection messages, and a test
+walks every kobo value up to NGN 1,000 through the round trip.
+
+Writing those parity cases found a real defect in this code, which is recorded because the process
+mattered more than the fix: `fromMajor` already refused a fractional amount in a currency with no
+subunit (XOF), because providers drop the fraction during processing. `toMajor` did not, so it would
+emit `0.01` XOF — a value its own inverse rejects. The two directions were tested separately and
+agreed separately; only comparing them across languages and across both directions exposed it.
+
+**Percentages have the same problem.** Our API takes basis points, integers only, because `9%` as
+`0.09` is a float. Flutterwave's API wants exactly that float — its documentation states that a 9%
+commission is `0.09`. `basisPointsToFraction` does the conversion once, with the same round-trip
+check, instead of each call site doing a division where a factor of 100 is easy to lose.
+
+**What this means for an adapter author.** If the provider you are adding sends decimals, do not add
+a conversion to your adapter. Use these two functions, add your provider's amounts to the parity
+cases, and let the harness prove the two languages agree. See the add-a-provider checklist in
+CONTRIBUTING.md.

@@ -1,0 +1,10 @@
+{
+  "status": "success",
+  "message": "Wallet balance fetched",
+  "data": {
+    "account_reference": "FLW-EXAMPLE00000000000000000000000",
+    "currency": "NGN",
+    "available_balance": 1200.09,
+    "ledger_balance": 1200.09
+  }
+}

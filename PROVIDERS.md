@@ -16,8 +16,11 @@ All product and company names are the trademarks of their respective owners.
 | **Docs blocked**     | Portal is private, down, or unreachable at time of checking. Build from fixtures, mark unverified. |
 | **Sandbox verified** | Additionally exercised against the provider's sandbox with real test keys.                         |
 
-**Paystack is Sandbox verified** as of 2026-10-30 (milestone 4), with the two caveats recorded in its section. No other provider is yet. Any adapter that is not
-sandbox verified ships with a `notYetSandboxVerified` flag and a visible note in the docs site.
+**Paystack is Sandbox verified** as of 2026-10-30 (milestone 4), with the two caveats recorded in its
+section. **Flutterwave is Docs verified** as of 2026-11-02 (milestone 5) and has an adapter in both
+languages, but has **not** been sandbox-verified. No other provider has an adapter yet. Any adapter
+that is not sandbox verified ships with a `notYetSandboxVerified` flag and a visible note in the docs
+site — per operation, not per provider, so a partially verified adapter reports honestly.
 
 ---
 
@@ -148,22 +151,38 @@ enabling and that the key is fine.
 
 Flutterwave currently runs **two live API generations at once**, and this materially affects the design.
 
-|                 | v3                                                                    | v4                                                                                                                                               |
-| --------------- | --------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Docs            | <https://developer.flutterwave.com/docs> (pages tagged `/v3.0.0/`)    | <https://developer.flutterwave.com/v4.0.0/llms.txt>                                                                                              |
-| Verified        | 2026-10-25 — **Docs verified** (pages stamped `updatedAt` 2026-10-19) | 2026-10-25 — **Docs verified** (same stamp)                                                                                                      |
-| Base URL        | `https://api.flutterwave.com/v3`                                      | Test `https://developersandbox-api.flutterwave.com`, live `https://f4bexperience.flutterwave.com`                                                |
-| Auth            | `Authorization: Bearer FLWSECK_TEST-... / FLWSECK-...`                | **OAuth 2.0 client credentials** at `https://idp.flutterwave.com/realms/flutterwave/protocol/openid-connect/token`; access token lives **600 s** |
-| Idempotency     | Not documented                                                        | `X-Idempotency-Key` on every POST; replays return the original response plus `X-Idempotency-Cache-Hit: true`                                     |
-| Webhook signing | `verif-hash` header holds **your secret hash verbatim**               | `flutterwave-signature` = **HMAC-SHA256, base64**, over the raw body, keyed with the secret hash                                                 |
-| Test data       | —                                                                     | Archived and unrecoverable after **30 days**                                                                                                     |
+|                 | v3                                                                                  | v4                                                                                                                                               |
+| --------------- | ----------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Docs            | <https://developer.flutterwave.com/docs> (pages tagged `/v3.0.0/`)                  | <https://developer.flutterwave.com/v4.0.0/llms.txt>                                                                                              |
+| Verified        | 2026-11-02 — **Docs verified** (pages stamped `updatedAt` 2026-10-19 to 2026-10-26) | 2026-11-02 — **Docs verified** (reference pages stamped `updatedAt` 2026-10-19)                                                                  |
+| Base URL        | `https://api.flutterwave.com/v3`                                                    | Test `https://developersandbox-api.flutterwave.com`, live `https://f4bexperience.flutterwave.com`                                                |
+| Auth            | `Authorization: Bearer FLWSECK_TEST-... / FLWSECK-...`                              | **OAuth 2.0 client credentials** at `https://idp.flutterwave.com/realms/flutterwave/protocol/openid-connect/token`; access token lives **600 s** |
+| Idempotency     | Not documented                                                                      | `X-Idempotency-Key` on every POST; replays return the original response plus `X-Idempotency-Cache-Hit: true`                                     |
+| Webhook signing | `verif-hash` header holds **your secret hash verbatim**                             | `flutterwave-signature` = **HMAC-SHA256, base64**, over the raw body, keyed with the secret hash                                                 |
+| Test data       | —                                                                                   | Archived and unrecoverable after **30 days**                                                                                                     |
 
-**The decisive finding:** the v4 documentation index covers card, mobile money, pay-with-bank-transfer,
-pay-with-bank (NG), USSD, OPay, payouts, settlements, refunds and chargebacks — but it does **not**
-cover virtual accounts, split payments, payout subaccounts, or direct debit. Those four exist only in
-v3. Since naija-pay is built around exactly those features, the Flutterwave adapter has to straddle
-both generations: v4 where available, v3 for virtual accounts, splits, payout subaccounts and
-mandates. This is handled inside the adapter and never leaks into the normalised API.
+**Corrected on 2026-11-02.** The note here previously said v4 covered neither virtual accounts nor
+splits, payout subaccounts or direct debit, and that the adapter would straddle both generations.
+Reading the v4 reference endpoint by endpoint before writing any code changed two of those facts, and
+changed the design:
+
+- **v4 does now have virtual accounts** — `POST /virtual-accounts`, with list, get and update. The
+  earlier reading was wrong, and it was wrong because it worked from the documentation index rather
+  than from the endpoint list.
+- **v4 still has no split payments and no payout subaccounts.** Neither concept appears anywhere in
+  the v4 reference. Confirmed again on 2026-11-02.
+- **v4 has no hosted checkout at all**, which the earlier note did not register and which turned out
+  to decide the whole question. A v4 collection runs `POST /customers`, then
+  `POST /payment-methods`, then `POST /charges` with a `payment_method_id`. There is no hosted page
+  and no payment link, so taking a card payment on v4 means holding the card number — which this SDK
+  will not do under any circumstances. v3's `POST /payments` returns a hosted link.
+
+**So the adapter speaks v3 for every operation, and v4 only for webhook verification.** Straddling
+the two would have meant two credential sets, two token lifecycles and a PCI-scope problem, to reach
+a v4 surface that is missing half of what this SDK normalises. v4's genuine advantages — a real
+`X-Idempotency-Key` on every POST, and `X-Scenario-Key` for deterministic sandbox outcomes, which
+would be worth having for payouts in particular — are recorded as the next step rather than
+half-built. The version boundary is stated in the adapter's own capability declaration, not buried.
 
 **Findings to encapsulate**
 
@@ -179,7 +198,57 @@ mandates. This is handled inside the adapter and never leaks into the normalised
    few paragraphs below still does the v3-style `signature !== secretHash` comparison. We implement
    the HMAC form and will confirm against sandbox.
 3. A 600-second token means the adapter needs token caching with pre-emptive refresh, not a fetch per
-   call. We refresh at 60 s remaining, exactly as their guide recommends.
+   call. We refresh at 60 s remaining, exactly as their guide recommends. Not yet needed, since the
+   adapter is v3-only for operations.
+4. **Amounts are decimals in major units, in both generations.** Flutterwave sends and accepts
+   `5000` for five thousand naira, `12.34`, and a balance of `20000.5`; v4's schema sets a minimum of
+   `0.01`. Paystack, by contrast, is integer kobo. naija-pay is integer minor units throughout, so
+   this adapter is the first to convert at the boundary — and conversion through a float is where
+   money quietly goes missing. `1200.09 * 100` is `120008.99999999999`, and `3.29 * 100` is
+   `328.99999999999994`; truncating either loses a kobo on every transaction. Both languages convert
+   through `fromMajor`/`toMajor`, which round the scaled integer and then **assert the round trip**,
+   refusing outright rather than shipping a wrong number. Cross-language parity cases pin the
+   conversion in both directions, and a test walks every kobo value up to NGN 1,000.
+5. **Writing those parity cases found a bug in our own code, not Flutterwave's.** `fromMajor` already
+   refused a fractional amount in a currency with no subunit, because providers drop the fraction
+   during processing. `toMajor` did not, so it would emit `0.01` XOF — a value its own inverse
+   rejects. Fixed in both languages with identical messages, and regression-tested.
+6. **`"Transfer Queued Successfully"` is not a completed transfer.** A created payout returns HTTP
+   200 with `"status": "success"` at the envelope level and `data.status` of `"NEW"`. It is queued.
+   Reading the envelope — the obvious thing to do — marks every payout as paid the instant
+   Flutterwave accepts it. The adapter reads `data.status` and reports `pending`.
+7. **A 200 can be a failure.** v3 signals errors with `"status": "error"` inside a 200 response as
+   well as through HTTP statuses, so the envelope is checked on every call. `"Transfer reference is
+   used already"` arrives this way.
+8. **Percentage splits are decimal fractions, not percentages.** Flutterwave's own documentation
+   states that a 9% commission is `0.09`. Our public API is basis points, so the factor of 100 is
+   converted once, in `basisPointsToFraction`, and tested — rather than by hand at each call site,
+   where it is easy to lose.
+9. **Payout subaccounts are real wallets, which is why Flutterwave earns the `wallets.*` tier that
+   Paystack cannot.** Each one holds a NGN balance, gets its own NUBAN that funds it, and can pay out
+   from that balance via `debit_subaccount`. Two identifiers must both be kept: `account_reference`
+   reads the balance and debits the wallet, while `barter_id` is the destination for wallet-to-wallet
+   transfers. The docs state these wallets are NGN-only, so another currency fails locally.
+10. **Flutterwave uses the literal string `"N/A"`** where a field does not apply — `"amount": "N/A"`
+    and `"expiry_date": "N/A"` in virtual-account responses. Parsing those yields an Invalid Date and
+    a NaN amount, so they are filtered in the normaliser rather than escaping into application code.
+11. **A transfer may need dashboard approval.** `requires_approval` and `is_approved` come back as
+    integers, not booleans. When approval is pending, the payout reports `awaitingApproval`, for the
+    same reason Paystack's OTP gate reports `awaitingOtp`: so nobody mistakes an accepted transfer
+    for a sent one.
+12. **Flutterwave publishes no webhook IP allowlist**, unlike Paystack. The adapter therefore offers
+    no `isKnownWebhookIp` method, rather than one that always answers false.
+13. **Reference formats differ between generations.** v3 publishes no pattern for `tx_ref`; v4
+    requires 6 to 42 characters of letters, digits and hyphens. The adapter enforces v4's stricter
+    rule now, because a reference v4 would reject is a reference that cannot be carried forward on
+    migration — and it says so in the error.
+
+**Implementation status (2026-11-02):** adapter written in both languages from the documentation
+above, with 58 tests each and 15 fixtures recorded from Flutterwave's own documented samples.
+**Not sandbox-verified.** Wallets, virtual accounts and v4 webhook verification are declared
+`notYetSandboxVerified`, so the generated capability matrix says so rather than implying they are
+proven. Paystack's sandbox run changed real behaviour in that adapter, and there is no reason to
+expect Flutterwave to be kinder.
 
 ### Monnify (Moniepoint)
 
@@ -377,7 +446,18 @@ publicly. This is the single biggest reason to keep Tier 3 out of v1.0.
 
 Hand-written for this milestone from the verified docs above. **From milestone 6 onward this table is
 generated from the adapters' own declared capabilities** (`npm run docs:matrix`), so it can never
-drift from the code. Legend: yes = documented and planned for the adapter; **A** = documented but
+drift from the code.
+
+Two Flutterwave cells were corrected on 2026-11-02 while building its adapter: it _does_ accept a
+`bank_code` when creating a virtual account, and it _does_ have a BVN-update route. Both were read
+from the v3 reference endpoint by endpoint, which the milestone-1 survey had not done. This is the
+second time a hand-written cell turned out wrong, and the reason the table stops being hand-written
+next milestone.
+
+A cell here says what the **provider** documents, not what this SDK has implemented. For what an
+adapter actually does — and which of its operations are sandbox-verified rather than merely written —
+read the capability declaration in `providers/<name>/capabilities.ts`, which is the source the
+generated table will come from. Legend: yes = documented and planned for the adapter; **A** = documented but
 requires the provider's commercial approval; ? = provider surveyed only, not yet confirmed;
 no = not offered.
 
@@ -400,8 +480,8 @@ no = not offered.
 | Refunds (partial)          |   yes    |             yes             |           yes            |         yes          |      ?      |             yes              |
 | Static / reserved VA       |   yes    |             yes             |           yes            |         yes          |     yes     |             yes              |
 | Dynamic / temporary VA     |   yes    |             yes             |           yes            |         yes          |     yes     |             yes              |
-| Choose VA bank             |   yes    |             no              | yes (all banks at once)  | yes (7 of 9 enabled) |      ?      |             yes              |
-| VA KYC update              |   yes    |              ?              |           yes            |         yes          |      ?      |             yes              |
+| Choose VA bank             |   yes    |             yes             | yes (all banks at once)  | yes (7 of 9 enabled) |      ?      |             yes              |
+| VA KYC update              |   yes    |          yes (BVN)          |           yes            |         yes          |      ?      |             yes              |
 | VA inflow listing          |   yes    |             yes             |           yes            |         yes          |      ?      |             yes              |
 | Over/underpayment guidance |    no    |             no              |            no            |          no          |     no      |     **yes, documented**      |
 | Split-payment subaccounts  |   yes    |          yes (v3)           |          **A**           |          ?           |      ?      |             yes              |

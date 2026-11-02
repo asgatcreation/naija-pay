@@ -29,6 +29,7 @@ export {
 export {
   add,
   BASIS_POINTS_TOTAL,
+  basisPointsToFraction,
   type Currency,
   compare,
   equals,
@@ -46,6 +47,7 @@ export {
   splitByBasisPoints,
   splitByFlatAmounts,
   subtract,
+  toMajor,
 } from "./core/money.ts";
 
 export {

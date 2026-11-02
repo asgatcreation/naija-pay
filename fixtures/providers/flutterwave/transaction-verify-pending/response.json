@@ -1,0 +1,26 @@
+{
+  "status": "success",
+  "message": "Transaction fetched successfully",
+  "data": {
+    "id": 288200109,
+    "tx_ref": "order-01HR-EXAMPLE",
+    "flw_ref": "AdaExample/FLW275407302",
+    "amount": 5000,
+    "currency": "NGN",
+    "charged_amount": 5000,
+    "app_fee": 70,
+    "merchant_fee": 0,
+    "processor_response": "Pending validation",
+    "status": "pending",
+    "payment_type": "banktransfer",
+    "created_at": "2026-11-02T09:20:00.000Z",
+    "account_id": 73362,
+    "customer": {
+      "id": 210,
+      "name": "Ada Example",
+      "phone_number": "07000000000",
+      "email": "ada@example.com",
+      "created_at": "2026-11-02T09:20:00.000Z"
+    }
+  }
+}

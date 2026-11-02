@@ -1,0 +1,8 @@
+{
+  "status": "success",
+  "message": "Account details fetched",
+  "data": {
+    "account_number": "0690000032",
+    "account_name": "Ada Example"
+  }
+}

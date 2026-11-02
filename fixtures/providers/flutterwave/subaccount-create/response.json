@@ -1,0 +1,15 @@
+{
+  "status": "success",
+  "message": "Subaccount created",
+  "data": {
+    "id": 2181,
+    "account_number": "0690000037",
+    "account_bank": "044",
+    "full_name": "Example Vendor",
+    "created_at": "2026-11-02T09:40:15.000Z",
+    "split_type": "percentage",
+    "split_value": 0.09,
+    "subaccount_id": "RS_EXAMPLE4D9C66C0B1C75014EE67D4D66",
+    "bank_name": "ACCESS BANK NIGERIA"
+  }
+}

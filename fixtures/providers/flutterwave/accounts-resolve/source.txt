@@ -1,0 +1,9 @@
+https://developer.flutterwave.com/reference/resolve-account-transfer-details.md - Retrieve Bank Account Name
+updatedAt: 2026-10-19T10:11:01.000Z
+Verified: 2026-11-02
+Recorded from Flutterwave's documented sample response. The account holder's name
+is replaced with a fake value: a resolved account name is personal data and must
+never be committed.
+
+Note the response does NOT echo the bank code, unlike Paystack's. The adapter
+carries the requested code through so the enriched result is complete.

@@ -83,6 +83,13 @@ Both `packages/ts/src/providers/<provider>/` and
 - [ ] `errors` — map the provider's codes onto our typed errors, always keeping `providerCode` and
   `providerMessage`
 
+**If the provider sends or accepts decimal amounts**, as Flutterwave does, do not write a conversion
+in your adapter. Use `toMajor` and `fromMajor` from `core/money`, which assert the round trip, and
+add your provider's amounts to `fixtures/parity/core.json` so the harness proves both languages
+agree. Multiplying by 100 looks correct and is not: `1200.09 * 100` is `120008.99999999999`. The
+same goes for percentages — the public API is basis points, and `basisPointsToFraction` converts
+them. See "Providers whose wire format is not minor units" in [DESIGN.md](DESIGN.md).
+
 ### 4. Tests
 
 - [ ] Unit tests for every operation, from fixtures, no network.
@@ -91,6 +98,9 @@ Both `packages/ts/src/providers/<provider>/` and
 - [ ] Virtual account edge cases: overpayment, underpayment, late payment, duplicate delivery.
 - [ ] Split maths: percentages, flat fees, and that rounding never loses or invents a kobo.
 - [ ] Parity test passes — TypeScript and Python produce byte-identical normalised JSON.
+- [ ] Any amount conversion is covered in **both** directions in the parity cases. Testing each
+  direction on its own is not enough: that is how `toMajor` came to emit a value `fromMajor`
+  refused, and both of its own tests passed.
 - [ ] Redaction test: a known BVN and account number appear in **no** log, error or repr.
 
 ### 5. Finish

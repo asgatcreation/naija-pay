@@ -1,0 +1,5 @@
+https://developer.flutterwave.com/reference/transaction-refund.md - Refund a transaction
+updatedAt: 2026-10-19
+Verified: 2026-11-02
+Recorded from Flutterwave's documented sample response with identifiers replaced.
+amount_refunded is a decimal in major units.

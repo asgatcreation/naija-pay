@@ -281,6 +281,10 @@ from paystack_py import paystack_parity
 
 out.update(paystack_parity(ROOT, CASES))
 
+from flutterwave_py import flutterwave_parity
+
+out.update(flutterwave_parity(ROOT, CASES))
+
 
 def canonical(value: Any) -> Any:
     """Sort mapping keys recursively so key order can never cause a false difference."""

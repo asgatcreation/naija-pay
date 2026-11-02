@@ -1,0 +1,9 @@
+https://developer.flutterwave.com/reference/checkout.md - Standard (hosted checkout)
+updatedAt: 2026-10-19T10:09:59.000Z
+Verified: 2026-11-02
+Recorded from Flutterwave's documented sample response. The hosted link value is
+Flutterwave's own example shape with the identifier replaced.
+
+Note: the schema types `amount` as integer int32 while the page's own example sends
+it as the string "200". We send a JSON number in major units, which both readings
+accept.

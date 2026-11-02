@@ -65,6 +65,7 @@ from naija_pay.core.money import (
     SplitPart,
     SplitResult,
     add,
+    basis_points_to_fraction,
     compare,
     format_money,
     from_major,
@@ -74,6 +75,7 @@ from naija_pay.core.money import (
     split_by_basis_points,
     split_by_flat_amounts,
     subtract,
+    to_major,
 )
 from naija_pay.core.redact import (
     looks_like_live_key,
@@ -140,6 +142,7 @@ __all__ = [
     "add",
     "assert_supported",
     "bank_data_source",
+    "basis_points_to_fraction",
     "classify_inflow",
     "compare",
     "compute_signature",
@@ -172,6 +175,7 @@ __all__ = [
     "subtract",
     "support_for",
     "supports",
+    "to_major",
     "unverified_codes_for",
     "verify_signature",
 ]

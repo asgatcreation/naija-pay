@@ -1,0 +1,6 @@
+https://developer.flutterwave.com/reference/get-all-banks.md - Get all banks
+updatedAt: 2026-10-19
+Verified: 2026-11-02
+A four-entry excerpt of Flutterwave's documented sample response, enough to
+exercise bank enrichment and the mixture of 3-digit and 6-digit codes that makes
+single-code normalisation impossible. See the bank-codes section of DESIGN.md.

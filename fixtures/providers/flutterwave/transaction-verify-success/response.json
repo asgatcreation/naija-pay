@@ -1,0 +1,39 @@
+{
+  "status": "success",
+  "message": "Transaction fetched successfully",
+  "data": {
+    "id": 288200108,
+    "tx_ref": "order-01HQ-EXAMPLE",
+    "flw_ref": "AdaExample/FLW275407301",
+    "device_fingerprint": "N/A",
+    "amount": 5000,
+    "currency": "NGN",
+    "charged_amount": 5000,
+    "app_fee": 70,
+    "merchant_fee": 0,
+    "processor_response": "Approved",
+    "auth_model": "VBVSECURECODE",
+    "ip": "::ffff:127.0.0.1",
+    "narration": "Example Store",
+    "status": "successful",
+    "payment_type": "card",
+    "created_at": "2026-11-02T09:15:22.000Z",
+    "account_id": 73362,
+    "amount_settled": 4930,
+    "card": {
+      "first_6digits": "123456",
+      "last_4digits": "7890",
+      "issuer": "VERVE FIRST CITY MONUMENT BANK PLC",
+      "country": "NG",
+      "type": "VERVE",
+      "expiry": "02/27"
+    },
+    "customer": {
+      "id": 210,
+      "name": "Ada Example",
+      "phone_number": "07000000000",
+      "email": "ada@example.com",
+      "created_at": "2026-11-02T09:15:22.000Z"
+    }
+  }
+}

@@ -28,6 +28,7 @@ from naija_pay.core import (
     ValidationError,
     WebhookVerificationError,
     add,
+    basis_points_to_fraction,
     compare,
     error_class_for_status,
     format_money,
@@ -44,6 +45,7 @@ from naija_pay.core import (
     split_by_basis_points,
     split_by_flat_amounts,
     subtract,
+    to_major,
 )
 
 #: The package version. Kept identical to the TypeScript package; CI enforces it.
@@ -95,6 +97,7 @@ __all__ = [
     "WebhookVerificationError",
     "__version__",
     "add",
+    "basis_points_to_fraction",
     "compare",
     "error_class_for_status",
     "format_money",
@@ -111,4 +114,5 @@ __all__ = [
     "split_by_basis_points",
     "split_by_flat_amounts",
     "subtract",
+    "to_major",
 ]

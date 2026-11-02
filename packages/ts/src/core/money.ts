@@ -256,3 +256,68 @@ export function splitByFlatAmounts(total: Money, shares: readonly Share[]): Spli
     remainder: money(total.amount - allocated, total.currency),
   });
 }
+
+/**
+ * Money to a major-unit number, for providers whose wire format is decimal.
+ *
+ * Paystack takes kobo, so this is never needed there. Flutterwave does not: both v3
+ * and v4 put decimals on the wire (`"amount": 12.34`, minimum 0.01), and v4's balance
+ * comes back as `1200.09`. Converting through a float is where money quietly goes
+ * missing, so this does two things:
+ *
+ * 1. Divides once, on an integer, rather than doing any float arithmetic.
+ * 2. Asserts the round trip. If multiplying the result back does not land exactly on
+ *    the integer we started with, the amount cannot be sent as a decimal at all and
+ *    this throws rather than shipping a wrong number.
+ *
+ * The returned number serialises exactly: JSON.stringify prints the shortest string
+ * that round-trips to the same double, which for any amount inside the safe-integer
+ * range is the decimal we meant. `fromMajor` is the inverse and is tested against it.
+ */
+export function toMajor(m: Money): number {
+  const exponent = MINOR_UNIT_EXPONENT[m.currency];
+  const factor = 10 ** exponent;
+  const major = m.amount / factor;
+
+  // A currency with no subunit cannot carry a fractional major amount. `fromMajor`
+  // already refuses one, and without this check `toMajor` would emit 0.01 XOF — a
+  // value its own inverse rejects, and one a provider would silently drop the
+  // fraction of. Found by the cross-language parity cases.
+  if (CURRENCIES_WITHOUT_SUBUNIT.has(m.currency) && !Number.isInteger(major)) {
+    throw new MoneyError(
+      `${m.amount} ${m.currency} minor units is ${major} ${m.currency}, but ${m.currency} ` +
+        "has no subunit, so that cannot be sent as a decimal. Providers drop the " +
+        "fractional part during processing, so naija-pay refuses it here instead",
+    );
+  }
+
+  if (Math.round(major * factor) !== m.amount) {
+    throw new MoneyError(
+      `${m.amount} ${m.currency} minor units cannot be represented exactly as a ` +
+        "decimal major amount, so it must not be sent to a provider that takes decimals",
+    );
+  }
+  return major;
+}
+
+/**
+ * Basis points to the decimal fraction a provider wants, e.g. 900 bps to 0.09.
+ *
+ * Flutterwave states percentage splits as decimal fractions — its own documentation
+ * says a 9% commission is `0.09`, not `9`. Our public API is basis points, integers
+ * only, so the conversion happens here once and is tested, instead of being done by
+ * hand at each call site where a factor of 100 is easy to lose.
+ */
+export function basisPointsToFraction(basisPoints: number): number {
+  if (!Number.isInteger(basisPoints) || basisPoints < 0) {
+    throw new MoneyError(`basis points must be a non-negative integer, received ${basisPoints}`);
+  }
+  if (basisPoints > BASIS_POINTS_TOTAL) {
+    throw new MoneyError(`${basisPoints} basis points is more than 100% (${BASIS_POINTS_TOTAL})`);
+  }
+  const fraction = basisPoints / BASIS_POINTS_TOTAL;
+  if (Math.round(fraction * BASIS_POINTS_TOTAL) !== basisPoints) {
+    throw new MoneyError(`${basisPoints} basis points cannot be expressed exactly as a fraction`);
+  }
+  return fraction;
+}

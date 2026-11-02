@@ -1,0 +1,14 @@
+{
+  "method": "POST",
+  "path": "/subaccounts",
+  "body": {
+    "account_bank": "044",
+    "account_number": "0690000037",
+    "business_name": "Example Vendor",
+    "country": "NG",
+    "split_type": "percentage",
+    "split_value": 0.09,
+    "business_mobile": "07000000000",
+    "business_email": "vendor@example.com"
+  }
+}

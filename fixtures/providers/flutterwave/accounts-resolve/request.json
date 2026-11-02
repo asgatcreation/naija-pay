@@ -1,0 +1,8 @@
+{
+  "method": "POST",
+  "path": "/accounts/resolve",
+  "body": {
+    "account_number": "0690000032",
+    "account_bank": "044"
+  }
+}

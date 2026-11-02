@@ -1,0 +1,10 @@
+{
+  "method": "POST",
+  "path": "/payout-subaccounts",
+  "body": {
+    "account_name": "Ada Example",
+    "email": "ada@example.com",
+    "mobilenumber": "07000000000",
+    "country": "NG"
+  }
+}

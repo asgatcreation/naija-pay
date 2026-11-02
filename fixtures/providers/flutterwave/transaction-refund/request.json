@@ -1,0 +1,7 @@
+{
+  "method": "POST",
+  "path": "/transactions/288200108/refund",
+  "body": {
+    "amount": 2000
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "status": "success",
+  "message": "Banks fetched successfully",
+  "data": [
+    {
+      "id": 132,
+      "code": "560",
+      "name": "Page MFBank"
+    },
+    {
+      "id": 133,
+      "code": "304",
+      "name": "Stanbic Mobile Money"
+    },
+    {
+      "id": 161,
+      "code": "044",
+      "name": "ACCESS BANK NIGERIA"
+    },
+    {
+      "id": 288,
+      "code": "000019",
+      "name": "Flutterwave MFB"
+    }
+  ]
+}

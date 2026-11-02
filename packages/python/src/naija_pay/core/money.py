@@ -246,3 +246,61 @@ def split_by_flat_amounts(total: Money, shares: Sequence[Share]) -> SplitResult:
         parts=tuple(parts),
         remainder=money(total.amount - allocated, total.currency),
     )
+
+
+def to_major(m: Money) -> float:
+    """Money to a major-unit number, for providers whose wire format is decimal.
+
+    Paystack takes kobo, so this is never needed there. Flutterwave does not: both v3
+    and v4 put decimals on the wire (``"amount": 12.34``, minimum 0.01), and v4's
+    balance comes back as ``1200.09``. Converting through a float is where money
+    quietly goes missing, so this divides once on an integer and then asserts the round
+    trip: if multiplying back does not land exactly on the integer we started with, the
+    amount cannot be sent as a decimal at all and this raises rather than shipping a
+    wrong number.
+
+    ``from_major`` is the inverse and is tested against it.
+    """
+    exponent = _MINOR_UNIT_EXPONENT[m.currency]
+    factor = 10**exponent
+    major: float = m.amount / factor
+
+    # A currency with no subunit cannot carry a fractional major amount. ``from_major``
+    # already refuses one, and without this check ``to_major`` would emit 0.01 XOF -- a
+    # value its own inverse rejects, and one a provider would silently drop the fraction
+    # of. Found by the cross-language parity cases.
+    if m.currency in _CURRENCIES_WITHOUT_SUBUNIT and major != int(major):
+        raise MoneyError(
+            f"{m.amount} {m.currency} minor units is {major} {m.currency}, but "
+            f"{m.currency} has no subunit, so that cannot be sent as a decimal. "
+            "Providers drop the fractional part during processing, so naija-pay "
+            "refuses it here instead"
+        )
+
+    if round(major * factor) != m.amount:
+        raise MoneyError(
+            f"{m.amount} {m.currency} minor units cannot be represented exactly as a "
+            "decimal major amount, so it must not be sent to a provider that takes decimals"
+        )
+    return major
+
+
+def basis_points_to_fraction(basis_points: int) -> float:
+    """Basis points to the decimal fraction a provider wants, e.g. 900 bps to 0.09.
+
+    Flutterwave states percentage splits as decimal fractions -- its own documentation
+    says a 9% commission is ``0.09``, not ``9``. Our public API is basis points,
+    integers only, so the conversion happens here once and is tested, instead of being
+    done by hand at each call site where a factor of 100 is easy to lose.
+    """
+    if isinstance(basis_points, bool) or not isinstance(basis_points, int):
+        raise MoneyError(f"basis points must be a non-negative integer, received {basis_points!r}")
+    if basis_points < 0:
+        raise MoneyError(f"basis points must be a non-negative integer, received {basis_points}")
+    if basis_points > BASIS_POINTS_TOTAL:
+        raise MoneyError(f"{basis_points} basis points is more than 100% ({BASIS_POINTS_TOTAL})")
+
+    fraction = basis_points / BASIS_POINTS_TOTAL
+    if round(fraction * BASIS_POINTS_TOTAL) != basis_points:
+        raise MoneyError(f"{basis_points} basis points cannot be expressed exactly as a fraction")
+    return fraction

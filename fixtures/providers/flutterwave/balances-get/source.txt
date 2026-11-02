@@ -1,0 +1,9 @@
+https://developer.flutterwave.com/reference/get-all-wallet-balances.md - Retrieve Wallet balances
+updatedAt: 2026-10-19
+Verified: 2026-11-02
+Recorded from Flutterwave's documented sample response.
+
+Balances are decimals in major units. 20000.5 is NGN 20,000.50 -- that is
+2,000,050 kobo, and 3.29 USD is 329 cents. A naive float multiply by 100 gives
+328.99999999999994 for the second one, which is why core/money converts through
+fromMajor and asserts the round trip.

@@ -1,0 +1,9 @@
+https://developer.flutterwave.com/reference/create-a-virtual-account-number-1.md - Create a virtual account number
+updatedAt: 2026-10-22T17:15:08.000Z
+Verified: 2026-11-02
+Recorded from Flutterwave's documented sample response with identifiers replaced.
+The BVN is the standard Flutterwave test BVN from its own documentation, not a
+real one.
+
+is_permanent true gives a static account; a dynamic account needs amount and
+expires instead. The docs say nin can replace bvn for static accounts.

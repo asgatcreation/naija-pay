@@ -1,0 +1,14 @@
+{
+  "method": "POST",
+  "path": "/transfers",
+  "body": {
+    "account_bank": "044",
+    "account_number": "0690000037",
+    "amount": 2500,
+    "currency": "NGN",
+    "debit_currency": "NGN",
+    "debit_subaccount": "FLW-EXAMPLE00000000000000000000000",
+    "reference": "walletpay-01hq-example",
+    "narration": "Wallet withdrawal"
+  }
+}

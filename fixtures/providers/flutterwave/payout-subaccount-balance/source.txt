@@ -1,0 +1,9 @@
+https://developer.flutterwave.com/docs/payout-subaccount.md - Checking the balance
+updatedAt: 2026-10-19T10:09:50.000Z
+Verified: 2026-11-02
+GET /v3/payout-subaccounts/{reference}/balances is documented on the payout
+subaccount page. The docs do not print a complete response body, so this shape is
+assembled from the fields the page names plus the balance shape used elsewhere in
+v3. Marked notYetSandboxVerified in the capability declaration for that reason.
+
+available_balance is a decimal in major units: 1200.09, not 120009.

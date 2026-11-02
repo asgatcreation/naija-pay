@@ -36,6 +36,7 @@ const BUDGETS_KB = {
   "providers/mock/index.js": 10,
   // Carries the bank registry for enrichment, which is most of its weight.
   "providers/paystack/index.js": 45,
+  "providers/flutterwave/index.js": 45,
 };
 
 if (!existsSync(DIST)) {

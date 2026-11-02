@@ -1,0 +1,12 @@
+https://developer.flutterwave.com/reference/verify-transaction.md - Verify transaction status
+updatedAt: 2026-10-19T10:10:19.000Z
+Verified: 2026-11-02
+Recorded from Flutterwave's documented sample response, with the card number,
+customer name and references replaced by fake values.
+
+Two fields matter and are easy to confuse:
+  amount          what the customer was asked for
+  charged_amount  what was actually taken (can exceed amount when the customer
+                  bears the fee)
+  amount_settled  what reaches your balance after fees
+These are decimals in major units, not kobo.

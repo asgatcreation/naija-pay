@@ -1,0 +1,8 @@
+https://developer.flutterwave.com/docs/common-errors.md - Common errors
+updatedAt: 2026-10-19
+Verified: 2026-11-02
+Flutterwave's documented wording for an empty balance. Unlike Paystack, whose
+wording is "Your balance is not enough to fulfil this request", Flutterwave says
+"Insufficient funds" -- the two were found to differ by running against Paystack's
+sandbox, which is why each provider's classifier matches its own wording rather
+than sharing one list.

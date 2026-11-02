@@ -1,0 +1,11 @@
+{
+  "method": "POST",
+  "path": "/transfers",
+  "body": {
+    "account_bank": "044",
+    "account_number": "0690000037",
+    "amount": 5000,
+    "currency": "NGN",
+    "reference": "payout-01hq-example"
+  }
+}

@@ -1,0 +1,6 @@
+https://developer.flutterwave.com/reference/verify-transaction.md - Verify transaction status
+updatedAt: 2026-10-19T10:10:19.000Z
+Verified: 2026-11-02
+Assembled from the documented success sample with data.status set to "pending",
+which the docs list as a transaction status. Kept as a fixture so the adapter's
+status mapping is exercised on a transaction that must NOT be treated as paid.

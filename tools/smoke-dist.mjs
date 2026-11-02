@@ -107,6 +107,22 @@ check("paystack refuses a live key in a test environment", () => {
   );
 });
 
+const flutterwave = await esm("providers/flutterwave/index.js");
+check("flutterwave refuses a live key in a test environment", () => {
+  assert.throws(
+    () => flutterwave.flutterwave({ secretKey: "FLWSECK-EXAMPLEreal-X", environment: "test" }),
+    /LIVE secret key/,
+  );
+});
+
+check("flutterwave converts kobo to the decimal it puts on the wire", () => {
+  // The conversion that only exists because Flutterwave is decimal on the wire. Checked
+  // against the built output because a bundler that mangled it would lose real money.
+  assert.equal(core.toMajor(core.money(2_000_050, "NGN")), 20_000.5);
+  assert.equal(core.toMajor(core.money(329, "USD")), 3.29);
+  assert.equal(core.basisPointsToFraction(900), 0.09);
+});
+
 console.log("\nCJS:");
 
 const coreCjs = require(path.join(DIST, "index.cjs"));
@@ -117,6 +133,14 @@ check("CJS core loads and money still works", () => {
 const paystackCjs = require(path.join(DIST, "providers", "paystack", "index.cjs"));
 check("CJS paystack loads and still validates keys", () => {
   assert.throws(() => paystackCjs.paystack({ secretKey: "pk_test_EXAMPLE1" }), /secret key/);
+});
+
+const flutterwaveCjs = require(path.join(DIST, "providers", "flutterwave", "index.cjs"));
+check("CJS flutterwave loads and still validates keys", () => {
+  assert.throws(
+    () => flutterwaveCjs.flutterwave({ secretKey: "FLWPUBK_TEST-EXAMPLE1-X" }),
+    /secret key/,
+  );
 });
 
 console.log(`\n${checks} checks passed against the built output on Node ${process.versions.node}`);

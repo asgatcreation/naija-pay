@@ -220,6 +220,11 @@ const { paystackParity } = await import(
 );
 Object.assign(out, await paystackParity(ROOT, load, cases));
 
+const { flutterwaveParity } = await import(
+  pathToFileURL(path.join(ROOT, "tools", "parity", "flutterwave-ts.mjs")).href
+);
+Object.assign(out, await flutterwaveParity(ROOT, load, cases));
+
 /** Sort object keys recursively so key order can never cause a false difference. */
 function canonical(value) {
   if (Array.isArray(value)) return value.map(canonical);

@@ -1,0 +1,18 @@
+{
+  "status": "success",
+  "message": "Payout subaccount created",
+  "data": {
+    "id": 461311,
+    "account_reference": "FLW-EXAMPLE00000000000000000000000",
+    "account_name": "Ada Example",
+    "barter_id": "FLW-EXAMPLE-BARTER",
+    "email": "ada@example.com",
+    "mobilenumber": "07000000000",
+    "country": "NG",
+    "nuban": "8548349036",
+    "bank_name": "Flutterwave MFB",
+    "bank_code": "000019",
+    "status": "ACTIVE",
+    "created_at": "2026-11-02T09:45:00.000Z"
+  }
+}

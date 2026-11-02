@@ -1,0 +1,17 @@
+{
+  "status": "success",
+  "message": "Virtual account created",
+  "data": {
+    "response_code": "02",
+    "response_message": "Transaction in progress",
+    "flw_ref": "FLW-EXAMPLE-VA-REF",
+    "order_ref": "URF_EXAMPLE_1762000000000",
+    "account_number": "7824822527",
+    "frequency": "N/A",
+    "bank_name": "Flutterwave MFB",
+    "created_at": "2026-11-02T09:50:00.000Z",
+    "expiry_date": "N/A",
+    "note": "Please make a bank transfer to Flutterwave MFB",
+    "amount": "N/A"
+  }
+}

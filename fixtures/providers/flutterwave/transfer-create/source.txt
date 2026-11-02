@@ -1,0 +1,10 @@
+https://developer.flutterwave.com/reference/create-a-transfer.md - Create a transfer
+updatedAt: 2026-10-19T10:10:24.000Z
+Verified: 2026-11-02
+Recorded from Flutterwave's documented sample response with identifiers replaced.
+
+data.status is "NEW" on creation: the transfer is QUEUED, not completed. Treating
+"status": "success" at the top level as a completed payout is the single most
+dangerous misreading of this response, and the adapter maps NEW to pending.
+
+requires_approval and is_approved are integers (0/1), not booleans.

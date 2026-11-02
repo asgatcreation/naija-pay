@@ -1,0 +1,15 @@
+{
+  "method": "POST",
+  "path": "/payments",
+  "body": {
+    "tx_ref": "order-01HQ-EXAMPLE",
+    "amount": 5000,
+    "currency": "NGN",
+    "redirect_url": "https://example.com/callback",
+    "customer": {
+      "email": "ada@example.com",
+      "name": "Ada Example"
+    },
+    "payment_options": "card,banktransfer"
+  }
+}

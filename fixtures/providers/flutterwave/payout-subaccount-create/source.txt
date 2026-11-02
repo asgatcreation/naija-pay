@@ -1,0 +1,11 @@
+https://developer.flutterwave.com/reference/create-a-payout-subaccount.md - Create a payout subaccount
+https://developer.flutterwave.com/docs/payout-subaccount.md - Payout Subaccount
+updatedAt: 2026-10-19T10:10:43.000Z and 2026-10-19T10:09:50.000Z
+Verified: 2026-11-02
+Recorded from Flutterwave's documented sample response with identifiers replaced.
+
+This is a REAL WALLET holding a NGN balance, which is why Flutterwave supports
+wallets.* while Paystack does not. Keep two identifiers:
+  account_reference  used for balances and as debit_subaccount on a transfer
+  barter_id          used as the account_number for wallet-to-wallet transfers
+The docs state these wallets are NGN-only.

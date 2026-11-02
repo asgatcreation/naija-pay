@@ -51,6 +51,11 @@
       "import": "./dist/providers/paystack/index.js",
       "require": "./dist/providers/paystack/index.cjs"
     },
+    "./flutterwave": {
+      "types": "./dist/providers/flutterwave/index.d.ts",
+      "import": "./dist/providers/flutterwave/index.js",
+      "require": "./dist/providers/flutterwave/index.cjs"
+    },
     "./banks": {
       "types": "./dist/banks.d.ts",
       "import": "./dist/banks.js",

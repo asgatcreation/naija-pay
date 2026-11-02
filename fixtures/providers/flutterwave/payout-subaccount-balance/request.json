@@ -1,0 +1,7 @@
+{
+  "method": "GET",
+  "path": "/payout-subaccounts/FLW-EXAMPLE00000000000000000000000/balances",
+  "query": {
+    "currency": "NGN"
+  }
+}

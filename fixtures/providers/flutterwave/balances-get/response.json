@@ -1,0 +1,20 @@
+{
+  "status": "success",
+  "message": "wallet balances fetched",
+  "data": [
+    {
+      "id": 1,
+      "short_name": "NGN",
+      "currency": "NGN",
+      "ledger_balance": 20000.5,
+      "available_balance": 20000.5
+    },
+    {
+      "id": 2,
+      "short_name": "USD",
+      "currency": "USD",
+      "ledger_balance": 3.29,
+      "available_balance": 3.29
+    }
+  ]
+}

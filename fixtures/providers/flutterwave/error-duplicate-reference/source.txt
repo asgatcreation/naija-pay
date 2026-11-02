@@ -1,0 +1,6 @@
+https://developer.flutterwave.com/docs/common-errors.md - Common errors
+updatedAt: 2026-10-19
+Verified: 2026-11-02
+Flutterwave's documented wording for a replayed transfer reference. Note the
+envelope: "status": "error" with the detail in "message", which is why the adapter
+must never treat a 200 response as success without reading status.

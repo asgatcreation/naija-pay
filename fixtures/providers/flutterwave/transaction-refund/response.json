@@ -1,0 +1,18 @@
+{
+  "status": "success",
+  "message": "Refund initiated",
+  "data": {
+    "id": 24598,
+    "account_id": 73362,
+    "tx_id": 288200108,
+    "flw_ref": "AdaExample/FLW275407301",
+    "wallet_id": 92013,
+    "amount_refunded": 2000,
+    "status": "completed",
+    "destination": "payment_source",
+    "meta": {
+      "source": "availablebalance"
+    },
+    "created_at": "2026-11-02T09:30:00.000Z"
+  }
+}

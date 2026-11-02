@@ -3,6 +3,7 @@ import { describe, test } from "node:test";
 import {
   add,
   BASIS_POINTS_TOTAL,
+  basisPointsToFraction,
   compare,
   equals,
   format,
@@ -13,6 +14,7 @@ import {
   splitByBasisPoints,
   splitByFlatAmounts,
   subtract,
+  toMajor,
 } from "../src/core/money.ts";
 
 describe("money construction", () => {
@@ -189,5 +191,67 @@ describe("splits", () => {
         assert.ok(Number.isInteger(part.amount.amount), "every part must be an integer");
       }
     }
+  });
+});
+
+describe("decimal conversion, for providers whose wire format is not minor units", () => {
+  test("toMajor is the inverse of fromMajor", () => {
+    for (const major of [0, 1, 1.5, 12.34, 150.75, 1200.09, 20_000.5, 3.29, 999_999.99]) {
+      const m = fromMajor(major, "NGN");
+      assert.equal(toMajor(m), major, `${major} did not round-trip`);
+    }
+  });
+
+  test("the cases a naive multiply by 100 gets wrong", () => {
+    // 1200.09 * 100 is 120008.99999999999 and 3.29 * 100 is 328.99999999999994.
+    // Truncating either loses a kobo; these are the exact values that must come out.
+    assert.equal(fromMajor(1200.09, "NGN").amount, 120_009);
+    assert.equal(fromMajor(3.29, "USD").amount, 329);
+    assert.equal(fromMajor(1.15, "NGN").amount, 115);
+    assert.equal(toMajor(money(120_009, "NGN")), 1200.09);
+    assert.equal(toMajor(money(329, "USD")), 3.29);
+  });
+
+  test("the decimal a provider receives serialises as the decimal we meant", () => {
+    // JSON.stringify prints the shortest round-tripping representation, which is the
+    // property that makes sending a converted number safe at all.
+    assert.equal(JSON.stringify({ amount: toMajor(money(120_009, "NGN")) }), '{"amount":1200.09}');
+    assert.equal(
+      JSON.stringify({ amount: toMajor(money(2_000_050, "NGN")) }),
+      '{"amount":20000.5}',
+    );
+  });
+
+  test("every kobo value up to a thousand naira round-trips exactly", () => {
+    for (let kobo = 0; kobo <= 100_000; kobo++) {
+      const m = money(kobo, "NGN");
+      assert.equal(fromMajor(toMajor(m), "NGN").amount, kobo);
+    }
+  });
+
+  test("refuses a fractional amount in a currency with no subunit", () => {
+    // Found by the cross-language parity cases: toMajor used to emit 0.01 XOF, which
+    // fromMajor then rejected, so the round trip was broken for the one currency
+    // without a subunit. A provider would have dropped the fraction silently.
+    assert.throws(() => toMajor(money(1, "XOF")), MoneyError);
+    assert.throws(() => toMajor(money(150, "XOF")), MoneyError);
+    // A whole number of XOF is fine.
+    assert.equal(toMajor(money(100, "XOF")), 1);
+    assert.equal(toMajor(money(500_000, "XOF")), 5000);
+  });
+
+  test("basis points become the decimal fraction a provider expects", () => {
+    // Flutterwave's own documentation: a 9% commission is 0.09, not 9.
+    assert.equal(basisPointsToFraction(900), 0.09);
+    assert.equal(basisPointsToFraction(2000), 0.2);
+    assert.equal(basisPointsToFraction(0), 0);
+    assert.equal(basisPointsToFraction(BASIS_POINTS_TOTAL), 1);
+    assert.equal(basisPointsToFraction(5000), 0.5);
+  });
+
+  test("refuses basis points that are not whole, negative, or over 100%", () => {
+    assert.throws(() => basisPointsToFraction(1.5), MoneyError);
+    assert.throws(() => basisPointsToFraction(-1), MoneyError);
+    assert.throws(() => basisPointsToFraction(BASIS_POINTS_TOTAL + 1), MoneyError);
   });
 });

@@ -1,0 +1,6 @@
+https://developer.flutterwave.com/docs/payout-subaccount.md - Transferring from a payout subaccount
+https://developer.flutterwave.com/reference/create-a-transfer.md - Create a transfer
+updatedAt: 2026-10-19T10:09:50.000Z and 2026-10-19T10:10:24.000Z
+Verified: 2026-11-02
+Same endpoint as transfer-create, with debit_subaccount naming the wallet to debit
+instead of the main balance. This is how wallets.transfer works on Flutterwave.

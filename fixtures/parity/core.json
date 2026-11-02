@@ -665,5 +665,152 @@
     "eft",
     "capitec_pay",
     "payattitude"
-  ]
+  ],
+  "$flutterwaveComment": "Flutterwave is the first adapter whose wire format is decimal rather than minor units, so these cases pin the conversion in both directions as well as the normalisers. A float discrepancy between two runtimes is exactly the kind of bug that would otherwise reach production.",
+  "flutterwaveNormalise": [
+    {
+      "fixture": "transaction-verify-success",
+      "shape": "transaction"
+    },
+    {
+      "fixture": "transaction-verify-pending",
+      "shape": "transaction"
+    },
+    {
+      "fixture": "transaction-refund",
+      "shape": "refund"
+    },
+    {
+      "fixture": "virtual-account-create",
+      "shape": "virtual_account"
+    },
+    {
+      "fixture": "transfer-create",
+      "shape": "payout"
+    },
+    {
+      "fixture": "transfer-from-wallet",
+      "shape": "payout"
+    },
+    {
+      "fixture": "subaccount-create",
+      "shape": "split_account"
+    },
+    {
+      "fixture": "payout-subaccount-create",
+      "shape": "wallet_account"
+    },
+    {
+      "fixture": "payout-subaccount-balance",
+      "shape": "wallet_balance"
+    },
+    {
+      "fixture": "accounts-resolve",
+      "shape": "transaction"
+    }
+  ],
+  "flutterwaveStatuses": [
+    "successful",
+    "success",
+    "failed",
+    "cancelled",
+    "abandoned",
+    "reversed",
+    "pending",
+    "pending-validation",
+    "SUCCESSFUL",
+    "something-new",
+    ""
+  ],
+  "flutterwaveTransferStatuses": [
+    "NEW",
+    "new",
+    "PENDING",
+    "SUCCESSFUL",
+    "FAILED",
+    "CANCELLED",
+    "REVERSED",
+    "something-new",
+    ""
+  ],
+  "flutterwaveChannels": [
+    "card",
+    "account",
+    "banktransfer",
+    "ussd",
+    "qr",
+    "mobilemoneyghana",
+    "applepay",
+    "CARD",
+    "mpesa",
+    ""
+  ],
+  "toMajor": [
+    {
+      "amount": 0,
+      "currency": "NGN"
+    },
+    {
+      "amount": 1,
+      "currency": "NGN"
+    },
+    {
+      "amount": 100,
+      "currency": "NGN"
+    },
+    {
+      "amount": 115,
+      "currency": "NGN"
+    },
+    {
+      "amount": 329,
+      "currency": "USD"
+    },
+    {
+      "amount": 1234,
+      "currency": "NGN"
+    },
+    {
+      "amount": 15075,
+      "currency": "NGN"
+    },
+    {
+      "amount": 120009,
+      "currency": "NGN"
+    },
+    {
+      "amount": 500000,
+      "currency": "NGN"
+    },
+    {
+      "amount": 2000050,
+      "currency": "NGN"
+    },
+    {
+      "amount": 99999999,
+      "currency": "NGN"
+    },
+    {
+      "amount": 1,
+      "currency": "XOF"
+    },
+    {
+      "amount": 100,
+      "currency": "XOF"
+    }
+  ],
+  "basisPointsToFraction": [
+    0,
+    1,
+    9,
+    100,
+    900,
+    2000,
+    5000,
+    9999,
+    10000,
+    10001,
+    -1
+  ],
+  "$toMajorComment": "The XOF cases are the interesting ones. XOF has no subunit, so 1 minor unit is 0.01 XOF, which cannot be sent as a decimal at all -- a provider would drop the fraction. fromMajor already refused that; these cases are what showed toMajor did not, and both languages must now refuse it with the same message."
 }
