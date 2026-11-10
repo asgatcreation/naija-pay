@@ -122,6 +122,16 @@ Nothing is published to npm or PyPI yet. See [PLAN.md](PLAN.md) for the mileston
   authenticates a tampered body just as happily as the original, because that is the security
   property `signatureStrength` exists to expose. v4 is preferred when both headers arrive.
 
+- A Flutterwave sandbox harness (`npm run sandbox:flutterwave`), built around the questions its
+  documentation cannot answer: whether a fractional amount survives a real round trip unchanged,
+  what status a created transfer actually carries, whether transfers need dashboard approval on a
+  fresh account, whether payout subaccount wallets are enabled per merchant, and whether a
+  percentage split really is a decimal fraction. It refuses to run with anything but a
+  `FLWSECK_TEST-` key, skips silently when no key is set, distinguishes a probe blocked by account
+  configuration from a genuine failure, and records a resolved account name only by its length —
+  that file is committed to a public repository, and the Paystack harness leaked a real name into
+  its equivalent on the first run.
+
 ### Fixed
 
 - Four Flutterwave endpoint paths, caught by reading each reference page rather than the

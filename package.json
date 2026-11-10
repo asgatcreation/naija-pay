@@ -34,7 +34,8 @@
     "verify": "npm run build && npm run size && npm run smoke",
     "sandbox:paystack": "node tools/sandbox/paystack.mjs",
     "sandbox:paystack:python": "python tools/sandbox/paystack_sandbox.py",
-    "sandbox": "npm run sandbox:paystack && npm run sandbox:paystack:python"
+    "sandbox:flutterwave": "node tools/sandbox/flutterwave.mjs",
+    "sandbox": "npm run sandbox:paystack && npm run sandbox:paystack:python && npm run sandbox:flutterwave"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.6.4",
