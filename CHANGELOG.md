@@ -124,6 +124,17 @@ Nothing is published to npm or PyPI yet. See [PLAN.md](PLAN.md) for the mileston
 
 ### Fixed
 
+- Four Flutterwave endpoint paths, caught by reading each reference page rather than the
+  documentation index that the first pass had worked from. Listing refunds is `GET /refunds`, not
+  `/transactions/refunds`; a BVN update is `PUT /virtual-account-numbers/{order_ref}` with the BVN
+  alone in the body, with no `/update-bvn` route; deactivating a virtual account is a **POST** to
+  that same path with a `status` of `inactive` or `active`, one route serving both directions; and a
+  wallet statement puts the reference in the path, with `from` and `to` **required** rather than
+  optional. Each would have been a 404 at runtime, inside a payout or a KYC update. All four are now
+  pinned by tests in both languages. Two improvements fell out of the same pass: a
+  `reactivateVirtualAccount` method, and required date arguments on a wallet statement so a missing
+  range fails locally with a message naming the fields.
+
 - `toMajor` would emit `0.01` XOF — an amount its own inverse refuses, and one a provider would
   silently drop the fraction of, since XOF has no subunit. `fromMajor` had always refused it. The
   two directions were tested separately and each passed; only the cross-language parity cases,

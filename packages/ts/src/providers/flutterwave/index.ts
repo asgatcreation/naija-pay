@@ -437,6 +437,8 @@ export class FlutterwaveProvider {
   async createRefund(options: {
     readonly transactionId: string | number;
     readonly amount?: Money;
+    readonly comments?: string;
+    readonly callbackUrl?: string;
   }): Promise<Refund> {
     const { data } = await this.#call({
       method: "POST",
@@ -446,16 +448,27 @@ export class FlutterwaveProvider {
       // idempotency key — that is a v4 feature — so there is nothing to make this safe.
       safety: "money-moving",
       reference: String(options.transactionId),
-      body: options.amount === undefined ? {} : { amount: toMajor(options.amount) },
+      body: {
+        ...(options.amount === undefined ? {} : { amount: toMajor(options.amount) }),
+        ...(options.comments === undefined ? {} : { comments: options.comments }),
+        // Flutterwave spells this one without a separator.
+        ...(options.callbackUrl === undefined ? {} : { callbackurl: options.callbackUrl }),
+      },
     });
     return toRefund(data);
   }
 
-  /** Refunds recorded against a transaction, newest first as Flutterwave returns them. */
+  /**
+   * Refunds recorded against a transaction, as Flutterwave returns them.
+   *
+   * The route is `/refunds`, not `/transactions/refunds` — a distinction confirmed
+   * against Flutterwave's reference page, having first been written the other way from
+   * the documentation index.
+   */
   async listRefunds(transactionId: string | number): Promise<readonly Refund[]> {
     const { data } = await this.#call<unknown[]>({
       method: "GET",
-      path: "/transactions/refunds",
+      path: "/refunds",
       operation: "refunds.status",
       safety: "safe",
       query: { id: String(transactionId) },
@@ -567,30 +580,57 @@ export class FlutterwaveProvider {
     return toVirtualAccount(data);
   }
 
-  /** Update the BVN on a static virtual account. Flutterwave has no NIN equivalent. */
+  /**
+   * Update the BVN on a static virtual account. Flutterwave has no NIN equivalent.
+   *
+   * `PUT /virtual-account-numbers/{order_ref}` with the BVN alone in the body. There is
+   * no `/update-bvn` route; the order reference goes in the path.
+   */
   async updateVirtualAccountBvn(options: {
     readonly orderReference: string;
     readonly bvn: string;
   }): Promise<{ readonly message: string; readonly raw: unknown }> {
     const { data, message } = await this.#call({
       method: "PUT",
-      path: "/virtual-account-numbers/update-bvn",
+      path: `/virtual-account-numbers/${encodeURIComponent(options.orderReference)}`,
       operation: "virtualAccounts.updateKyc",
       safety: "unsafe",
-      body: { order_ref: options.orderReference, bvn: options.bvn },
+      body: { bvn: options.bvn },
     });
     return { message, raw: data };
   }
 
+  /**
+   * Deactivate a virtual account, so it stops accepting money.
+   *
+   * One endpoint serves both directions: `POST /virtual-account-numbers/{order_ref}`
+   * with `status` of `"inactive"` or `"active"`. It is a POST, not a PUT.
+   */
   async deactivateVirtualAccount(
     orderReference: string,
   ): Promise<{ readonly message: string; readonly raw: unknown }> {
+    return await this.#setVirtualAccountStatus(orderReference, "inactive");
+  }
+
+  /** Reactivate a deactivated virtual account. The same endpoint, the other status. */
+  async reactivateVirtualAccount(
+    orderReference: string,
+  ): Promise<{ readonly message: string; readonly raw: unknown }> {
+    return await this.#setVirtualAccountStatus(orderReference, "active");
+  }
+
+  async #setVirtualAccountStatus(
+    orderReference: string,
+    status: "active" | "inactive",
+  ): Promise<{ readonly message: string; readonly raw: unknown }> {
     const { data, message } = await this.#call({
-      method: "PUT",
-      path: "/virtual-account-numbers/status/deactivate",
+      method: "POST",
+      path: `/virtual-account-numbers/${encodeURIComponent(orderReference)}`,
       operation: "virtualAccounts.deactivate",
+      // Not retried: flipping an account's status twice is not harmless, because the
+      // second attempt could race a deliberate change made in between.
       safety: "unsafe",
-      body: { order_ref: orderReference },
+      body: { status },
     });
     return { message, raw: data };
   }
@@ -851,22 +891,43 @@ export class FlutterwaveProvider {
     return toWalletBalance(data, options.reference);
   }
 
+  /**
+   * A wallet's statement.
+   *
+   * `from` and `to` are **required by Flutterwave**, not optional, so they are required
+   * here too — asking for a statement with no date range fails at the provider with a
+   * message that does not say which field is missing.
+   */
   async getWalletStatement(options: {
     readonly reference: string;
-    readonly from?: string;
-    readonly to?: string;
+    readonly from: string;
+    readonly to: string;
+    readonly currency?: string;
     readonly page?: number;
+    readonly fetchLimit?: number;
   }): Promise<{ readonly transactions: readonly Transaction[]; readonly meta: unknown }> {
+    assertSupported(this.capabilities, "wallets.statement");
+
+    if (!options.from || !options.to) {
+      throw new ValidationError(
+        "flutterwave: a wallet statement needs both from and to dates. Flutterwave " +
+          "requires the range and does not say which field is missing when it is absent.",
+        { provider: FLUTTERWAVE_PROVIDER_NAME, operation: "wallets.statement" },
+      );
+    }
+
     const { data, meta } = await this.#call<unknown[]>({
       method: "GET",
-      path: "/payout-subaccounts/transactions",
+      // The reference is a path segment, not a query parameter.
+      path: `/payout-subaccounts/${encodeURIComponent(options.reference)}/transactions`,
       operation: "wallets.statement",
       safety: "safe",
       query: {
-        account_reference: options.reference,
         from: options.from,
         to: options.to,
+        currency: options.currency,
         page: options.page,
+        fetch_limit: options.fetchLimit,
       },
     });
     return { transactions: (Array.isArray(data) ? data : []).map(toTransaction), meta };

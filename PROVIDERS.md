@@ -243,8 +243,28 @@ half-built. The version boundary is stated in the adapter's own capability decla
     rule now, because a reference v4 would reject is a reference that cannot be carried forward on
     migration — and it says so in the error.
 
-**Implementation status (2026-11-02):** adapter written in both languages from the documentation
-above, with 58 tests each and 15 fixtures recorded from Flutterwave's own documented samples.
+14. **Four endpoint paths were wrong, and reading each reference page caught them.** The first pass
+    took several routes from the documentation index and its operation names rather than from the
+    pages themselves. Every one of those four was wrong, and each would have failed at runtime:
+
+    | What it does      | First written as                                                   | Actually                                                                                                              |
+    | ----------------- | ------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------- |
+    | List refunds      | `GET /transactions/refunds`                                        | `GET /refunds`                                                                                                        |
+    | Update a VA's BVN | `PUT /virtual-account-numbers/update-bvn`, `order_ref` in the body | `PUT /virtual-account-numbers/{order_ref}`, body is the BVN alone                                                     |
+    | Deactivate a VA   | `PUT /virtual-account-numbers/status/deactivate`                   | `POST /virtual-account-numbers/{order_ref}` with `status` of `inactive` or `active` — one route both ways, and a POST |
+    | Wallet statement  | `GET /payout-subaccounts/transactions?account_reference=`          | `GET /payout-subaccounts/{account_reference}/transactions`, with `from` and `to` **required**                         |
+
+    Verified against each page on 2026-11-10. Two things came out of it besides the fixes: a
+    `reactivateVirtualAccount` method, since the same endpoint serves both directions; and `from`
+    and `to` are now required arguments on a wallet statement, because Flutterwave requires them and
+    does not say which is missing when they are absent. All four paths are now pinned by tests in
+    both languages, because the failure mode is a 404 inside a payout or a KYC update, which no
+    amount of normalising protects anybody from. The refund body also takes `comments` and
+    `callbackurl` — Flutterwave's own spelling, without a separator.
+
+**Implementation status (2026-11-10):** adapter written in both languages from the documentation
+above, with 64 tests each and 15 fixtures recorded from Flutterwave's own documented samples.
+Every endpoint path has been read from its own reference page rather than from the index.
 **Not sandbox-verified.** Wallets, virtual accounts and v4 webhook verification are declared
 `notYetSandboxVerified`, so the generated capability matrix says so rather than implying they are
 proven. Paystack's sandbox run changed real behaviour in that adapter, and there is no reason to

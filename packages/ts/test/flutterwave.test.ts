@@ -844,6 +844,97 @@ describe("webhooks", () => {
   });
 });
 
+describe("endpoint paths that were verified wrong once", () => {
+  /**
+   * Four of these were written from Flutterwave's documentation index and were all
+   * wrong. Reading each reference page caught them before release. They are pinned
+   * here because the failure mode is a 404 at runtime, in a payout or a KYC update,
+   * which no amount of normalising protects anybody from.
+   */
+
+  test("refunds are listed from /refunds, not /transactions/refunds", async () => {
+    const { provider, calls } = harness([{ status: 200, body: { status: "success", data: [] } }]);
+    await provider.listRefunds(288_200_108);
+    assert.match(calls[0]?.url ?? "", /\/v3\/refunds\?id=288200108$/);
+    assert.doesNotMatch(calls[0]?.url ?? "", /transactions\/refunds/);
+  });
+
+  test("the BVN update puts the order reference in the path, not the body", async () => {
+    const { provider, calls } = harness([{ status: 200, body: { status: "success", data: {} } }]);
+    await provider.updateVirtualAccountBvn({
+      orderReference: "URF_EXAMPLE_1762000000000",
+      bvn: "22222222222",
+    });
+
+    assert.equal(calls[0]?.method, "PUT");
+    assert.match(calls[0]?.url ?? "", /\/virtual-account-numbers\/URF_EXAMPLE_1762000000000$/);
+    // There is no /update-bvn route, and order_ref is not a body field.
+    assert.doesNotMatch(calls[0]?.url ?? "", /update-bvn/);
+    assert.deepEqual(bodyOf(calls, 0), { bvn: "22222222222" });
+  });
+
+  test("deactivating a virtual account POSTs a status, and reactivating is the same route", async () => {
+    const { provider, calls } = harness([{ status: 200, body: { status: "success", data: {} } }]);
+    await provider.deactivateVirtualAccount("URF_EXAMPLE_1762000000000");
+    await provider.reactivateVirtualAccount("URF_EXAMPLE_1762000000000");
+
+    // A POST, not a PUT, and one endpoint for both directions.
+    assert.equal(calls[0]?.method, "POST");
+    assert.match(calls[0]?.url ?? "", /\/virtual-account-numbers\/URF_EXAMPLE_1762000000000$/);
+    assert.deepEqual(bodyOf(calls, 0), { status: "inactive" });
+    assert.equal(calls[1]?.url, calls[0]?.url);
+    assert.deepEqual(bodyOf(calls, 1), { status: "active" });
+  });
+
+  test("a wallet statement puts the reference in the path and requires the dates", async () => {
+    const { provider, calls } = harness([{ status: 200, body: { status: "success", data: [] } }]);
+    await provider.getWalletStatement({
+      reference: "FLW-EXAMPLE00000000000000000000000",
+      from: "2026-11-01",
+      to: "2026-11-10",
+    });
+
+    assert.match(
+      calls[0]?.url ?? "",
+      /\/payout-subaccounts\/FLW-EXAMPLE00000000000000000000000\/transactions\?/,
+    );
+    // Not a query parameter, which is how it was written first.
+    assert.doesNotMatch(calls[0]?.url ?? "", /account_reference=/);
+    assert.match(calls[0]?.url ?? "", /from=2026-11-01/);
+    assert.match(calls[0]?.url ?? "", /to=2026-11-10/);
+  });
+
+  test("a wallet statement with a blank date range fails locally", async () => {
+    const { provider, calls } = harness([{ status: 200, body: { status: "success", data: [] } }]);
+    await assert.rejects(
+      provider.getWalletStatement({ reference: "FLW-EXAMPLE", from: "", to: "2026-11-10" }),
+      (error: unknown) => {
+        assert.ok(error instanceof ValidationError);
+        assert.match(error.message, /both from and to dates/);
+        return true;
+      },
+    );
+    assert.equal(calls.length, 0);
+  });
+
+  test("a refund carries comments and the callback url Flutterwave spells oddly", async () => {
+    const { provider, calls } = harness(["transaction-refund"]);
+    await provider.createRefund({
+      transactionId: 288_200_108,
+      amount: naira(2000),
+      comments: "duplicate order",
+      callbackUrl: "https://example.com/refunds",
+    });
+
+    assert.deepEqual(bodyOf(calls, 0), {
+      amount: 2000,
+      comments: "duplicate order",
+      // No separator, which is Flutterwave's own spelling.
+      callbackurl: "https://example.com/refunds",
+    });
+  });
+});
+
 describe("capabilities", () => {
   test("an unsupported operation fails locally with no network call", async () => {
     let called = false;
@@ -860,7 +951,11 @@ describe("capabilities", () => {
     });
 
     await assert.rejects(
-      provider.getWalletStatement({ reference: "FLW-EXAMPLE" }),
+      provider.getWalletStatement({
+        reference: "FLW-EXAMPLE",
+        from: "2026-11-01",
+        to: "2026-11-10",
+      }),
       UnsupportedOperationError,
     );
     // The guard ran before any request was made, which is the whole point of it.

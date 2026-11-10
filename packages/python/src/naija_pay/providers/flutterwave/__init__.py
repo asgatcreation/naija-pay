@@ -434,8 +434,24 @@ class FlutterwaveProvider:
         items = data if isinstance(data, list) else []
         return tuple(to_transaction(item) for item in items), meta
 
-    def create_refund(self, *, transaction_id: str | int, amount: Money | None = None) -> Refund:
+    def create_refund(
+        self,
+        *,
+        transaction_id: str | int,
+        amount: Money | None = None,
+        comments: str | None = None,
+        callback_url: str | None = None,
+    ) -> Refund:
         """Refund a transaction, fully or partially."""
+        payload: dict[str, Any] = {}
+        if amount is not None:
+            payload["amount"] = to_major(amount)
+        if comments is not None:
+            payload["comments"] = comments
+        if callback_url is not None:
+            # Flutterwave spells this one without a separator.
+            payload["callbackurl"] = callback_url
+
         data, _message, _meta = self._call(
             method="POST",
             path=f"/transactions/{transaction_id}/refund",
@@ -444,15 +460,20 @@ class FlutterwaveProvider:
             # idempotency key -- that is a v4 feature -- so nothing makes this safe.
             safety="money-moving",
             reference=str(transaction_id),
-            body={} if amount is None else {"amount": to_major(amount)},
+            body=payload,
         )
         return to_refund(data)
 
     def list_refunds(self, transaction_id: str | int) -> tuple[Refund, ...]:
-        """Refunds recorded against a transaction, as Flutterwave returns them."""
+        """Refunds recorded against a transaction, as Flutterwave returns them.
+
+        The route is ``/refunds``, not ``/transactions/refunds`` -- a distinction
+        confirmed against Flutterwave's reference page, having first been written the
+        other way from the documentation index.
+        """
         data, _message, _meta = self._call(
             method="GET",
-            path="/transactions/refunds",
+            path="/refunds",
             operation="refunds.status",
             safety="safe",
             query={"id": str(transaction_id)},
@@ -575,23 +596,41 @@ class FlutterwaveProvider:
         return to_virtual_account(data)
 
     def update_virtual_account_bvn(self, *, order_reference: str, bvn: str) -> dict[str, Any]:
-        """Update the BVN on a static virtual account. Flutterwave has no NIN equivalent."""
+        """Update the BVN on a static virtual account. Flutterwave has no NIN equivalent.
+
+        ``PUT /virtual-account-numbers/{order_ref}`` with the BVN alone in the body.
+        There is no ``/update-bvn`` route; the order reference goes in the path.
+        """
         data, message, _meta = self._call(
             method="PUT",
-            path="/virtual-account-numbers/update-bvn",
+            path=f"/virtual-account-numbers/{order_reference}",
             operation="virtualAccounts.updateKyc",
             safety="unsafe",
-            body={"order_ref": order_reference, "bvn": bvn},
+            body={"bvn": bvn},
         )
         return {"message": message, "raw": data}
 
     def deactivate_virtual_account(self, order_reference: str) -> dict[str, Any]:
+        """Deactivate a virtual account, so it stops accepting money.
+
+        One endpoint serves both directions: ``POST /virtual-account-numbers/{order_ref}``
+        with ``status`` of ``"inactive"`` or ``"active"``. It is a POST, not a PUT.
+        """
+        return self._set_virtual_account_status(order_reference, "inactive")
+
+    def reactivate_virtual_account(self, order_reference: str) -> dict[str, Any]:
+        """Reactivate a deactivated virtual account. The same endpoint, the other status."""
+        return self._set_virtual_account_status(order_reference, "active")
+
+    def _set_virtual_account_status(self, order_reference: str, status: str) -> dict[str, Any]:
         data, message, _meta = self._call(
-            method="PUT",
-            path="/virtual-account-numbers/status/deactivate",
+            method="POST",
+            path=f"/virtual-account-numbers/{order_reference}",
             operation="virtualAccounts.deactivate",
+            # Not retried: flipping an account's status twice is not harmless, because
+            # the second attempt could race a deliberate change made in between.
             safety="unsafe",
-            body={"order_ref": order_reference},
+            body={"status": status},
         )
         return {"message": message, "raw": data}
 
@@ -842,20 +881,41 @@ class FlutterwaveProvider:
         self,
         *,
         reference: str,
-        from_date: str | None = None,
-        to_date: str | None = None,
+        from_date: str,
+        to_date: str,
+        currency: str | None = None,
         page: int | None = None,
+        fetch_limit: int | None = None,
     ) -> tuple[tuple[Transaction, ...], Any]:
+        """A wallet's statement.
+
+        ``from_date`` and ``to_date`` are **required by Flutterwave**, not optional, so
+        they are required here too -- asking for a statement with no date range fails at
+        the provider with a message that does not say which field is missing.
+        """
+        assert_supported(self.capabilities, "wallets.statement")
+
+        if not from_date or not to_date:
+            raise ValidationError(
+                "flutterwave: a wallet statement needs both from and to dates. "
+                "Flutterwave requires the range and does not say which field is "
+                "missing when it is absent.",
+                provider=FLUTTERWAVE_PROVIDER_NAME,
+                operation="wallets.statement",
+            )
+
         data, _message, meta = self._call(
             method="GET",
-            path="/payout-subaccounts/transactions",
+            # The reference is a path segment, not a query parameter.
+            path=f"/payout-subaccounts/{reference}/transactions",
             operation="wallets.statement",
             safety="safe",
             query={
-                "account_reference": reference,
                 "from": from_date,
                 "to": to_date,
+                "currency": currency,
                 "page": page,
+                "fetch_limit": fetch_limit,
             },
         )
         items = data if isinstance(data, list) else []

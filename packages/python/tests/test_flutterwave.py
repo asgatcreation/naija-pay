@@ -664,6 +664,89 @@ class TestWebhooks(unittest.TestCase):
         self.assertIn("not the API secret key", str(ctx.exception))
 
 
+class TestEndpointPathsVerifiedWrongOnce(unittest.TestCase):
+    """Four of these were written from Flutterwave's documentation index and were all
+    wrong. Reading each reference page caught them before release. They are pinned here
+    because the failure mode is a 404 at runtime, in a payout or a KYC update, which no
+    amount of normalising protects anybody from.
+    """
+
+    def test_refunds_listed_from_refunds_not_transactions_refunds(self) -> None:
+        provider, harness = make([(200, {"status": "success", "data": []})])
+        provider.list_refunds(288_200_108)
+        url = harness.requests[0].url
+        self.assertIn("/v3/refunds?id=288200108", url)
+        self.assertNotIn("transactions/refunds", url)
+
+    def test_bvn_update_puts_the_order_reference_in_the_path(self) -> None:
+        provider, harness = make([(200, {"status": "success", "data": {}})])
+        provider.update_virtual_account_bvn(
+            order_reference="URF_EXAMPLE_1762000000000", bvn="22222222222"
+        )
+        self.assertEqual(harness.requests[0].method, "PUT")
+        self.assertTrue(
+            harness.requests[0].url.endswith("/virtual-account-numbers/URF_EXAMPLE_1762000000000")
+        )
+        # There is no /update-bvn route, and order_ref is not a body field.
+        self.assertNotIn("update-bvn", harness.requests[0].url)
+        self.assertEqual(harness.body(0), {"bvn": "22222222222"})
+
+    def test_deactivate_posts_a_status_and_reactivate_is_the_same_route(self) -> None:
+        provider, harness = make([(200, {"status": "success", "data": {}})])
+        provider.deactivate_virtual_account("URF_EXAMPLE_1762000000000")
+        provider.reactivate_virtual_account("URF_EXAMPLE_1762000000000")
+
+        # A POST, not a PUT, and one endpoint for both directions.
+        self.assertEqual(harness.requests[0].method, "POST")
+        self.assertTrue(
+            harness.requests[0].url.endswith("/virtual-account-numbers/URF_EXAMPLE_1762000000000")
+        )
+        self.assertEqual(harness.body(0), {"status": "inactive"})
+        self.assertEqual(harness.requests[1].url, harness.requests[0].url)
+        self.assertEqual(harness.body(1), {"status": "active"})
+
+    def test_wallet_statement_puts_the_reference_in_the_path(self) -> None:
+        provider, harness = make([(200, {"status": "success", "data": []})])
+        provider.get_wallet_statement(
+            reference="FLW-EXAMPLE00000000000000000000000",
+            from_date="2026-11-01",
+            to_date="2026-11-10",
+        )
+        url = harness.requests[0].url
+        self.assertIn("/payout-subaccounts/FLW-EXAMPLE00000000000000000000000/transactions?", url)
+        # Not a query parameter, which is how it was written first.
+        self.assertNotIn("account_reference=", url)
+        self.assertIn("from=2026-11-01", url)
+        self.assertIn("to=2026-11-10", url)
+
+    def test_wallet_statement_with_a_blank_date_range_fails_locally(self) -> None:
+        provider, harness = make([(200, {"status": "success", "data": []})])
+        with self.assertRaises(ValidationError) as ctx:
+            provider.get_wallet_statement(
+                reference="FLW-EXAMPLE", from_date="", to_date="2026-11-10"
+            )
+        self.assertIn("both from and to dates", str(ctx.exception))
+        self.assertEqual(len(harness.requests), 0)
+
+    def test_refund_carries_comments_and_the_oddly_spelled_callback_url(self) -> None:
+        provider, harness = make(["transaction-refund"])
+        provider.create_refund(
+            transaction_id=288_200_108,
+            amount=naira(2000),
+            comments="duplicate order",
+            callback_url="https://example.com/refunds",
+        )
+        self.assertEqual(
+            harness.body(0),
+            {
+                "amount": 2000,
+                "comments": "duplicate order",
+                # No separator, which is Flutterwave's own spelling.
+                "callbackurl": "https://example.com/refunds",
+            },
+        )
+
+
 class TestCapabilities(unittest.TestCase):
     def test_unsupported_operation_fails_locally_with_no_network_call(self) -> None:
         from naija_pay.core.capabilities import ProviderCapabilities
@@ -673,7 +756,9 @@ class TestCapabilities(unittest.TestCase):
         # object and the guard is what stops it.
         provider.capabilities = ProviderCapabilities(provider="flutterwave", operations={})
         with self.assertRaises(UnsupportedOperationError):
-            provider.get_wallet_statement(reference="FLW-EXAMPLE")
+            provider.get_wallet_statement(
+                reference="FLW-EXAMPLE", from_date="2026-11-01", to_date="2026-11-10"
+            )
         # The guard ran before any request was made, which is the whole point of it.
         self.assertEqual(len(harness.requests), 0)
 
