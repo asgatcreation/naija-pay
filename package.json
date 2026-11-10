@@ -38,7 +38,7 @@
     "sandbox": "npm run sandbox:paystack && npm run sandbox:paystack:python && npm run sandbox:flutterwave"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.6.4",
+    "@biomejs/biome": "^2.6.6",
     "@types/node": "^26.6.6",
     "tsup": "^9.0.0",
     "typescript": "^7.0.2"
