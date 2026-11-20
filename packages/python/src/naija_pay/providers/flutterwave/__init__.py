@@ -318,6 +318,21 @@ class FlutterwaveProvider:
         assert_supported(self.capabilities, "checkout.create")
         self._assert_reference(reference, "checkout.create")
 
+        # Flutterwave REQUIRES redirect_url on /v3/payments. Without it the call fails
+        # with `400 One or more required parameters missing`, which names no field --
+        # verified against the sandbox on 2026-11-19, with and without it, same body
+        # otherwise. The documentation lists it as optional. Refused here so the message
+        # says which field.
+        if callback_url is None or not callback_url.strip():
+            raise ValidationError(
+                "flutterwave: callback_url is required for a checkout. Flutterwave's "
+                "/v3/payments endpoint rejects a request without redirect_url, and its "
+                "own error names no field -- so this is refused here instead. It is where "
+                "the customer is sent after paying.",
+                provider=FLUTTERWAVE_PROVIDER_NAME,
+                operation="checkout.create",
+            )
+
         flw_channels: list[str] = []
         if channels is not None:
             unsupported = [c for c in channels if c not in CHANNEL_TO_FLUTTERWAVE]
@@ -343,8 +358,7 @@ class FlutterwaveProvider:
             "currency": amount.currency,
             "customer": customer,
         }
-        if callback_url is not None:
-            payload["redirect_url"] = callback_url
+        payload["redirect_url"] = callback_url
         if flw_channels:
             # A comma-separated string, not an array. Flutterwave ignores an array here,
             # which silently offers every channel instead of the ones you asked for.

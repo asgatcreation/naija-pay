@@ -152,6 +152,7 @@ describe("amounts are decimal on the wire and integer minor units in the API", (
       amount: naira(5000),
       email: "ada@example.com",
       reference: "order-01HQ-EXAMPLE",
+      callbackUrl: "https://example.com/return",
     });
 
     // The whole point: 5,000 naira is 500000 kobo internally and 5000 on the wire.
@@ -167,6 +168,7 @@ describe("amounts are decimal on the wire and integer minor units in the API", (
       amount: money(2_000_050, "NGN"),
       email: "ada@example.com",
       reference: "order-01HR-EXAMPLE",
+      callbackUrl: "https://example.com/return",
     });
     assert.equal(bodyOf<{ amount: number }>(calls, 0).amount, 20_000.5);
   });
@@ -204,6 +206,7 @@ describe("collections", () => {
       email: "ada@example.com",
       reference: "order-01HQ-EXAMPLE",
       channels: ["card", "bank_transfer"],
+      callbackUrl: "https://example.com/return",
     });
 
     assert.match(checkout.checkoutUrl, /^https:\/\/checkout\.flutterwave\.com\//);
@@ -219,12 +222,35 @@ describe("collections", () => {
       email: "ada@example.com",
       reference: "order-01HQ-EXAMPLE",
       channels: ["card", "bank_transfer", "ussd"],
+      callbackUrl: "https://example.com/return",
     });
 
     // Flutterwave ignores an array here, which silently offers every channel instead
     // of the ones that were asked for.
     const body = bodyOf<{ payment_options: unknown }>(calls, 0);
     assert.equal(body.payment_options, "card,banktransfer,ussd");
+  });
+
+  test("a checkout without a callbackUrl is refused before it is sent", async () => {
+    // Flutterwave's documentation lists redirect_url as optional and its API requires it:
+    // the same body with and without it was sent to the sandbox on 2026-11-19 and
+    // answered `400 One or more required parameters missing` without, 200 with. Its error
+    // names no field, so the refusal happens here and names one.
+    const { provider, calls } = harness(["checkout-create"]);
+    await assert.rejects(
+      provider.createCheckout({
+        amount: naira(5000),
+        email: "ada@example.com",
+        reference: "order-01HQ-EXAMPLE",
+      }),
+      (error: unknown) => {
+        assert.ok(error instanceof ValidationError);
+        assert.match(error.message, /callbackUrl is required/);
+        return true;
+      },
+    );
+    // Nothing was sent: a request Flutterwave would reject is not worth making.
+    assert.equal(calls.length, 0);
   });
 
   test("refuses a channel Flutterwave does not support", async () => {
@@ -235,6 +261,7 @@ describe("collections", () => {
         email: "ada@example.com",
         reference: "order-01HQ-EXAMPLE",
         channels: ["google_pay"],
+        callbackUrl: "https://example.com/return",
       }),
       (error: unknown) => {
         assert.ok(error instanceof ValidationError);
@@ -252,6 +279,7 @@ describe("collections", () => {
         email: "ada@example.com",
         // Underscores are fine in v3 and rejected by v4's pattern.
         reference: "order_01HQ",
+        callbackUrl: "https://example.com/return",
       }),
       (error: unknown) => {
         assert.ok(error instanceof ValidationError);
@@ -647,6 +675,7 @@ describe("splits", () => {
       email: "ada@example.com",
       reference: "order-01HQ-EXAMPLE",
       subaccounts: provider.createSplit([{ subaccountId: "RS_A", commissionBasisPoints: 2000 }]),
+      callbackUrl: "https://example.com/return",
     });
 
     const body = bodyOf<{ subaccounts: unknown[] }>(calls, 0);

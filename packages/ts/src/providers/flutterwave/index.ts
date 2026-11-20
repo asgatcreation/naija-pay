@@ -314,6 +314,20 @@ export class FlutterwaveProvider {
   }> {
     this.#assertReference(options.reference, "checkout.create");
 
+    // Flutterwave REQUIRES redirect_url on /v3/payments. Without it the call fails with
+    // `400 One or more required parameters missing`, which names no field — verified
+    // against the sandbox on 2026-11-19, with and without it, same body otherwise. The
+    // documentation lists it as optional. Refused here so the message says which field.
+    if (options.callbackUrl === undefined || options.callbackUrl.trim() === "") {
+      throw new ValidationError(
+        "flutterwave: callbackUrl is required for a checkout. Flutterwave's /v3/payments " +
+          "endpoint rejects a request without redirect_url, and its own error names no " +
+          "field — so this is refused here instead. It is where the customer is sent " +
+          "after paying.",
+        { provider: FLUTTERWAVE_PROVIDER_NAME, operation: "checkout.create" },
+      );
+    }
+
     const channels = options.channels
       ?.map((channel) => CHANNEL_TO_FLUTTERWAVE[channel])
       .filter((channel): channel is string => channel !== undefined);

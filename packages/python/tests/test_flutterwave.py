@@ -129,7 +129,10 @@ class TestDecimalAmounts(unittest.TestCase):
     def test_checkout_sends_major_units_not_kobo(self) -> None:
         provider, harness = make(["payment-initialize"])
         provider.create_checkout(
-            amount=naira(5000), email="ada@example.com", reference="order-01HQ-EXAMPLE"
+            amount=naira(5000),
+            email="ada@example.com",
+            reference="order-01HQ-EXAMPLE",
+            callback_url="https://example.com/return",
         )
         # The whole point: 5,000 naira is 500000 kobo internally and 5000 on the wire.
         # Sending the kobo figure would charge a hundred times too much.
@@ -143,6 +146,7 @@ class TestDecimalAmounts(unittest.TestCase):
             amount=money(2_000_050, "NGN"),
             email="ada@example.com",
             reference="order-01HR-EXAMPLE",
+            callback_url="https://example.com/return",
         )
         self.assertEqual(harness.body(0)["amount"], 20_000.5)
 
@@ -179,6 +183,7 @@ class TestCollections(unittest.TestCase):
             email="ada@example.com",
             reference="order-01HQ-EXAMPLE",
             channels=["card", "bank_transfer"],
+            callback_url="https://example.com/return",
         )
         self.assertTrue(checkout["checkout_url"].startswith("https://checkout.flutterwave.com/"))
         self.assertEqual(checkout["reference"], "order-01HQ-EXAMPLE")
@@ -192,10 +197,27 @@ class TestCollections(unittest.TestCase):
             email="ada@example.com",
             reference="order-01HQ-EXAMPLE",
             channels=["card", "bank_transfer", "ussd"],
+            callback_url="https://example.com/return",
         )
         # Flutterwave ignores an array here, which silently offers every channel instead
         # of the ones that were asked for.
         self.assertEqual(harness.body(0)["payment_options"], "card,banktransfer,ussd")
+
+    def test_a_checkout_without_a_callback_url_is_refused_before_it_is_sent(self) -> None:
+        # Flutterwave's documentation lists redirect_url as optional and its API requires
+        # it: the same body with and without it was sent to the sandbox on 2026-11-19 and
+        # answered `400 One or more required parameters missing` without, 200 with. Its
+        # error names no field, so the refusal happens here and names one.
+        provider, harness = make(["checkout-create"])
+        with self.assertRaises(ValidationError) as ctx:
+            provider.create_checkout(
+                amount=naira(5000),
+                email="ada@example.com",
+                reference="order-01HQ-EXAMPLE",
+            )
+        self.assertIn("callback_url is required", str(ctx.exception))
+        # Nothing was sent: a request Flutterwave would reject is not worth making.
+        self.assertEqual(len(harness.requests), 0)
 
     def test_refuses_unsupported_channel(self) -> None:
         provider, harness = make(["payment-initialize"])
@@ -205,6 +227,7 @@ class TestCollections(unittest.TestCase):
                 email="ada@example.com",
                 reference="order-01HQ-EXAMPLE",
                 channels=["google_pay"],
+                callback_url="https://example.com/return",
             )
         self.assertIn("google_pay", str(ctx.exception))
         self.assertEqual(len(harness.requests), 0)
@@ -214,7 +237,10 @@ class TestCollections(unittest.TestCase):
         with self.assertRaises(ValidationError) as ctx:
             # Underscores are fine in v3 and rejected by v4's pattern.
             provider.create_checkout(
-                amount=naira(5000), email="ada@example.com", reference="order_01HQ"
+                amount=naira(5000),
+                email="ada@example.com",
+                reference="order_01HQ",
+                callback_url="https://example.com/return",
             )
         self.assertIn("letters, digits and hyphens", str(ctx.exception))
         self.assertEqual(len(harness.requests), 0)
@@ -518,6 +544,7 @@ class TestSplits(unittest.TestCase):
             amount=naira(5000),
             email="ada@example.com",
             reference="order-01HQ-EXAMPLE",
+            callback_url="https://example.com/return",
             subaccounts=provider.create_split(
                 [{"subaccount_id": "RS_A", "commission_basis_points": 2000}]
             ),
