@@ -301,6 +301,25 @@ export function toMajor(m: Money): number {
 }
 
 /**
+ * A major amount as the string a provider that types its amount field as a string wants.
+ *
+ * Fincra's temporary-virtual-account endpoint is the one in Tier 1 that does: its schema
+ * types `amount` as a string while every other endpoint takes a number. The formatting
+ * has to be pinned rather than left to each language's default, because `str(350.0)` in
+ * Python is `"350.0"` while `String(350)` in JavaScript is `"350"`, and a provider that
+ * parses the string strictly would see two different values from the two packages.
+ *
+ * The rule: at most the currency's own number of decimal places, trailing zeros removed,
+ * no exponent. `toMajor` has already proved the value is exact to that many places.
+ */
+export function majorToString(m: Money): string {
+  const major = toMajor(m);
+  const exponent = MINOR_UNIT_EXPONENT[m.currency];
+  const fixed = major.toFixed(exponent);
+  return exponent === 0 ? fixed : fixed.replace(/\.?0+$/, "");
+}
+
+/**
  * Basis points to the decimal fraction a provider wants, e.g. 900 bps to 0.09.
  *
  * Flutterwave states percentage splits as decimal fractions — its own documentation

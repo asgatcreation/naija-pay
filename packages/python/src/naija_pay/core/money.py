@@ -14,6 +14,7 @@ Mirrors ``packages/ts/src/core/money.ts``; the parity tests assert the two agree
 from __future__ import annotations
 
 import math
+import sys
 from collections.abc import Sequence
 from dataclasses import dataclass
 from typing import Literal
@@ -117,7 +118,11 @@ def from_major(major_units: float, currency: str) -> Money:
     factor = 10**exponent
     scaled = round(major_units * factor)
 
-    if abs(scaled / factor - major_units) > 1e-9 * max(1.0, abs(float(major_units))):
+    # The tolerance is one float ulp, relative -- the same test the TypeScript package
+    # makes with Number.EPSILON. It was 1e-9 * max(1, |amount|), which on a balance like
+    # 1999792413.990817 allowed a mismatch of nearly two naira and silently accepted a
+    # figure the provider never gave. Found by the cross-language Fincra tests.
+    if abs(scaled / factor - major_units) > sys.float_info.epsilon * abs(float(major_units)):
         raise MoneyError(
             f"{major_units} {currency} has more precision than {currency} supports "
             f"({exponent} decimal places)"
@@ -283,6 +288,28 @@ def to_major(m: Money) -> float:
             "decimal major amount, so it must not be sent to a provider that takes decimals"
         )
     return major
+
+
+def major_to_string(m: Money) -> str:
+    """A major amount as the string a provider that types its amount field wants.
+
+    Fincra's temporary-virtual-account endpoint is the one in Tier 1 that does: its
+    schema types ``amount`` as a string while every other endpoint takes a number. The
+    formatting has to be pinned rather than left to each language's default, because
+    ``str(350.0)`` in Python is ``"350.0"`` while ``String(350)`` in JavaScript is
+    ``"350"``, and a provider that parses the string strictly would see two different
+    values from the two packages.
+
+    The rule: at most the currency's own number of decimal places, trailing zeros
+    removed, no exponent. ``to_major`` has already proved the value is exact to that many
+    places.
+    """
+    major = to_major(m)
+    exponent = _MINOR_UNIT_EXPONENT[m.currency]
+    fixed = f"{major:.{exponent}f}"
+    if exponent == 0:
+        return fixed
+    return fixed.rstrip("0").rstrip(".")
 
 
 def basis_points_to_fraction(basis_points: int) -> float:

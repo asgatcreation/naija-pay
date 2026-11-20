@@ -231,6 +231,7 @@ class HttpClient:
         idempotency_key: str | None = None,
         idempotency_header: str | None = None,
         reference: str | None = None,
+        skip_authorize: bool = False,
     ) -> HttpResponse:
         url = self._build_url(path, query)
         # Only `safe` requests may ever be sent twice.
@@ -246,6 +247,7 @@ class HttpClient:
                     headers=headers,
                     idempotency_key=idempotency_key,
                     idempotency_header=idempotency_header,
+                    skip_authorize=skip_authorize,
                 )
             except (TransportTimeoutError, TransportError, OSError) as exc:
                 duration_ms = int((time.monotonic() - started) * 1_000)
@@ -350,10 +352,11 @@ class HttpClient:
         headers: Mapping[str, str] | None,
         idempotency_key: str | None,
         idempotency_header: str | None,
+        skip_authorize: bool = False,
     ) -> TransportResponse:
         merged: dict[str, str] = {"accept": "application/json"}
         merged.update(self._o.headers)
-        if self._o.authorize is not None:
+        if self._o.authorize is not None and not skip_authorize:
             merged.update(self._o.authorize())
         if headers:
             merged.update(headers)

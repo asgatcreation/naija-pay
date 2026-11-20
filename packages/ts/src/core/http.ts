@@ -101,6 +101,12 @@ export interface RequestOptions {
   /** The naija-pay operation, for errors and logs. */
   readonly operation?: string;
   /**
+   * Skips the client's `authorize` callback for this one request. Token-based
+   * providers need it: the login call itself carries its own credential header, and
+   * without this it would ask `authorize` for a token, which logs in, for ever.
+   */
+  readonly skipAuthorize?: boolean;
+  /**
    * Sent as an idempotency header where the provider supports one. Flutterwave v4
    * documents `X-Idempotency-Key`; most others key off the transaction reference
    * instead.
@@ -311,7 +317,7 @@ export class HttpClient {
     const headers: Record<string, string> = {
       accept: "application/json",
       ...this.#options.headers,
-      ...(await this.#authHeaders()),
+      ...(options.skipAuthorize ? {} : await this.#authHeaders()),
       ...options.headers,
     };
 

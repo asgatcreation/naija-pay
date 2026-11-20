@@ -63,7 +63,10 @@ class TestComputingSignatures(unittest.TestCase):
         )
 
     def test_refuses_to_invent_an_undocumented_signature(self) -> None:
-        for name in ("squad", "monnify"):
+        # Squad alone, now. Monnify's scheme was undocumented until 2026-11-11, when its
+        # webhook guide turned out to publish both the algorithm and a worked example;
+        # see test_monnify.py, which pins Monnify's own published hash.
+        for name in ("squad",):
             with self.assertRaises(ValueError) as ctx:
                 compute_signature(SCHEMES[name], BODY, SECRET)
             self.assertIn("undocumented", str(ctx.exception))
@@ -221,13 +224,15 @@ class TestDeclaredStrengthsAreHonest(unittest.TestCase):
                 f'{name} claims "{scheme.strength}" but gives "{strength_of(scheme)}"',
             )
 
-    def test_the_three_weak_providers_are_marked(self) -> None:
+    def test_the_weak_providers_are_marked(self) -> None:
         # The headline finding from PROVIDERS.md, asserted so it cannot be quietly
         # upgraded later without a failing test.
         self.assertEqual(SCHEMES["flutterwaveV3"].strength, "shared-secret")
         self.assertEqual(SCHEMES["korapay"].strength, "partial-body")
         self.assertEqual(SCHEMES["squad"].strength, "unverified")
-        self.assertEqual(SCHEMES["monnify"].strength, "unverified")
+        # Monnify moved from unverified to full-body on 2026-11-11, on the evidence of
+        # its own published hash. The strength is only claimed where it was earned.
+        self.assertEqual(SCHEMES["monnify"].strength, "full-body")
 
 
 if __name__ == "__main__":

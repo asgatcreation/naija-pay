@@ -64,7 +64,10 @@ describe("computing signatures", () => {
   });
 
   test("refuses to invent a signature for an undocumented scheme", async () => {
-    for (const scheme of [SCHEMES.squad, SCHEMES.monnify]) {
+    // Squad alone, now. Monnify's scheme was undocumented until 2026-11-11, when its
+    // webhook guide turned out to publish both the algorithm and a worked example; see
+    // monnify.test.ts, which pins Monnify's own published hash.
+    for (const scheme of [SCHEMES.squad]) {
       await assert.rejects(
         computeSignature(scheme, BODY, SECRET),
         /undocumented/,
@@ -263,12 +266,14 @@ describe("declared strengths are honest", () => {
     }
   });
 
-  test("the three providers that cannot offer full-body integrity are marked as such", () => {
+  test("the providers that cannot offer full-body integrity are marked as such", () => {
     // This is the headline finding from PROVIDERS.md, asserted so it cannot be quietly
     // upgraded later without a failing test.
     assert.equal(SCHEMES.flutterwaveV3.strength, "shared-secret");
     assert.equal(SCHEMES.korapay.strength, "partial-body");
     assert.equal(SCHEMES.squad.strength, "unverified");
-    assert.equal(SCHEMES.monnify.strength, "unverified");
+    // Monnify moved from unverified to full-body on 2026-11-11, on the evidence of its
+    // own published hash. The strength is only claimed where it was earned.
+    assert.equal(SCHEMES.monnify.strength, "full-body");
   });
 });

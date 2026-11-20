@@ -278,11 +278,23 @@ SCHEMES: dict[str, SignatureScheme] = {
         header="x-squad-encrypted-body",
         strength="unverified",
     ),
-    # Monnify: its OpenAPI spec documents no webhooks at all.
+    # Monnify: HMAC-SHA512 hex over the raw body, keyed with the merchant CLIENT SECRET
+    # -- the same secret used for API authentication, not a separate webhook key.
+    #
+    # Recorded as undocumented until 2026-11-11, because the OpenAPI spec documents no
+    # webhooks at all. The webhook guide does, and it publishes a worked example: a
+    # client secret, a payload and the expected hash. HMAC-SHA512(body, secret)
+    # reproduces that hash; the plain SHA-512(secret + body) its prose describes does
+    # not. The vector is pinned by a fixture in both languages.
+    #
+    # One caveat the guide states and this declaration cannot: the monnify-signature
+    # header is only sent on production notifications. In sandbox there is nothing to
+    # verify.
     "monnify": SignatureScheme(
-        kind="undocumented",
+        kind="hmac-hex",
         header="monnify-signature",
-        strength="unverified",
+        algorithm="SHA-512",
+        strength="full-body",
     ),
 }
 
