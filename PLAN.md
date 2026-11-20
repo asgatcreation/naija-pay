@@ -178,8 +178,13 @@ report of what I actually ran.
 
 ## 7. Open questions for later milestones, recorded so they are not forgotten
 
-1. **Squad and Monnify webhook signatures** — establish against sandbox in milestones 6 and 7, or
-   ship those adapters with webhook support flagged unverified.
+1. **Squad and Monnify webhook signatures** — **Monnify: answered in milestone 6.** Its OpenAPI spec
+   documents no webhooks at all, and the prose on its documentation page is wrong about the scheme.
+   It was settled instead against a hash Monnify itself publishes: that vector is recorded in
+   `fixtures/providers/monnify/webhook-successful-transaction/published.json` and recomputed in both
+   languages by the parity harness, so neither package can drift back towards the prose. Squad is
+   still open — establish against its sandbox in milestone 7, or ship it with webhook support
+   flagged unverified.
 2. **CBN and NDPA citations** — every regulatory claim in the docs needs a citation to the actual
    circular, verified on the day of writing. Currently marked "observed, not legally verified".
 3. **Paystack `bank_code` vs `settlement_bank`** — their own reference and sample disagree; confirm

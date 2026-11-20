@@ -196,6 +196,9 @@ await observe("QUESTION 1: does a fractional amount survive the round trip exact
     amount,
     email: "ada@example.com",
     reference: fractionalReference,
+    // Required: Flutterwave rejects /v3/payments without redirect_url, which this run is
+    // what discovered.
+    callbackUrl: "https://example.com/return",
   });
   return (
     `sent amount=${toMajor(amount)} (from ${amount.amount} kobo); ` +
@@ -224,25 +227,35 @@ await observe("the fractional amount comes back unchanged on verify", async () =
 
 let subaccountId;
 
-await observe("QUESTION 5: is a percentage split really a decimal fraction?", async () => {
-  const account = await provider.createSplitAccount({
-    businessName: `NaijaPay Probe ${run}`,
-    accountNumber: "0690000037",
-    bankCode: "044",
-    businessMobile: "08100000000",
-    businessEmail: `vendor+${run}@example.com`,
-    // 900 basis points. The adapter converts this to 0.09 on the wire.
-    shareBasisPoints: 900,
-  });
-  subaccountId = account.code;
-  const back = account.percentageCharge;
-  return (
-    `sent split_value=0.09 for 900 bps; Flutterwave returned ` +
-    `${back === null ? "no percentage" : `${back} bps`}; ` +
-    `${back === 900 ? "EXACT MATCH" : "*** MISMATCH — check basisPointsToFraction ***"}; ` +
-    `subaccount id prefix ${subaccountId.slice(0, 3)}`
-  );
-});
+await observe(
+  "QUESTION 5: is a percentage split really a decimal fraction?",
+  async () => {
+    const account = await provider.createSplitAccount({
+      businessName: `NaijaPay Probe ${run}`,
+      accountNumber: "0690000037",
+      bankCode: "044",
+      businessMobile: "08100000000",
+      businessEmail: `vendor+${run}@example.com`,
+      // 900 basis points. The adapter converts this to 0.09 on the wire.
+      shareBasisPoints: 900,
+    });
+    subaccountId = account.code;
+    const back = account.percentageCharge;
+    return (
+      `sent split_value=0.09 for 900 bps; Flutterwave returned ` +
+      `${back === null ? "no percentage" : `${back} bps`}; ` +
+      `${back === 900 ? "EXACT MATCH" : "*** MISMATCH — check basisPointsToFraction ***"}; ` +
+      `subaccount id prefix ${subaccountId.slice(0, 3)}`
+    );
+  },
+  {
+    error: "ValidationError",
+    because:
+      "Flutterwave keys a subaccount on its account number, so the first run of this " +
+      "harness answered the question and every later run is a duplicate. Delete the " +
+      "subaccount in the dashboard to ask again.",
+  },
+);
 
 await observe("a split declaration is accepted on a checkout", async () => {
   const split = provider.createSplit([{ subaccountId, commissionBasisPoints: 2000 }]);
@@ -251,6 +264,7 @@ await observe("a split declaration is accepted on a checkout", async () => {
     email: "ada@example.com",
     reference: `naijapay-split-${run}`,
     subaccounts: split,
+    callbackUrl: "https://example.com/return",
   });
   return `accepted transaction_charge=${split[0].transaction_charge}; checkout created (${
     new URL(checkout.checkoutUrl).host
@@ -367,41 +381,52 @@ await observe(
     );
   },
   {
-    error: "InsufficientFundsError",
+    error: "ValidationError",
     because:
-      "The test balance is empty, so no transfer can be created. Fund it from the " +
-      "Flutterwave dashboard and rerun to answer this. The adapter classified the " +
-      "empty balance correctly, which is itself worth knowing.",
+      "Flutterwave gates its transfer API behind IP whitelisting, a per-merchant " +
+      "dashboard setting: it answers `Please enable IP Whitelisting to access this " +
+      "service` until the calling IP is listed under Settings > API. An empty test " +
+      "balance stops this probe the same way. Either is a fact about the account, not " +
+      "about the adapter, which classified both correctly.",
   },
 );
 
-await observe("a duplicate payout reference is refused, not paid twice", async () => {
-  const reference = `naijapay-dup-${run}`;
-  const attempt = () =>
-    provider.createPayout({
-      amount: naira(100),
-      accountNumber: "0690000037",
-      bankCode: "044",
-      reference,
-    });
+await observe(
+  "a duplicate payout reference is refused, not paid twice",
+  async () => {
+    const reference = `naijapay-dup-${run}`;
+    const attempt = () =>
+      provider.createPayout({
+        amount: naira(100),
+        accountNumber: "0690000037",
+        bankCode: "044",
+        reference,
+      });
 
-  try {
-    await attempt();
-  } catch (error) {
-    // An empty balance stops this probe before it can test anything useful.
-    if (error.name === "InsufficientFundsError") {
-      return "skipped: the test balance is empty, so the first transfer never happened";
+    try {
+      await attempt();
+    } catch (error) {
+      // An empty balance stops this probe before it can test anything useful.
+      if (error.name === "InsufficientFundsError") {
+        return "skipped: the test balance is empty, so the first transfer never happened";
+      }
+      throw error;
     }
-    throw error;
-  }
 
-  try {
-    await attempt();
-    return "*** the second transfer with the same reference SUCCEEDED — investigate ***";
-  } catch (error) {
-    return `second attempt refused with ${error.name}: ${error.providerMessage ?? error.message}`;
-  }
-});
+    try {
+      await attempt();
+      return "*** the second transfer with the same reference SUCCEEDED — investigate ***";
+    } catch (error) {
+      return `second attempt refused with ${error.name}: ${error.providerMessage ?? error.message}`;
+    }
+  },
+  {
+    error: "ValidationError",
+    because:
+      "The transfer API is gated behind IP whitelisting on this account, so no first " +
+      "transfer could be made to duplicate.",
+  },
+);
 
 // --- write up what we saw ---------------------------------------------------
 

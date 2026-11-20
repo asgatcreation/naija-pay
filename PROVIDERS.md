@@ -265,10 +265,44 @@ half-built. The version boundary is stated in the adapter's own capability decla
 **Implementation status (2026-11-10):** adapter written in both languages from the documentation
 above, with 64 tests each and 15 fixtures recorded from Flutterwave's own documented samples.
 Every endpoint path has been read from its own reference page rather than from the index.
-**Not sandbox-verified.** Wallets, virtual accounts and v4 webhook verification are declared
-`notYetSandboxVerified`, so the generated capability matrix says so rather than implying they are
-proven. Paystack's sandbox run changed real behaviour in that adapter, and there is no reason to
-expect Flutterwave to be kinder.
+Paystack's sandbox run changed real behaviour in that adapter, and there was no reason to expect
+Flutterwave to be kinder. It was not.
+
+#### What the sandbox established, 2026-11-19
+
+Run by `npm run sandbox:flutterwave` against a `FLWSECK_TEST-` key; the full table is in
+[fixtures/providers/flutterwave/SANDBOX.md](fixtures/providers/flutterwave/SANDBOX.md). Nine probes
+succeeded and five were blocked by settings on the account rather than by anything in the adapter.
+
+**One real bug, in the most important endpoint there is:**
+
+- **`redirect_url` is REQUIRED on `POST /v3/payments`, and Flutterwave documents it as optional.**
+  Without it the call fails `400 One or more required parameters missing` — an error that names no
+  field, on the one endpoint every integration starts with. The same body with it attached returns
+  200 and a hosted link; both were sent to the sandbox to be sure. `createCheckout` treated
+  `callbackUrl` as optional and so **every checkout created without one failed**, which no fixture
+  could have caught, because the fixtures are Flutterwave's own samples and its samples all include
+  the field. Both packages now refuse the call locally, naming the field, and a test in each pins it.
+
+**Confirmed working against the live API:** the Nigerian bank list; balance decimals converting to
+exact minor units; account resolution; an unknown reference mapping to `NotFoundError`; 5,000 naira
+50 kobo surviving the round trip exactly as `5000.5`; a split declaration reaching a checkout body;
+and both dynamic and static virtual accounts, the latter with the documented test BVN.
+
+**Blocked by the account, not by the code:**
+
+- **The transfer API is gated behind IP whitelisting.** Every payout call answers `Please enable IP
+  Whitelisting to access this service` until the calling IP is listed under **Settings → API** in the
+  dashboard. So the two questions that matter most for payouts — what status a created transfer has,
+  and whether a duplicate reference is refused rather than paid twice — remain unanswered. They are
+  the same questions Paystack's OTP gate answered only on a funded balance.
+- **Payout subaccount wallets** could not be exercised, as expected: Flutterwave appears to gate
+  them per merchant, the way Paystack gates Dedicated Virtual Accounts.
+- **Subaccount creation is keyed on the account number**, so the first run answered question 5 and
+  every later run is a duplicate. Delete the subaccount in the dashboard to ask again.
+
+Wallets and v4 webhook verification remain declared `notYetSandboxVerified`, so the generated
+capability matrix says so rather than implying they are proven.
 
 ### Monnify (Moniepoint)
 
@@ -312,6 +346,61 @@ Verified endpoint groups, read from the spec:
 3. Reserved accounts carry a per-account **income split config** — an inflow-level split that is
    conceptually different from Paystack's transaction splits. Our model keeps the two distinct.
 
+#### What the sandbox established, 2026-11-19
+
+Run by `npm run sandbox:monnify` against `sandbox.monnify.com` with Monnify's own published public
+test credentials; the full table is in
+[fixtures/providers/monnify/SANDBOX.md](fixtures/providers/monnify/SANDBOX.md). Seventeen of
+nineteen probes succeeded; the two that did not need a funded wallet, which this account has not
+got. **Four of these contradict Monnify's own specification**, and in every case the code follows
+the sandbox.
+
+- **`/api/v1/transactions/search` IS enveloped, and its rows have a different shape.** The spec
+  shows the Spring page at the top level, outside `responseBody`, and shows flat
+  `customerName`/`customerEmail`/`transactionDate` fields. The sandbox returns the ordinary
+  envelope, nests the customer under `customerDTO`, dates each row with the zoneless `createdOn`,
+  names the currency `currencyCode`, and adds `paymentMethodList` and `collectionChannel`. The
+  fixture was re-recorded from the sandbox; the envelope-less fallback is kept as a defence,
+  because Monnify's document still says otherwise.
+- **A searched row makes no claim about channel or amount paid.** It carries `amount` and no
+  `totalPayable`/`amountPaid`, so `amountPaid` and `amountSettled` are null. `collectionChannel`
+  says how the money was collected (a reserved account, the web SDK), not which instrument was
+  used, and `paymentMethodList` on a pending row is what was _enabled_. The adapter reports
+  `channel` as null rather than passing either off as the payment channel.
+- **`restrictPaymentSource` does not default to true.** The documentation says it does, which
+  would mean a reserved account created without an allow-list rejects the inflows you are waiting
+  for. Creating an account with the field omitted entirely returned `false`. Because the document
+  and the server disagree, the adapter always sends the field explicitly — `true` exactly when you
+  pass `allowedSources` — so neither default can surprise a caller.
+- **The token does not last an hour.** The login returned `expiresIn: 828` — under fourteen
+  minutes. The adapter uses the value from the response rather than a constant, which is why this
+  is a documentation correction rather than a bug; a client that assumed an hour would spend
+  three-quarters of its life holding a dead token.
+- **`/api/v1/disbursements/account/validate` is switched off, not merely deprecated.** It answers
+  `HTTP 422 This API endpoint has been deprecated and is no longer available. Please migrate to
+  the more secure endpoint: /api/v2/disbursements/account/validate`. The adapter already uses v2.
+- **An unpaid transaction reports a price of zero.** `totalPayable` comes back as the string
+  `"0.00"` until the transaction is paid, so `amount` on a pending Monnify transaction is 0 and
+  **must not be read as the price**. The adapter reports what Monnify said rather than echoing
+  back what was requested.
+- **Confirmed as documented:** the Basic→Bearer exchange works and is cached (one login for two
+  calls); Basic is used on the login and nowhere else; `allBanks: true` really does issue a NUBAN
+  at every partner bank (two, at 035 and 232, both matched in naija-data); a sub-account round-trips
+  2000 basis points exactly; 5,000 naira 50 kobo goes out as `5000.5`; the bank list returns 374
+  entries with 3-, 5- and 6-character codes; an unknown reference is a `NotFoundError` on both
+  verify routes; and a brand-new reserved account's inflow list is an empty page rather than an
+  error.
+- **Two surprises in the small print.** Monnify keys a sub-account on its account number, so
+  creating one twice is a `DuplicateReferenceError` rather than an update. And deallocating a
+  reserved account echoes the account back with `status: active` — the account is gone regardless,
+  there being no route to undo a deallocation, so that status must not be read as "still usable".
+- **Not settled:** whether two-factor disbursement is on by default, and the wallet balance
+  conversion. Both need `MONNIFY_WALLET_ACCOUNT_NUMBER` and a funded sandbox wallet.
+- **One transient worth knowing about:** on an earlier run Monnify answered the login with 200 and
+  a well-formed, unexpired JWT carrying the right authorities, then answered every other endpoint
+  `401 {"error":"invalid_token"}`. It cleared by itself. The harness now reports that pattern as
+  blocked rather than failed, because it says nothing about the adapter.
+
 ### Fincra
 
 |                 |                                                                                                                                        |
@@ -350,6 +439,27 @@ NGN permanent virtual accounts, verified from the docs:
 2. Auth is a bare `api-key` header. Our HTTP layer must not assume every provider uses `Bearer`.
 3. Two of the nine published NGN virtual-account bank channels are disabled. Bank choice has to be a
    runtime capability query, not a hardcoded enum.
+4. **The temporary-virtual-account endpoint types `amount` as a string** while every other endpoint
+   takes a number. That is why `majorToString` / `major_to_string` exist in the core: `str(350.0)`
+   in Python is `"350.0"` and `String(350)` in JavaScript is `"350"`, and the two packages must
+   agree on which one Fincra gets.
+5. **Fincra uses two different envelope keys.** Its own samples show `success` on some endpoints and
+   `status` on others. The adapter accepts either, and the sandbox harness records which one an
+   account actually gets.
+6. **A BVN resolution returns a photograph** (`pixBase64`). It is stripped from both the parsed
+   result and `raw`, so it cannot be logged, serialised or stored by accident. That is a privacy
+   guarantee, not a formatting choice, and it is asserted in both languages and in the parity
+   harness.
+
+#### What the sandbox cannot yet establish
+
+`npm run sandbox:fincra` is written and runs, but it needs `FINCRA_SECRET_KEY` and
+`FINCRA_BUSINESS_ID` in `.env`; without a key it skips cleanly, and the probes that need a business
+id report themselves as blocked rather than failed. It asks six questions: which envelope key the
+account gets; whether the six-decimal fees and balances are real; whether the temporary-account
+endpoint really takes a string amount; whether `bold` and `providus` are still disabled; whether a
+documented GET-with-body works as query parameters; and whether a BVN verification ever leaks the
+photograph. It will be run and this section filled in as soon as a sandbox key exists.
 
 ### Squad (GTCO)
 
@@ -464,9 +574,10 @@ publicly. This is the single biggest reason to keep Tier 3 out of v1.0.
 
 ## Capability matrix
 
-Hand-written for this milestone from the verified docs above. **From milestone 6 onward this table is
-generated from the adapters' own declared capabilities** (`npm run docs:matrix`), so it can never
-drift from the code.
+Hand-written from the verified docs above. The plan was for this table to be generated from the
+adapters' own declared capabilities from milestone 6 onward, so it could never drift from the code.
+**That generator is not written yet** — it is the next piece of work on this file, and until it
+exists these cells carry the same risk as the two corrected below.
 
 Two Flutterwave cells were corrected on 2026-11-02 while building its adapter: it _does_ accept a
 `bank_code` when creating a virtual account, and it _does_ have a BVN-update route. Both were read

@@ -132,7 +132,68 @@ Nothing is published to npm or PyPI yet. See [PLAN.md](PLAN.md) for the mileston
   that file is committed to a public repository, and the Paystack harness leaked a real name into
   its equivalent on the first run.
 
+- **Monnify adapter** in both languages, with 76 tests each over 18 fixtures. Monnify is the first
+  provider that does not take a static key: it exchanges an HTTP Basic pair for a Bearer token at
+  `POST /api/v1/auth/login`, and the adapter caches that token, refreshes it a minute before it
+  expires using the lifetime Monnify returns rather than a constant, shares one login between
+  concurrent callers so a cold client firing ten requests performs one login rather than ten, and
+  retries a 401 only on a request that is safe to repeat. It covers checkouts with sub-account
+  splits, verification by either reference, the transaction search page, refunds, reserved
+  (static) virtual accounts including the `allBanks` flag that issues a NUBAN at every partner
+  bank at once, BVN and KYC updates, per-account income splits, sub-accounts, single and bulk
+  payouts with their OTP gate, bank lists, account resolution, wallet balance and webhooks.
+
+- **Fincra adapter** in both languages, with 62 tests each over 8 fixtures. It covers checkouts,
+  refunds, permanent and temporary virtual accounts, wallet balances per currency, same-currency
+  and cross-currency payouts, bank lists, account resolution, BVN verification and webhooks.
+
+- `skipAuthorize` / `skip_authorize` on a request in both HTTP clients. A token-exchanging provider
+  needs it: the login call carries its own credential header, and without this it asks the
+  `authorize` callback for a token, which logs in, for ever. That is not a hypothetical — it was a
+  heap exhaustion in the first run of the Monnify suite.
+
+- `majorToString` / `major_to_string` in `core/money`, for a provider that types an amount field as
+  a string. Fincra's temporary-virtual-account endpoint is the first: `str(350.0)` in Python is
+  `"350.0"` while `String(350)` in JavaScript is `"350"`, and a parity case now pins which one
+  Fincra gets.
+
+- Cross-language parity coverage for both new adapters — 9 Monnify shapes and 7 Fincra shapes over
+  their fixtures, plus statuses, channels, date formats and amounts, taking the harness to **353
+  cases across 38 groups**. It includes the webhook hash Monnify publishes, recomputed in both
+  languages, so neither can drift back towards the (wrong) prose on Monnify's documentation page.
+
+- Sandbox harnesses for Monnify (`npm run sandbox:monnify`) and Fincra (`npm run sandbox:fincra`).
+  The Monnify one runs for anyone: Monnify publishes working public test credentials in its own API
+  reference, so it needs no account — though the credentials still come from `.env` rather than
+  from the repository. Seventeen of its nineteen probes pass against the live sandbox.
+
 ### Fixed
+
+- **Flutterwave rejected every checkout created without a `callbackUrl`.** Its `/v3/payments`
+  endpoint requires `redirect_url` and documents it as optional; without it the call fails
+  `400 One or more required parameters missing`, an error naming no field, on the one endpoint
+  every integration starts with. No fixture could have caught this, because the fixtures are
+  Flutterwave's own samples and its samples all include the field — only a live run did. Both
+  packages now refuse the call locally with a message naming the field, and a test in each pins it.
+
+- A money-rounding tolerance in the Python package loose enough to **accept a discrepancy of almost
+  two naira**. `from_major` allowed `1e-9 * max(1, |amount|)`, so on a balance of
+  `1999792413.990817` it returned a `Money` the provider had never reported, where TypeScript
+  correctly returned nothing. It is now one relative float ulp, the same test TypeScript makes with
+  `Number.EPSILON`. Found by the first cross-language Fincra parity run, which is exactly the class
+  of defect that harness exists to catch.
+
+- **Monnify's transaction search is enveloped, and its rows have a different shape than its
+  specification shows.** The spec puts the page at the top level outside `responseBody` and shows
+  flat customer fields; the sandbox returns the ordinary envelope, nests the customer under
+  `customerDTO`, and dates each row with the zoneless `createdOn`. The fixture was re-recorded from
+  the sandbox, with the envelope-less fallback kept as a defence since the document still says
+  otherwise.
+
+- **Monnify does have a verify-by-your-own-reference route.** The adapter had declared
+  `GET /api/v2/merchant/transactions/query` absent and fell back to searching, which would have
+  made every verification a page scan. Rewritten in both languages and confirmed against the
+  sandbox, where an unseen reference answers with a `NotFoundError` naming it.
 
 - Four Flutterwave endpoint paths, caught by reading each reference page rather than the
   documentation index that the first pass had worked from. Listing refunds is `GET /refunds`, not
@@ -152,6 +213,14 @@ Nothing is published to npm or PyPI yet. See [PLAN.md](PLAN.md) for the mileston
   messages and regression-tested.
 
 ### Changed
+
+- Three documentation claims corrected against what Monnify's sandbox actually does, each recorded
+  in the code beside the behaviour it describes: `restrictPaymentSource` returns `false` when
+  omitted rather than defaulting to `true` as documented, so the adapter always sends the field
+  explicitly and neither default can surprise a caller; the access token lasted **828 seconds**,
+  not the hour the documentation implies, which is why the adapter reads the lifetime from the
+  response; and `/api/v1/disbursements/account/validate` is switched off rather than merely
+  deprecated, answering `HTTP 422` with a migration message.
 
 - **Bank codes are no longer normalised onto a single CBN/NIBSS code.** Measuring the real data
   showed naija-data carries a NIP code for only 49 of 898 institutions, while Paystack alone
