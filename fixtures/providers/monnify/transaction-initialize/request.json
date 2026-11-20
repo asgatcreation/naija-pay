@@ -1,0 +1,17 @@
+{
+  "method": "POST",
+  "path": "/api/v1/merchant/transactions/init-transaction",
+  "body": {
+    "amount": 100.0,
+    "customerEmail": "ada@example.com",
+    "paymentReference": "order-01HQ-EXAMPLE",
+    "currencyCode": "NGN",
+    "contractCode": "5867418298",
+    "paymentDescription": "Trial transaction",
+    "redirectUrl": "https://example.com/callback",
+    "paymentMethods": [
+      "CARD",
+      "ACCOUNT_TRANSFER"
+    ]
+  }
+}

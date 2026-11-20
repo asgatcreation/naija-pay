@@ -1,0 +1,13 @@
+https://docs.fincra.com/reference/verify-checkout-status.md
+updatedAt: 2026-09-29T21:10:11.000Z
+Verified: 2026-11-11
+
+Verifying a payment by YOUR reference -- Fincra has no verify-by-its-own-reference route
+for checkout, which is the opposite of Flutterwave.
+
+The x-business-id header is required on this call and on no other checkout call.
+
+Fincra's documented checkout statuses are initiated, pending, success, successful, failed
+and expired, and a charge left pending for more than two hours becomes expired. The
+business settings that Fincra also returns on this endpoint are omitted from this
+fixture: they are merchant configuration rather than payment data.

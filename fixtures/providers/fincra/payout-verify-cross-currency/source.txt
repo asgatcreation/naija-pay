@@ -1,0 +1,14 @@
+https://docs.fincra.com/reference/verify-payout-status-by-reference.md
+updatedAt: 2026-09-29T21:10:11.000Z
+Verified: 2026-11-11
+
+A cross-currency payout, which is Fincra's whole proposition and the reason this fixture
+is kept rather than only a naira one.
+
+Three things it pins:
+  fee is 9090.909091 -- SIX decimal places. No currency has six, so core/money refuses to
+  convert it and the adapter reports fee as null rather than inventing a rounded figure.
+  The exact number stays in `raw`.
+  amountSent and amountReceived are in DIFFERENT currencies, so they are separate fields
+  rather than one amount.
+  isDocumentRequired comes back as 0 here and as false elsewhere, so both are accepted.

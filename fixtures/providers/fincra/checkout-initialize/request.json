@@ -1,0 +1,15 @@
+{
+  "method": "POST",
+  "path": "/checkout/payments",
+  "body": {
+    "currency": "NGN",
+    "amount": 350,
+    "customer": {
+      "name": "Ada Example",
+      "email": "ada@example.com"
+    },
+    "reference": "order-01HQ-EXAMPLE",
+    "feeBearer": "customer",
+    "redirectUrl": "https://example.com/callback"
+  }
+}

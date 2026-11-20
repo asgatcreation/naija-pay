@@ -1,0 +1,28 @@
+{
+  "requestSuccessful": true,
+  "responseMessage": "success",
+  "responseCode": "0",
+  "responseBody": [
+    {
+      "name": "Rolez Microfinance Bank",
+      "code": "50515",
+      "ussdTemplate": null,
+      "baseUssdCode": null,
+      "transferUssdTemplate": null
+    },
+    {
+      "name": "Access bank",
+      "code": "044",
+      "ussdTemplate": "*901*Amount*AccountNumber#",
+      "baseUssdCode": "*901#",
+      "transferUssdTemplate": "*901*AccountNumber#"
+    },
+    {
+      "name": "Kuda Microfinance Bank",
+      "code": "50211",
+      "ussdTemplate": null,
+      "baseUssdCode": "*5573#",
+      "transferUssdTemplate": "*5573*AccountNumber#"
+    }
+  ]
+}

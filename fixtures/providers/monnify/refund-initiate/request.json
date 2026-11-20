@@ -1,0 +1,11 @@
+{
+  "method": "POST",
+  "path": "/api/v1/refunds/initiate-refund",
+  "body": {
+    "transactionReference": "MNFY|67|20220725111957|000283",
+    "refundAmount": 100.0,
+    "refundReference": "refund-01HQ-EXAMPLE",
+    "refundReason": "Duplicate order",
+    "customerNote": "Refund for duplicate order"
+  }
+}

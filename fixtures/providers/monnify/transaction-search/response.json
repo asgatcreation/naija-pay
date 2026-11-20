@@ -1,0 +1,55 @@
+{
+  "requestSuccessful": true,
+  "responseMessage": "success",
+  "responseCode": "0",
+  "responseBody": {
+    "content": [
+      {
+        "customerDTO": {
+          "email": "ada@example.com",
+          "name": "Ada Example",
+          "merchantCode": null
+        },
+        "createdOn": "2024-11-25 07:35:17.566",
+        "amount": 50.0,
+        "flagged": false,
+        "currencyCode": "NGN",
+        "paymentDescription": "Order 1024",
+        "paymentStatus": "PAID",
+        "transactionReference": "MNFY|13|20241125073517|000001",
+        "paymentReference": "merchant-ref-EXAMPLE",
+        "merchantCode": "MK_TEST_EXAMPLE",
+        "merchantName": "NaijaPay Example",
+        "metaData": {},
+        "completed": true,
+        "paymentMethodList": ["ACCOUNT_TRANSFER"],
+        "collectionChannel": "RESERVED_ACCOUNT"
+      }
+    ],
+    "pageable": {
+      "sort": {
+        "empty": true,
+        "sorted": false,
+        "unsorted": true
+      },
+      "offset": 0,
+      "pageSize": 10,
+      "pageNumber": 0,
+      "unpaged": false,
+      "paged": true
+    },
+    "last": true,
+    "totalElements": 1,
+    "totalPages": 1,
+    "first": true,
+    "size": 10,
+    "number": 0,
+    "sort": {
+      "empty": true,
+      "sorted": false,
+      "unsorted": true
+    },
+    "numberOfElements": 1,
+    "empty": false
+  }
+}

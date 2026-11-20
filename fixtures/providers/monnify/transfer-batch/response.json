@@ -1,0 +1,13 @@
+{
+  "requestSuccessful": true,
+  "responseMessage": "success",
+  "responseCode": "0",
+  "responseBody": {
+    "totalAmount": 2100,
+    "totalFee": 105,
+    "batchReference": "batchreference--12934",
+    "batchStatus": "AWAITING_PROCESSING",
+    "totalTransactionsCount": 3,
+    "dateCreated": "2022-07-31T14:41:19.588+0000"
+  }
+}

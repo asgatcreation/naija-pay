@@ -1,0 +1,28 @@
+https://developers.monnify.com/docs/webhooks
+Verified: 2026-11-11
+
+Monnify's webhook, and the vector that settles how its signature is computed.
+
+Monnify's webhook page contradicts itself. Its prose gives the formula as
+  SHA-512(client secret key + object of request body)
+which is a plain digest of a concatenation. Its security note and all three of its code
+samples -- Node, PHP and Java -- compute an HMAC instead. The page also publishes a
+worked example: a sample client secret, a payload, and the expected hash.
+
+HMAC-SHA512(body, key=secret) reproduces that published hash exactly.
+SHA-512(secret + body) does not. So the samples are right and the prose is stale, and
+this is settled by evidence rather than by preference.
+
+published.json records that vector verbatim -- Monnify's published secret, its payload
+and its hash -- and a test asserts our implementation still reproduces it. The secret in
+it is documentation sample data from a public page, not a credential.
+
+body.json is the same payload with the sample's personal names replaced, which is what
+the rest of the tests use; its signature is in request.json.
+
+One more thing from the same page, and it matters more than the algorithm:
+  "the monnify-signature header is only included on webhook notifications sent in
+  production, it is not present on sandbox notifications"
+So this scheme cannot be confirmed end to end against a sandbox, however much sandbox
+access you have. Monnify also publishes one webhook source address, 35.242.133.146,
+which the adapter exposes as isKnownWebhookIp.

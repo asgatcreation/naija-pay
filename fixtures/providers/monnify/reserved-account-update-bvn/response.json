@@ -1,0 +1,31 @@
+{
+  "requestSuccessful": true,
+  "responseMessage": "success",
+  "responseCode": "0",
+  "responseBody": {
+    "contractCode": "5867418298",
+    "accountReference": "abc1023",
+    "currencyCode": "NGN",
+    "customerEmail": "ada@example.com",
+    "customerName": "Ada Example",
+    "accountNumber": "6842287615",
+    "bankName": "Moniepoint Microfinance Bank",
+    "bankCode": "50515",
+    "collectionChannel": "RESERVED_ACCOUNT",
+    "reservationReference": "06MCYE1991Q1X9102093",
+    "reservedAccountType": "GENERAL",
+    "status": "ACTIVE",
+    "createdOn": "2024-11-27T04:32:08.000Z",
+    "incomeSplitConfig": [
+      {
+        "subAccountCode": "MFY_SUB_319452883228",
+        "feePercentage": 10.5,
+        "splitPercentage": 20,
+        "feeBearer": true,
+        "splitAmount": 100.0
+      }
+    ],
+    "bvn": "21212121212",
+    "restrictPaymentSource": true
+  }
+}

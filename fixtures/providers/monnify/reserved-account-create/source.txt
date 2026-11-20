@@ -1,0 +1,13 @@
+https://developers.monnify.com/collection/monnify-collection.yml
+Verified: 2026-11-11 (OpenAPI 3.1, info.version 2.0.0)
+
+A reserved (static) virtual account. `accounts` is a LIST because getAllAvailableBanks
+reserves an account at every partner bank at once -- no other Tier 1 provider does this.
+
+Two things this fixture pins:
+  restrictPaymentSource defaults to TRUE at Monnify, so the adapter sends false unless
+  an allow-list is supplied; an account created with the default can reject the inflows
+  you are waiting for.
+  createdOn is "2024-11-25 07:35:17.566" -- a third date format, with no timezone. That
+  is a cross-language hazard: JavaScript reads a zoneless stamp as local time and Python
+  returns a naive datetime, so both packages pin it to UTC.

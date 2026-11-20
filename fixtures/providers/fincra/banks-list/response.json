@@ -1,0 +1,17 @@
+{
+  "success": true,
+  "message": "Banks fetched successfully",
+  "data": [
+    {
+      "id": "1",
+      "code": "044",
+      "name": "Access Bank",
+      "swiftCode": null,
+      "bic": null,
+      "isMobileVerified": null,
+      "isCashPickUp": false,
+      "nibssCode": "044",
+      "branches": []
+    }
+  ]
+}

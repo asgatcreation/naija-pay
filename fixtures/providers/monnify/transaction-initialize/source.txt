@@ -1,0 +1,8 @@
+https://developers.monnify.com/collection/monnify-collection.yml
+Verified: 2026-11-11 (OpenAPI 3.1, info.version 2.0.0)
+
+A hosted checkout. The amount goes out as a DECIMAL in major units: 100.0 is one hundred
+naira, where Paystack would take 10000 kobo.
+
+The response carries checkoutUrl, and enabledPaymentMethod says which channels Monnify
+actually turned on -- which can be fewer than were asked for.

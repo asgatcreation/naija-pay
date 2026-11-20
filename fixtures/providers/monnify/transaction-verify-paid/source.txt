@@ -1,0 +1,11 @@
+https://developers.monnify.com/collection/monnify-collection.yml
+Verified: 2026-11-11 (OpenAPI 3.1, info.version 2.0.0)
+
+The verify response, and the fixture that pins two Monnify quirks:
+
+  amountPaid, totalPayable and settlementAmount are STRINGS ("100.00"), not numbers
+  paidOn is "25/07/2022 11:20:20 AM" -- dd/MM/yyyy with a 12-hour clock and no timezone
+
+Handing that date to a lenient parser gives either an invalid date or July read as the
+25th month, so normalise.ts and normalise.py parse it explicitly and treat it as UTC.
+paymentStatus "PAID" is Monnify's word for a completed collection.

@@ -1,0 +1,10 @@
+{
+  "requestSuccessful": true,
+  "responseMessage": "success",
+  "responseCode": "0",
+  "responseBody": {
+    "accountNumber": "0123456789",
+    "accountName": "Damilare Ogunnaike",
+    "bankCode": "057"
+  }
+}

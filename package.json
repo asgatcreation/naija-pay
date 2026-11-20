@@ -35,7 +35,9 @@
     "sandbox:paystack": "node tools/sandbox/paystack.mjs",
     "sandbox:paystack:python": "python tools/sandbox/paystack_sandbox.py",
     "sandbox:flutterwave": "node tools/sandbox/flutterwave.mjs",
-    "sandbox": "npm run sandbox:paystack && npm run sandbox:paystack:python && npm run sandbox:flutterwave"
+    "sandbox:monnify": "node tools/sandbox/monnify.mjs",
+    "sandbox:fincra": "node tools/sandbox/fincra.mjs",
+    "sandbox": "npm run sandbox:paystack && npm run sandbox:paystack:python && npm run sandbox:flutterwave && npm run sandbox:monnify && npm run sandbox:fincra"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.6.4",

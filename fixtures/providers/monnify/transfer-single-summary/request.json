@@ -1,0 +1,7 @@
+{
+  "method": "GET",
+  "path": "/api/v2/disbursements/single/summary",
+  "query": {
+    "reference": "payout-01HQ-EXAMPLE"
+  }
+}

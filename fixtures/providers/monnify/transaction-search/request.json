@@ -1,0 +1,8 @@
+{
+  "method": "GET",
+  "path": "/api/v1/transactions/search",
+  "query": {
+    "page": 0,
+    "size": 10
+  }
+}

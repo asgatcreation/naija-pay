@@ -1,0 +1,22 @@
+{
+  "requestSuccessful": true,
+  "responseMessage": "success",
+  "responseCode": "0",
+  "responseBody": {
+    "amount": 200,
+    "reference": "referen00ce---1290034",
+    "narration": "911 Transaction",
+    "currency": "NGN",
+    "fee": 35,
+    "twoFaEnabled": "false",
+    "status": "SUCCESS",
+    "transactionDescription": "Transaction successful",
+    "transactionReference": "MFDS20220731033133AABQGN",
+    "createdOn": "2022-07-31T14:31:34.000+0000",
+    "sourceAccountNumber": "3934178936",
+    "destinationAccountNumber": "2085886393",
+    "destinationAccountName": "Marvelous Benji",
+    "destinationBankCode": "50515",
+    "destinationBankName": "Moniepoint Microfinance bank"
+  }
+}

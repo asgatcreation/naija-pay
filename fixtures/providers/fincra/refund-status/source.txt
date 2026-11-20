@@ -1,0 +1,17 @@
+https://docs.fincra.com/reference/get-refund-status.md
+updatedAt: 2026-09-29T21:10:11.000Z
+Verified: 2026-11-11
+
+A refund, which at Fincra is always a refund of a whole collection: the refund endpoint
+takes only a reference, so a PARTIAL refund is not possible through this API.
+
+Two things this fixture pins:
+  the amounts are STRINGS with six decimal places ("5914.000000"), and the trailing zeros
+  mean they still convert exactly, unlike the wallet balances
+  completedAt and initiatedAt are "2023-12-07 17:39:00" -- ISO with a space and no
+  timezone. JavaScript reads a zoneless stamp as local time and Python returns a naive
+  datetime, so both packages pin it to UTC; without that, the two would disagree about
+  when this refund happened.
+
+refundType "overpayment" is why the refund exists: the customer paid 6764 against an
+expected 850.

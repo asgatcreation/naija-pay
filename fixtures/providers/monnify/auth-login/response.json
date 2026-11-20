@@ -1,0 +1,9 @@
+{
+  "requestSuccessful": true,
+  "responseMessage": "success",
+  "responseCode": "0",
+  "responseBody": {
+    "accessToken": "EXAMPLE.access.token",
+    "expiresIn": 3600
+  }
+}

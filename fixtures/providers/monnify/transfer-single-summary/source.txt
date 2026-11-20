@@ -1,0 +1,5 @@
+https://developers.monnify.com/collection/monnify-collection.yml
+Verified: 2026-11-11 (OpenAPI 3.1, info.version 2.0.0)
+
+A transfer's status by your own reference. twoFaEnabled says whether this integration
+requires the OTP step at all.

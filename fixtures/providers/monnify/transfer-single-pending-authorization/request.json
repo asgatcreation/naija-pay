@@ -1,0 +1,14 @@
+{
+  "method": "POST",
+  "path": "/api/v2/disbursements/single",
+  "body": {
+    "amount": 1000.0,
+    "reference": "payout-01HQ-EXAMPLE",
+    "narration": "Payout",
+    "destinationBankCode": "044",
+    "destinationAccountNumber": "0123456789",
+    "destinationAccountName": "Ada Example",
+    "currency": "NGN",
+    "sourceAccountNumber": "3934178936"
+  }
+}

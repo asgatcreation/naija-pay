@@ -1,0 +1,36 @@
+{
+  "success": true,
+  "message": "Wallets fetched successfully",
+  "data": [
+    {
+      "id": 105146,
+      "_id": "105146",
+      "business": "64f000000000000000000001",
+      "businessId": 9056,
+      "ledgerBalance": 1999965363.990817,
+      "availableBalance": 1999792413.990817,
+      "lockedBalance": 172950,
+      "rollingReserveBalance": 0,
+      "walletNumber": 100000190560001,
+      "currency": "NGN",
+      "status": "enabled",
+      "createdAt": "2023-09-01T11:24:32.000Z",
+      "updatedAt": "2024-07-09T12:39:05.000Z"
+    },
+    {
+      "id": 105147,
+      "_id": "105147",
+      "business": "64f000000000000000000001",
+      "businessId": 9056,
+      "ledgerBalance": 4145.558824,
+      "availableBalance": 4145.558824,
+      "lockedBalance": 0,
+      "rollingReserveBalance": 0,
+      "walletNumber": 100000190560002,
+      "currency": "GBP",
+      "status": "enabled",
+      "createdAt": "2023-09-01T11:24:32.000Z",
+      "updatedAt": "2024-03-28T10:57:02.000Z"
+    }
+  ]
+}

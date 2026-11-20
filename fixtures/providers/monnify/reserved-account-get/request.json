@@ -1,0 +1,4 @@
+{
+  "method": "GET",
+  "path": "/api/v2/bank-transfer/reserved-accounts/va-ada-EXAMPLE"
+}

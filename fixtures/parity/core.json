@@ -812,5 +812,294 @@
     10001,
     -1
   ],
-  "$toMajorComment": "The XOF cases are the interesting ones. XOF has no subunit, so 1 minor unit is 0.01 XOF, which cannot be sent as a decimal at all -- a provider would drop the fraction. fromMajor already refused that; these cases are what showed toMajor did not, and both languages must now refuse it with the same message."
+  "$toMajorComment": "The XOF cases are the interesting ones. XOF has no subunit, so 1 minor unit is 0.01 XOF, which cannot be sent as a decimal at all -- a provider would drop the fraction. fromMajor already refused that; these cases are what showed toMajor did not, and both languages must now refuse it with the same message.",
+  "$monnifyComment": "Monnify. Its wire format is decimal major units, its dates are not ISO, and one of them carries no timezone at all -- the shape JavaScript reads as local time and Python returns naive. The monnifyDates group is the case that would have caught that divergence before it shipped. monnifyPublishedSignature recomputes the hash Monnify publishes on its webhook page, in both languages.",
+  "monnifyNormalise": [
+    {
+      "fixture": "transaction-verify-paid",
+      "shape": "transaction"
+    },
+    {
+      "fixture": "transaction-initialize",
+      "shape": "transaction"
+    },
+    {
+      "fixture": "reserved-account-create",
+      "shape": "virtual_account"
+    },
+    {
+      "fixture": "reserved-account-get",
+      "shape": "virtual_account"
+    },
+    {
+      "fixture": "reserved-account-update-bvn",
+      "shape": "virtual_account"
+    },
+    {
+      "fixture": "transfer-single-pending-authorization",
+      "shape": "payout"
+    },
+    {
+      "fixture": "transfer-single-summary",
+      "shape": "payout"
+    },
+    {
+      "fixture": "transfer-batch",
+      "shape": "bulk_payout"
+    },
+    {
+      "fixture": "refund-initiate",
+      "shape": "refund"
+    },
+    {
+      "fixture": "sub-account-create",
+      "shape": "split_account"
+    },
+    {
+      "fixture": "banks-list",
+      "shape": "bank"
+    },
+    {
+      "fixture": "wallet-balance",
+      "shape": "balance"
+    },
+    {
+      "fixture": "transaction-search",
+      "shape": "page"
+    },
+    {
+      "fixture": "reserved-account-transactions",
+      "shape": "page"
+    }
+  ],
+  "monnifyStatuses": [
+    "PAID",
+    "OVERPAID",
+    "PARTIALLY_PAID",
+    "PENDING",
+    "FAILED",
+    "CANCELLED",
+    "EXPIRED",
+    "ABANDONED",
+    "REVERSED",
+    "paid",
+    "SOMETHING_NEW",
+    ""
+  ],
+  "monnifyTransferStatuses": [
+    "PENDING",
+    "PENDING_AUTHORIZATION",
+    "OTP_EMAIL_DISPATCH_FAILED",
+    "SUCCESS",
+    "SUCCESSFUL",
+    "FAILED",
+    "REVERSED",
+    "CANCELLED",
+    "EXPIRED",
+    "SOMETHING_NEW"
+  ],
+  "monnifyChannels": [
+    "CARD",
+    "ACCOUNT_TRANSFER",
+    "USSD",
+    "PHONE_NUMBER",
+    "DIRECT_DEBIT",
+    "card",
+    "SOMETHING_NEW",
+    ""
+  ],
+  "monnifyDates": [
+    "25/07/2022 11:20:20 AM",
+    "25/07/2022 12:00:00 AM",
+    "25/07/2022 12:00:00 PM",
+    "25/07/2022 01:05:09 PM",
+    "31/02/2022 10:00:00 AM",
+    "2024-11-25 07:35:17.566",
+    "2024-11-25T07:35:17.566",
+    "2023-10-27T10:00:00Z",
+    "2023-10-27T10:00:00+01:00",
+    "not a date",
+    ""
+  ],
+  "monnifyAmounts": [
+    {
+      "value": "100.00"
+    },
+    {
+      "value": 100
+    },
+    {
+      "value": 0
+    },
+    {
+      "value": "5000.50"
+    },
+    {
+      "value": "100.001"
+    },
+    {
+      "value": 4145.558824
+    },
+    {
+      "value": -1
+    },
+    {
+      "value": "not a number"
+    },
+    {
+      "value": null
+    },
+    {
+      "value": 100,
+      "currency": "USD"
+    },
+    {
+      "value": 1.5,
+      "currency": "XOF"
+    }
+  ],
+  "$fincraComment": "Fincra. Six-decimal amounts that no currency can represent, two envelope key names, and zoneless refund timestamps. majorToString exists because Fincra's temporary-virtual-account endpoint types amount as a string, where str(350.0) and String(350) disagree.",
+  "fincraNormalise": [
+    {
+      "fixture": "checkout-verify-success",
+      "shape": "transaction"
+    },
+    {
+      "fixture": "payout-create-processing",
+      "shape": "payout"
+    },
+    {
+      "fixture": "payout-verify-cross-currency",
+      "shape": "payout"
+    },
+    {
+      "fixture": "refund-status",
+      "shape": "refund"
+    },
+    {
+      "fixture": "virtual-account-create",
+      "shape": "virtual_account"
+    },
+    {
+      "fixture": "wallets-list",
+      "shape": "wallet_balance"
+    },
+    {
+      "fixture": "banks-list",
+      "shape": "bank"
+    },
+    {
+      "fixture": "bvn-verification",
+      "shape": "bvn"
+    }
+  ],
+  "fincraStatuses": [
+    "success",
+    "successful",
+    "pending",
+    "processing",
+    "failed",
+    "expired",
+    "cancelled",
+    "abandoned",
+    "reversed",
+    "SUCCESS",
+    "something-new",
+    ""
+  ],
+  "fincraPayoutStatuses": [
+    "processing",
+    "pending",
+    "successful",
+    "success",
+    "failed",
+    "cancelled",
+    "expired",
+    "reversed",
+    "something-new"
+  ],
+  "fincraChannels": [
+    "card",
+    "bank_transfer",
+    "payattitude",
+    "mobile_money",
+    "wallet",
+    "CARD",
+    "something-new",
+    ""
+  ],
+  "fincraAmounts": [
+    {
+      "value": 350
+    },
+    {
+      "value": "5914.000000"
+    },
+    {
+      "value": "6662.201800"
+    },
+    {
+      "value": 9090.909091
+    },
+    {
+      "value": 4145.558824
+    },
+    {
+      "value": 1999792413.990817
+    },
+    {
+      "value": 0
+    },
+    {
+      "value": -1
+    },
+    {
+      "value": "not a number"
+    },
+    {
+      "value": null
+    },
+    {
+      "value": 9.9,
+      "currency": "EUR"
+    },
+    {
+      "value": 4500.67,
+      "currency": "KES"
+    }
+  ],
+  "majorToString": [
+    {
+      "amount": 35000,
+      "currency": "NGN"
+    },
+    {
+      "amount": 350050,
+      "currency": "NGN"
+    },
+    {
+      "amount": 1,
+      "currency": "NGN"
+    },
+    {
+      "amount": 10,
+      "currency": "NGN"
+    },
+    {
+      "amount": 0,
+      "currency": "NGN"
+    },
+    {
+      "amount": 100000000000,
+      "currency": "NGN"
+    },
+    {
+      "amount": 990,
+      "currency": "EUR"
+    },
+    {
+      "amount": 100,
+      "currency": "XOF"
+    }
+  ]
 }

@@ -1,0 +1,9 @@
+https://developers.monnify.com/collection/monnify-collection.yml
+Verified: 2026-11-11 (OpenAPI 3.1, info.version 2.0.0)
+
+A batch transfer. onValidationFailure decides what one bad row does to the batch: BREAK
+abandons the whole batch and CONTINUE skips the row. The adapter defaults to BREAK,
+because the safe default for money is to do nothing until a human looks.
+
+The spec's required list for this endpoint names a `title` field that its own schema does
+not define, so the adapter sends it anyway rather than risk a rejection.

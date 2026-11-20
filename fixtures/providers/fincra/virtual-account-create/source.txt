@@ -1,0 +1,16 @@
+https://docs.fincra.com/reference/request-permanent-virtual-account.md
+updatedAt: 2026-09-29T21:10:11.000Z
+Verified: 2026-11-11
+
+A permanent NGN virtual account. Assembled from the request page's own schema and its
+response example for the by-BVN route, whose fields are identical and whose own sample is
+masked with asterisks -- an unmasked example is more useful as a fixture.
+
+BVN is required for NGN, and a corporate account additionally requires businessName and
+bvnName, which Fincra matches against the name on the BVN. Both are enforced locally by
+the adapter, because Fincra rejects a mismatch without saying which field was wrong.
+
+status "approved" is the only value that means the account is usable: pending and reviewed
+mean Fincra is still looking, declined means it refused, and expired and closed mean the
+account is gone. isActive and isSuspended are separate flags, and an account is only
+usable when both agree.

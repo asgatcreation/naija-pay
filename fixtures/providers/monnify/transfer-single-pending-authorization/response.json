@@ -1,0 +1,16 @@
+{
+  "requestSuccessful": true,
+  "responseMessage": "success",
+  "responseCode": "0",
+  "responseBody": {
+    "amount": 200,
+    "reference": "payout-01HQ-EXAMPLE",
+    "status": "PENDING_AUTHORIZATION",
+    "dateCreated": "2022-07-31T15:36:16.398+0000",
+    "totalFee": 35,
+    "destinationAccountName": "ADA EXAMPLE",
+    "destinationBankName": "Moniepoint Microfinance bank",
+    "destinationAccountNumber": "2085886393",
+    "destinationBankCode": "50515"
+  }
+}

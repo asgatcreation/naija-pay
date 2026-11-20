@@ -1,0 +1,7 @@
+{
+  "method": "GET",
+  "path": "/wallets",
+  "query": {
+    "businessID": "64f000000000000000000001"
+  }
+}

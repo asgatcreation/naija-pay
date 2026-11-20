@@ -1,0 +1,52 @@
+{
+  "requestSuccessful": true,
+  "responseMessage": "success",
+  "responseCode": "0",
+  "responseBody": {
+    "contractCode": "5867418298",
+    "accountReference": "va-ada-EXAMPLE",
+    "accountName": "ADA EXAMPLE",
+    "currencyCode": "NGN",
+    "customerEmail": "ada@example.com",
+    "customerName": "Ada Example",
+    "accounts": [
+      {
+        "bankCode": "50515",
+        "bankName": "Moniepoint Microfinance Bank",
+        "accountNumber": "6839490147",
+        "accountName": "ADA EXAMPLE"
+      }
+    ],
+    "collectionChannel": "RESERVED_ACCOUNT",
+    "reservationReference": "96ZPXECUD84UQTB00931",
+    "reservedAccountType": "GENERAL",
+    "status": "ACTIVE",
+    "createdOn": "2024-11-25 07:35:17.566",
+    "incomeSplitConfig": [
+      {
+        "subAccountCode": "MFY_SUB_399360552679",
+        "feePercentage": 10.5,
+        "feeBearer": true,
+        "splitPercentage": 20,
+        "reservedAccountConfigCode": "N3NT809NUK"
+      }
+    ],
+    "bvn": "21212121212",
+    "restrictPaymentSource": false,
+    "allowedPaymentSources": {
+      "bvns": [
+        "21212121212",
+        "20202020202"
+      ],
+      "bankAccounts": [
+        {
+          "accountNumber": "0068687503",
+          "bankCode": "232"
+        }
+      ],
+      "accountNames": [
+        "ADA EXAMPLE"
+      ]
+    }
+  }
+}

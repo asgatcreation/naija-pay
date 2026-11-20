@@ -1,0 +1,12 @@
+https://developers.monnify.com/collection/monnify-collection.yml
+Verified: 2026-11-11 (OpenAPI 3.1, info.version 2.0.0)
+
+A refund. Both refundReason and customerNote are required by Monnify, and the note is
+shown to the customer.
+
+Live use needs approval from a Monnify relationship manager.
+
+The matching status route is GET /api/v1/refunds/{refundReference}. Monnify's own spec
+spells that path key with a literal example value in it -- /api/v1/refunds/202100op3456 --
+and only the refundReference path parameter underneath reveals what it really is. Copying
+the key would 404 on every refund but one.

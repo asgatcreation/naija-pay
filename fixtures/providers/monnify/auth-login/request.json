@@ -1,0 +1,7 @@
+{
+  "method": "POST",
+  "path": "/api/v1/auth/login",
+  "headers": {
+    "authorization": "Basic base64(apiKey:secretKey)"
+  }
+}

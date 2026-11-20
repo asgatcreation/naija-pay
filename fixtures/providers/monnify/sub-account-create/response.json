@@ -1,0 +1,19 @@
+{
+  "requestSuccessful": true,
+  "responseMessage": "success",
+  "responseCode": "0",
+  "responseBody": [
+    {
+      "subAccountCode": "MFY_SUB_811397375865",
+      "accountNumber": "0211319282",
+      "accountName": "ALEMOH DANIEL MOSES",
+      "currencyCode": "NGN",
+      "email": "tamira1@gmail.com",
+      "bankCode": "058",
+      "bankName": "GTBank",
+      "defaultSplitPercentage": 20.87,
+      "settlementProfileCode": "8717495899",
+      "settlementReportEmails": []
+    }
+  ]
+}

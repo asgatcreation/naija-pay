@@ -1,0 +1,31 @@
+{
+  "success": true,
+  "message": "Virtual account request created successfully",
+  "data": {
+    "_id": "655ec84f1f3ce30f00efEXAMPLE",
+    "business": "64f000000000000000000001",
+    "currency": "NGN",
+    "accountType": "individual",
+    "status": "approved",
+    "isActive": true,
+    "isPermanent": true,
+    "accountNumber": "1234567890",
+    "accountInformation": {
+      "accountNumber": "1234567890",
+      "accountName": "Ada Example",
+      "bankName": "GLOBUS BANK",
+      "bankCode": "103"
+    },
+    "merchantReference": "va-ada-EXAMPLE",
+    "KYCInformation": {
+      "firstName": "Ada",
+      "lastName": "Example",
+      "email": "ada@example.com"
+    },
+    "entityType": "main_account",
+    "virtualAccountType": "additional",
+    "accountOpeningFee": 0,
+    "createdAt": "2026-11-01T09:12:44.000Z",
+    "updatedAt": "2026-11-01T09:12:45.000Z"
+  }
+}

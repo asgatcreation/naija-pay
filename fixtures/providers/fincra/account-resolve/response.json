@@ -1,0 +1,8 @@
+{
+  "success": true,
+  "message": "Account resolve successful",
+  "data": {
+    "accountNumber": "0123456789",
+    "accountName": "ADA EXAMPLE"
+  }
+}

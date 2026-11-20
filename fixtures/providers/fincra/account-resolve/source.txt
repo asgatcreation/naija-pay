@@ -1,0 +1,9 @@
+https://docs.fincra.com/reference/verify-account-number.md
+updatedAt: 2026-09-29T21:10:11.000Z
+Verified: 2026-11-11
+
+Name enquiry, as a POST rather than a GET, with a required `type` that selects the kind of
+identifier: nuban, bank_account, iban, mobile_money or interac_etransfer.
+
+Fincra does not echo the bank code back on a NUBAN resolve, so the adapter carries through
+the one it was given.

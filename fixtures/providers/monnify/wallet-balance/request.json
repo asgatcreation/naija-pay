@@ -1,0 +1,7 @@
+{
+  "method": "GET",
+  "path": "/api/v2/disbursements/wallet-balance",
+  "query": {
+    "accountNumber": "3934178936"
+  }
+}

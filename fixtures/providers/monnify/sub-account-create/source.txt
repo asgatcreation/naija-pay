@@ -1,0 +1,12 @@
+https://developers.monnify.com/collection/monnify-collection.yml
+Verified: 2026-11-11 (OpenAPI 3.1, info.version 2.0.0)
+
+A settlement sub-account for split payments. The request body is an ARRAY and so is the
+response, even for a single sub-account.
+
+defaultSplitPercentage is a PERCENTAGE: 20 means 20%. naija-pay's API is basis points, so
+2000 basis points becomes 20 here, and a share that cannot be expressed in whole basis
+points is refused rather than rounded.
+
+Live use of this API needs approval from a Monnify relationship manager, which is why the
+capability is declared requiresApproval.

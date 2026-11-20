@@ -37,6 +37,8 @@ const BUDGETS_KB = {
   // Carries the bank registry for enrichment, which is most of its weight.
   "providers/paystack/index.js": 45,
   "providers/flutterwave/index.js": 45,
+  "providers/monnify/index.js": 45,
+  "providers/fincra/index.js": 45,
 };
 
 if (!existsSync(DIST)) {

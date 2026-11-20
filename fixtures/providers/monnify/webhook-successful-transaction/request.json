@@ -1,0 +1,8 @@
+{
+  "method": "POST",
+  "path": "(your webhook URL)",
+  "headers": {
+    "monnify-signature": "27feea338fbf892d661ede0818b863da13775cf361f9d28cec80e8ebe7dc4b79a861d7ddee4dc5db0b0f95f37507c0095e9541e009ea7d6ded2dcc95a49997de"
+  },
+  "note": "body.json holds the exact bytes the signature covers"
+}

@@ -1,0 +1,37 @@
+{
+  "success": true,
+  "message": "Payout fetched successfully",
+  "data": {
+    "id": 31821,
+    "amountSent": 4500.67,
+    "amountReceived": 9.9,
+    "sourceCurrency": "KES",
+    "destinationCurrency": "EUR",
+    "fee": 9090.909091,
+    "quoteId": "6490a6937d6dab0011852bEXAMPLE",
+    "status": "successful",
+    "reference": "db396365d80bEXAMPLE",
+    "customerReference": null,
+    "description": "Invoice 4471",
+    "paymentDestination": "bank_account",
+    "paymentScheme": "sepa_instant",
+    "message": "Payout was successful",
+    "isDocumentRequired": 0,
+    "isDocumentUploaded": 0,
+    "documentsRequired": null,
+    "valuedAt": "2023-06-19T19:03:57.000Z",
+    "createdAt": "2023-06-19T19:03:48.000Z",
+    "updatedAt": "2023-06-19T19:03:57.000Z",
+    "recipient": {
+      "firstName": "Ada",
+      "lastName": "Example",
+      "accountHolderName": "Ada Example",
+      "email": "ada@example.com",
+      "accountNumber": "0690000040",
+      "type": "individual",
+      "country": "NG",
+      "bankCode": "044",
+      "bankName": null
+    }
+  }
+}

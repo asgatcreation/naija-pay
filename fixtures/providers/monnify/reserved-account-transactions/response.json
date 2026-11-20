@@ -1,0 +1,60 @@
+{
+  "requestSuccessful": true,
+  "responseMessage": "success",
+  "responseCode": "0",
+  "responseBody": {
+    "content": [
+      {
+        "customerDTO": {
+          "email": "ada@example.com",
+          "name": "Test Reserved Account",
+          "merchantCode": "ALJKHDALASD"
+        },
+        "providerAmount": 0.21,
+        "paymentMethod": "ACCOUNT_TRANSFER",
+        "createdOn": "2019-07-24T14:12:27.000+0000",
+        "amount": 100.0,
+        "flagged": false,
+        "providerCode": "98271",
+        "fee": 0.79,
+        "currencyCode": "NGN",
+        "completedOn": "2019-07-24T14:12:28.000+0000",
+        "paymentDescription": "Test Reserved Account",
+        "paymentStatus": "PAID",
+        "transactionReference": "MNFY|20190724141227|003374",
+        "paymentReference": "MNFY|20190724141227|003374",
+        "merchantCode": "ALJKHDALASD",
+        "merchantName": "Test Limited",
+        "payableAmount": 100.0,
+        "amountPaid": 100.0,
+        "completed": true,
+        "settleInstantly": true
+      }
+    ],
+    "pageable": {
+      "sort": {
+        "sorted": true,
+        "unsorted": false,
+        "empty": false
+      },
+      "pageSize": 10,
+      "pageNumber": 0,
+      "offset": 0,
+      "unpaged": false,
+      "paged": true
+    },
+    "totalElements": 2,
+    "totalPages": 1,
+    "last": true,
+    "sort": {
+      "sorted": true,
+      "unsorted": false,
+      "empty": false
+    },
+    "first": true,
+    "numberOfElements": 2,
+    "size": 10,
+    "number": 0,
+    "empty": false
+  }
+}

@@ -1,0 +1,17 @@
+https://docs.fincra.com/reference/initiate-payout.md
+updatedAt: 2026-09-29T21:10:11.000Z
+Verified: 2026-11-11
+
+A created payout, and the response Fincra itself warns about:
+
+  "success: true confirms that Fincra handled the API request; it does not guarantee that
+   the payout settled successfully. Always inspect data.status"
+
+status "processing" is Fincra's own word for a payout in flight, so the adapter maps it to
+pending and never to successful. Fincra's documented payout statuses are processing,
+failed and successful.
+
+isDocumentRequired is the other thing to watch: when it is true, nothing moves until the
+requested documents are uploaded. That makes it Fincra's equivalent of Monnify's OTP gate
+-- a payout that looks accepted and is going nowhere -- so the adapter surfaces it as
+awaitingDocument.

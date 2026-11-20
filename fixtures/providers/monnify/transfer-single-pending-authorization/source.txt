@@ -1,0 +1,15 @@
+https://developers.monnify.com/collection/monnify-collection.yml
+Verified: 2026-11-11 (OpenAPI 3.1, info.version 2.0.0)
+
+A created transfer when two-factor disbursement is on -- which it is by DEFAULT on a new
+Monnify integration.
+
+This is the most dangerous response in the Monnify API to misread. requestSuccessful is
+true and the HTTP status is 200, and NO MONEY HAS MOVED: status is
+PENDING_AUTHORIZATION, and nothing happens until an OTP from the registered email is
+submitted to /api/v2/disbursements/single/validate-otp. The adapter maps the status to
+pending and sets awaitingOtp, so a caller is not left waiting for a webhook that will
+never arrive.
+
+Monnify documents six transfer states: PENDING, SUCCESS, FAILED, REVERSED,
+PENDING_AUTHORIZATION and OTP_EMAIL_DISPATCH_FAILED.

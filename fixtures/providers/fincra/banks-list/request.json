@@ -1,0 +1,9 @@
+{
+  "method": "GET",
+  "path": "/core/banks",
+  "query": {
+    "country": "NG",
+    "currency": "NGN",
+    "paymentDestination": "bank_account"
+  }
+}

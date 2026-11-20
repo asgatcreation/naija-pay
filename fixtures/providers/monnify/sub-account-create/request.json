@@ -1,0 +1,13 @@
+{
+  "method": "POST",
+  "path": "/api/v1/sub-accounts",
+  "body": [
+    {
+      "currencyCode": "NGN",
+      "accountNumber": "0123456789",
+      "bankCode": "044",
+      "email": "ada@example.com",
+      "defaultSplitPercentage": 20
+    }
+  ]
+}

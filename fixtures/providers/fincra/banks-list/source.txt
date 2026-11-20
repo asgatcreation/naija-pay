@@ -1,0 +1,13 @@
+https://docs.fincra.com/reference/list-banks.md
+updatedAt: 2026-08-26T10:54:32.000Z
+Verified: 2026-11-11
+
+Banks and payout providers. At least one of country or currency is required.
+
+Fincra is the only Tier 1 provider that publishes the NIBSS code alongside its own code,
+which is why the normalised Bank carries nipCode: that is the code which identifies an
+institution across every Nigerian provider, and having it from the provider is better
+than matching on a name.
+
+isMobileVerified is null for a bank and true for a mobile-money operator -- a tri-state
+in a field named like a boolean.

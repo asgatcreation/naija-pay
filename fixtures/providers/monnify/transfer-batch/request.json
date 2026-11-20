@@ -1,0 +1,22 @@
+{
+  "method": "POST",
+  "path": "/api/v2/disbursements/batch",
+  "body": {
+    "title": "Payroll",
+    "batchReference": "batch-01HQ-EXAMPLE",
+    "narration": "Payroll",
+    "sourceAccountNumber": "3934178936",
+    "onValidationFailure": "BREAK",
+    "notificationInterval": 10,
+    "transactionList": [
+      {
+        "amount": 1000.0,
+        "reference": "payout-01HQ-EXAMPLE-1",
+        "narration": "Payroll",
+        "destinationBankCode": "044",
+        "destinationAccountNumber": "0123456789",
+        "currency": "NGN"
+      }
+    ]
+  }
+}

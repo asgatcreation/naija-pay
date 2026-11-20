@@ -14,6 +14,8 @@ export default defineConfig({
     "providers/mock/index": "src/providers/mock/index.ts",
     "providers/paystack/index": "src/providers/paystack/index.ts",
     "providers/flutterwave/index": "src/providers/flutterwave/index.ts",
+    "providers/monnify/index": "src/providers/monnify/index.ts",
+    "providers/fincra/index": "src/providers/fincra/index.ts",
   },
   format: ["esm", "cjs"],
   // Declarations come from `tsc -p tsconfig.build.json`, not from tsup: tsup 9 bundles

@@ -1,0 +1,9 @@
+https://developers.monnify.com/collection/monnify-collection.yml
+Verified: 2026-11-11 (OpenAPI 3.1, info.version 2.0.0)
+
+Every bank Monnify can pay. Monnify is the only Tier 1 provider that publishes USSD
+templates per bank, and several banks have none -- the nulls in this fixture are real.
+
+The codes are a mix of three-digit CBN codes (044) and five-digit microfinance codes
+(50515), which is why bank matching treats the provider's code as authoritative and uses
+naija-data only for enrichment.

@@ -1,0 +1,12 @@
+{
+  "success": true,
+  "message": "Payout initiated successfully.",
+  "data": {
+    "id": 1254,
+    "reference": "5dcf24700a9a4EXAMPLE",
+    "customerReference": "payout-01HQ-EXAMPLE",
+    "status": "processing",
+    "isDocumentRequired": false,
+    "documentsRequired": []
+  }
+}

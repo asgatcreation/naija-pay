@@ -1,0 +1,5 @@
+https://developers.monnify.com/collection/monnify-collection.yml
+Verified: 2026-11-11 (OpenAPI 3.1, info.version 2.0.0)
+
+The disbursement wallet's balance. Both figures are STRINGS in decimal major units, and
+the account number is required -- Monnify will not infer which wallet you mean.

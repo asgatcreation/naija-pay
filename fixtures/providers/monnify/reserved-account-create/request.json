@@ -1,0 +1,15 @@
+{
+  "method": "POST",
+  "path": "/api/v2/bank-transfer/reserved-accounts",
+  "body": {
+    "accountReference": "va-ada-EXAMPLE",
+    "accountName": "Ada Example",
+    "currencyCode": "NGN",
+    "contractCode": "5867418298",
+    "customerEmail": "ada@example.com",
+    "customerName": "Ada Example",
+    "bvn": "21212121212",
+    "getAllAvailableBanks": true,
+    "restrictPaymentSource": false
+  }
+}

@@ -56,6 +56,16 @@
       "import": "./dist/providers/flutterwave/index.js",
       "require": "./dist/providers/flutterwave/index.cjs"
     },
+    "./monnify": {
+      "types": "./dist/providers/monnify/index.d.ts",
+      "import": "./dist/providers/monnify/index.js",
+      "require": "./dist/providers/monnify/index.cjs"
+    },
+    "./fincra": {
+      "types": "./dist/providers/fincra/index.d.ts",
+      "import": "./dist/providers/fincra/index.js",
+      "require": "./dist/providers/fincra/index.cjs"
+    },
     "./banks": {
       "types": "./dist/banks.d.ts",
       "import": "./dist/banks.js",

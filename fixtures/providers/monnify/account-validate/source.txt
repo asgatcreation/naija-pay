@@ -1,0 +1,5 @@
+https://developers.monnify.com/collection/monnify-collection.yml
+Verified: 2026-11-11 (OpenAPI 3.1, info.version 2.0.0)
+
+Name enquiry. Monnify echoes the bank code back, which Flutterwave does not, so the
+adapter does not have to carry it through.

@@ -1,0 +1,25 @@
+{
+  "requestSuccessful": true,
+  "responseMessage": "success",
+  "responseCode": "0",
+  "responseBody": {
+    "transactionReference": "MNFY|20190915200044|000090",
+    "paymentReference": "123-03hjsj--1klsa--dkad",
+    "merchantName": "Test Limited",
+    "apiKey": "MK_TEST_VR7J3UAACH",
+    "enabledPaymentMethod": [
+      "ACCOUNT_TRANSFER",
+      "CARD"
+    ],
+    "checkoutUrl": "https://sandbox.sdk.monnify.com/checkout/MNFY|20190915200044|000090",
+    "incomeSplitConfig": [
+      {
+        "subAccountCode": "MFY_SUB_319452883968",
+        "splitAmount": 20,
+        "feePercentage": 10.5,
+        "feeBearer": true,
+        "splitPercentage": 0
+      }
+    ]
+  }
+}

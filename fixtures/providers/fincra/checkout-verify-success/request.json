@@ -1,0 +1,7 @@
+{
+  "method": "GET",
+  "path": "/checkout/payments/merchant-reference/order-01HQ-EXAMPLE",
+  "headers": {
+    "x-business-id": "64f000000000000000000001"
+  }
+}

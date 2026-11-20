@@ -1,0 +1,33 @@
+https://developers.monnify.com/collection/monnify-collection.yml
+Verified: 2026-11-11 (OpenAPI 3.1, info.version 2.0.0)
+RE-RECORDED from the live sandbox: 2026-11-19 (npm run sandbox:monnify, question 3)
+
+A Spring Data page, which is what every Monnify list endpoint returns: content, pageable,
+totalElements, last. Pages are zero-based.
+
+THE SPEC IS WRONG ABOUT THIS ENDPOINT, in two ways, and this fixture follows the live
+sandbox rather than the document:
+
+1. The spec's example shows the page at the TOP LEVEL, outside `responseBody`, and the
+   adapter was built with a fallback for exactly that. The sandbox returns the ordinary
+   envelope: `requestSuccessful`, `responseMessage`, `responseCode`, `responseBody`. The
+   fallback is kept as a defensive measure — Monnify's own document says otherwise, so
+   either shape may appear — but the enveloped one is what actually arrives.
+
+2. The spec's item is flat: `customerName`, `customerEmail`, `transactionDate`. The real
+   item nests the customer under `customerDTO`, dates the row with `createdOn` (the
+   zoneless `"2024-11-25 07:35:17.566"` shape), names the currency `currencyCode`, and
+   carries `paymentMethodList` and `collectionChannel`.
+
+Two consequences for callers, both recorded in PROVIDERS.md:
+
+- An item from this endpoint has `amount` and NO `totalPayable` or `amountPaid`, so
+  `amountPaid` and `amountSettled` are null on every row. The amounts here are numbers,
+  where the verify response sends strings for the same fields.
+- `channel` is null on every row. `collectionChannel` is how the payment was collected
+  (a reserved account, the web SDK), not which instrument was used, and
+  `paymentMethodList` on a pending row is what was ENABLED rather than what was paid
+  with. The adapter reports neither as the channel, because neither is the claim.
+
+Personal data: the customer name and email here are invented. The live response carries
+real rows from Monnify's shared public test merchant.

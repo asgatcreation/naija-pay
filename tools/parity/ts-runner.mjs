@@ -225,6 +225,16 @@ const { flutterwaveParity } = await import(
 );
 Object.assign(out, await flutterwaveParity(ROOT, load, cases));
 
+const { monnifyParity } = await import(
+  pathToFileURL(path.join(ROOT, "tools", "parity", "monnify-ts.mjs")).href
+);
+Object.assign(out, await monnifyParity(ROOT, load, cases));
+
+const { fincraParity } = await import(
+  pathToFileURL(path.join(ROOT, "tools", "parity", "fincra-ts.mjs")).href
+);
+Object.assign(out, await fincraParity(ROOT, load, cases));
+
 /** Sort object keys recursively so key order can never cause a false difference. */
 function canonical(value) {
   if (Array.isArray(value)) return value.map(canonical);

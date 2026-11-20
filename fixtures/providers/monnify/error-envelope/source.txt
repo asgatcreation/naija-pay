@@ -1,0 +1,14 @@
+https://developers.monnify.com/collection/monnify-collection.yml
+Verified: 2026-11-11 (OpenAPI 3.1, info.version 2.0.0)
+
+Monnify's failure envelope, exactly as its spec publishes it.
+
+Two things to note. First, this arrives with HTTP 200 as well as with 4xx and 5xx
+statuses, so requestSuccessful must always be checked -- reading the HTTP status alone
+would treat a failure as data. Second, responseCode is 99 as a NUMBER here while a
+success carries "0" as a STRING, so the adapter stringifies it rather than comparing.
+
+The responseMessage is the spec's own placeholder. Monnify does not publish the wording
+of its real failure messages, so no fixture here pins one: the adapter's error
+classification is tested against its own message strings and the sandbox harness records
+what Monnify actually says.

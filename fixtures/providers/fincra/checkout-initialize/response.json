@@ -1,0 +1,9 @@
+{
+  "status": true,
+  "message": "Hosted link generated",
+  "data": {
+    "link": "https://sandbox-checkout.fincra.com/pay/fcr-p-EXAMPLE0000",
+    "reference": "order-01HQ-EXAMPLE",
+    "payCode": "fcr-p-EXAMPLE0000"
+  }
+}

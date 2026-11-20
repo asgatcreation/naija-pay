@@ -1,0 +1,42 @@
+{
+  "requestSuccessful": true,
+  "responseMessage": "success",
+  "responseCode": "0",
+  "responseBody": {
+    "transactionReference": "MNFY|67|20220725111957|000283",
+    "paymentReference": "order-01HQ-EXAMPLE",
+    "amountPaid": "100.00",
+    "totalPayable": "100.00",
+    "settlementAmount": "90.00",
+    "paidOn": "25/07/2022 11:20:20 AM",
+    "paymentStatus": "PAID",
+    "paymentDescription": "Trial transaction",
+    "currency": "NGN",
+    "paymentMethod": "CARD",
+    "product": {
+      "type": "WEB_SDK",
+      "reference": "order-01HQ-EXAMPLE"
+    },
+    "cardDetails": {
+      "cardType": "Sandbox Card Scheme",
+      "last4": "1111",
+      "expMonth": "10",
+      "expYear": "22",
+      "bin": "411111",
+      "bankCode": null,
+      "bankName": null,
+      "reusable": false,
+      "countryCode": null,
+      "cardToken": null,
+      "supportsTokenization": false,
+      "maskedPan": "411111******1111"
+    },
+    "accountDetails": null,
+    "accountPayments": [],
+    "customer": {
+      "email": "ada@example.com",
+      "name": "Ada Example"
+    },
+    "metaData": {}
+  }
+}

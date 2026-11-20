@@ -1,0 +1,5 @@
+https://developers.monnify.com/collection/monnify-collection.yml
+Verified: 2026-11-11 (OpenAPI 3.1, info.version 2.0.0)
+
+Inflows to one reserved account. accountReference is a REQUIRED query parameter: without
+it Monnify does not list every account, it rejects the request.

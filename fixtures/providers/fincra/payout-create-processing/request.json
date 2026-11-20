@@ -1,0 +1,22 @@
+{
+  "method": "POST",
+  "path": "/disbursements/payouts",
+  "body": {
+    "business": "64f000000000000000000001",
+    "sourceCurrency": "NGN",
+    "destinationCurrency": "NGN",
+    "amount": 5000,
+    "description": "Payment for services",
+    "paymentDestination": "bank_account",
+    "customerReference": "payout-01HQ-EXAMPLE",
+    "beneficiary": {
+      "firstName": "Ada",
+      "lastName": "Example",
+      "accountHolderName": "Ada Example",
+      "type": "individual",
+      "country": "NG",
+      "accountNumber": "0123456789",
+      "bankCode": "044"
+    }
+  }
+}

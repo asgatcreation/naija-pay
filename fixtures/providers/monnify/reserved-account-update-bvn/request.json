@@ -1,0 +1,7 @@
+{
+  "method": "PUT",
+  "path": "/api/v1/bank-transfer/reserved-accounts/update-customer-bvn/va-ada-EXAMPLE",
+  "body": {
+    "bvn": "21212121212"
+  }
+}

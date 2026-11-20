@@ -123,6 +123,33 @@ check("flutterwave converts kobo to the decimal it puts on the wire", () => {
   assert.equal(core.basisPointsToFraction(900), 0.09);
 });
 
+const monnify = await esm("providers/monnify/index.js");
+check("monnify refuses a live key in a test environment", () => {
+  assert.throws(
+    () =>
+      monnify.monnify({
+        apiKey: "MK_PROD_EXAMPLEREAL",
+        secretKey: "EXAMPLEsecret",
+        environment: "test",
+      }),
+    /LIVE api key/,
+  );
+});
+
+check("monnify still rejects a key that is not an MK_ pair", () => {
+  // The prefix check is the one that catches a secret key pasted into apiKey, which is
+  // the most common Monnify setup mistake.
+  assert.throws(
+    () => monnify.monnify({ apiKey: "EXAMPLEsecret", secretKey: "EXAMPLEsecret" }),
+    /MK_TEST_ or MK_PROD_/,
+  );
+});
+
+const fincra = await esm("providers/fincra/index.js");
+check("fincra refuses a client with no secret key", () => {
+  assert.throws(() => fincra.fincra({ secretKey: "" }), /secretKey is required/);
+});
+
 console.log("\nCJS:");
 
 const coreCjs = require(path.join(DIST, "index.cjs"));
@@ -141,6 +168,19 @@ check("CJS flutterwave loads and still validates keys", () => {
     () => flutterwaveCjs.flutterwave({ secretKey: "FLWPUBK_TEST-EXAMPLE1-X" }),
     /secret key/,
   );
+});
+
+const monnifyCjs = require(path.join(DIST, "providers", "monnify", "index.cjs"));
+check("CJS monnify loads and still validates keys", () => {
+  assert.throws(
+    () => monnifyCjs.monnify({ apiKey: "EXAMPLEsecret", secretKey: "EXAMPLEsecret" }),
+    /MK_TEST_ or MK_PROD_/,
+  );
+});
+
+const fincraCjs = require(path.join(DIST, "providers", "fincra", "index.cjs"));
+check("CJS fincra loads and still validates keys", () => {
+  assert.throws(() => fincraCjs.fincra({ secretKey: "" }), /secretKey is required/);
 });
 
 console.log(`\n${checks} checks passed against the built output on Node ${process.versions.node}`);

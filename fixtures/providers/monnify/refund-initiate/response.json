@@ -1,0 +1,22 @@
+{
+  "requestSuccessful": true,
+  "responseMessage": "success",
+  "responseCode": "0",
+  "responseBody": {
+    "refundReference": "202100op3456",
+    "reference": "TRFD|49|20220727094724|0006",
+    "transactionReference": "MNFY|65|20220727094724|000477",
+    "refundReason": "Order cancelled!",
+    "customerNote": "Refund for Purchase #2873872",
+    "refundAmount": 100,
+    "refundType": "PARTIAL_REFUND",
+    "refundStatus": "COMPLETED",
+    "refundStrategy": "MERCHANT_WALLET",
+    "comment": "Transaction refund is in progress.",
+    "createdOn": "02/08/2022 03:35:22 AM",
+    "destinationAccountName": "Ada Example",
+    "destinationAccountNumber": "0123456789",
+    "destinationBankName": "Moniepoint MFB",
+    "currencyCode": "NGN"
+  }
+}

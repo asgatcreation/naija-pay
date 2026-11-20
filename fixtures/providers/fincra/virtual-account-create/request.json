@@ -1,0 +1,15 @@
+{
+  "method": "POST",
+  "path": "/profile/virtual-accounts/requests",
+  "body": {
+    "currency": "NGN",
+    "accountType": "individual",
+    "KYCInformation": {
+      "firstName": "Ada",
+      "lastName": "Example",
+      "email": "ada@example.com",
+      "bvn": "22222222222"
+    },
+    "merchantReference": "va-ada-EXAMPLE"
+  }
+}

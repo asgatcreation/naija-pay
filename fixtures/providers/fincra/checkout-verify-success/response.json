@@ -1,0 +1,33 @@
+{
+  "status": true,
+  "message": "Payment details fetched",
+  "data": {
+    "id": 443787,
+    "businessId": "64f000000000000000000001",
+    "amount": 350,
+    "currency": "NGN",
+    "convertedAmount": 350,
+    "convertedCurrency": "NGN",
+    "paymentMethods": [
+      "card",
+      "bank_transfer",
+      "payattitude"
+    ],
+    "defaultPaymentMethod": "bank_transfer",
+    "redirectUrl": "https://example.com/callback",
+    "settlementDestination": "wallet",
+    "feeBearer": "customer",
+    "reference": "fcr-p-EXAMPLE0000",
+    "merchantReference": "order-01HQ-EXAMPLE",
+    "isDisabled": false,
+    "metadata": null,
+    "status": "success",
+    "createdAt": "2023-10-27T11:25:23.701Z",
+    "updatedAt": "2023-10-27T11:27:42.000Z",
+    "customer": {
+      "name": "Ada Example",
+      "email": "ada@example.com",
+      "phoneNumber": null
+    }
+  }
+}

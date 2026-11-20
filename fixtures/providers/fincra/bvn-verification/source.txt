@@ -1,0 +1,15 @@
+https://docs.fincra.com/reference/bvn-resolution.md
+updatedAt: 2026-09-29T21:10:11.000Z
+Verified: 2026-11-11
+
+BVN resolution, and the one fixture in this repository that exists to document something
+being THROWN AWAY.
+
+Fincra returns pixBase64: a photograph of the person. The adapter drops it -- it is not in
+the normalised object and it is not even carried in `raw` -- because a photograph in `raw`
+would reach every log line, error report and exception tracker that touches the object.
+Under NDPA 2023 a photograph is personal data and a biometric identifier, and inheriting
+that by accident is exactly what this SDK should prevent. A test asserts it is gone.
+
+dateOfBirth is "15-Jul-2022", which is not ISO 8601 and is not parsed: it is carried
+through as Fincra's own string rather than guessed at.

@@ -1,0 +1,8 @@
+{
+  "method": "POST",
+  "path": "/core/bvn-verification",
+  "body": {
+    "bvn": "22222222222",
+    "business": "64f000000000000000000001"
+  }
+}

@@ -1,0 +1,9 @@
+https://docs.fincra.com/reference/initiate-checkout.md
+updatedAt: 2026-09-29T21:10:11.000Z
+Verified: 2026-11-11
+
+A hosted checkout. The amount is a DECIMAL in major units: 350 is three hundred and fifty
+naira, where Paystack would take 35000 kobo.
+
+Note the envelope key: this endpoint answers `status`, where the payout, bank and wallet
+endpoints answer `success` for exactly the same meaning. The adapter accepts either.

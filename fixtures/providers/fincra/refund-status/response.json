@@ -1,0 +1,28 @@
+{
+  "success": true,
+  "message": "Refund fetched successfully",
+  "data": {
+    "id": 21,
+    "collectionReference": "96d1fc1c-2570-EXAMPLE",
+    "reference": "cba44033-bcaa-EXAMPLE",
+    "currency": "NGN",
+    "amountRefunded": "5914.000000",
+    "refundType": "overpayment",
+    "payeeAccountNumber": "0123456789",
+    "collectionExpectedAmount": "850.000000",
+    "collectionAmountReceived": "6764.000000",
+    "collectionAmountSettled": "6662.201800",
+    "collectionMerchantReference": "order-01HQ-EXAMPLE",
+    "collectionVarianceType": "overpayment",
+    "collectionVirtualAccountId": "655ec84f1f3ce30f00efEXAMPLE",
+    "refundStatus": "processing",
+    "completedAt": "2023-12-07 17:39:00",
+    "initiatedAt": "2023-12-05 15:07:18",
+    "payee": {
+      "accountNumber": "0123456789",
+      "bankCode": "042",
+      "bankName": "gtb",
+      "cardScheme": null
+    }
+  }
+}

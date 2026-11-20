@@ -1,0 +1,16 @@
+https://docs.fincra.com/reference/get-wallets.md
+updatedAt: 2026-09-29T21:10:11.000Z
+Verified: 2026-11-11
+
+One wallet per currency, which is what Fincra's "wallets" are: the business's own
+balances, not accounts opened for customers.
+
+Both balances here carry SIX decimal places -- 1999965363.990817 and 4145.558824. Neither
+can be expressed exactly in kobo or pence, so the adapter reports them as null rather
+than rounding, and the exact figures stay in `raw`. A balance that is wrong by a fraction
+is worse than a balance that says "I cannot tell you this exactly", because only one of
+those gets noticed.
+
+lockedBalance is money committed to payouts that have not settled, and 172950 converts
+cleanly -- so a fixture with a mix of convertible and inconvertible figures is the useful
+one to keep.

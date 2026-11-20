@@ -285,6 +285,14 @@ from flutterwave_py import flutterwave_parity
 
 out.update(flutterwave_parity(ROOT, CASES))
 
+from monnify_py import monnify_parity
+
+out.update(monnify_parity(ROOT, CASES))
+
+from fincra_py import fincra_parity
+
+out.update(fincra_parity(ROOT, CASES))
+
 
 def canonical(value: Any) -> Any:
     """Sort mapping keys recursively so key order can never cause a false difference."""

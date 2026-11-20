@@ -1,0 +1,16 @@
+{
+  "success": true,
+  "message": "Bvn verification successful",
+  "data": {
+    "verificationStatus": "verified",
+    "response": {
+      "firstName": "ADA",
+      "middleName": "TEST",
+      "lastName": "EXAMPLE",
+      "gender": "Female",
+      "dateOfBirth": "15-Jul-2022",
+      "phoneNo": "09022222222",
+      "pixBase64": "JJJ.."
+    }
+  }
+}

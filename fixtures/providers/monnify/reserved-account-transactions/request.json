@@ -1,0 +1,9 @@
+{
+  "method": "GET",
+  "path": "/api/v1/bank-transfer/reserved-accounts/transactions",
+  "query": {
+    "accountReference": "va-ada-EXAMPLE",
+    "page": 0,
+    "size": 10
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "method": "GET",
+  "path": "/api/v2/disbursements/account/validate",
+  "query": {
+    "accountNumber": "0123456789",
+    "bankCode": "044"
+  }
+}
